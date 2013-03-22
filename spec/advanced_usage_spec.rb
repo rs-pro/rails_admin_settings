@@ -39,4 +39,19 @@ describe 'Settings advanced usage' do
     Settings.get(:data).raw.should eq '[one, two, three]'
     Settings.data.should eq ['one', 'two', 'three']
   end
+
+  it 'should support phone type' do
+    Settings.set(:tphone, '906 111 11 11', type: 'phone')
+    Settings.get(:tphone).val.class.name.should eq 'RussianPhone::Number'
+    Settings.tphone.class.name.should eq 'RussianPhone::Number'
+    Settings.tphone.should eq '906 111 11 11'
+
+    Settings.get(:tphone).val.city.should eq '906'
+    Settings.get(:tphone).val.subscriber.should eq '111-11-11'
+
+    Settings.dphone(type: 'phone')
+
+    Settings.dphone.city.should eq '906'
+    Settings.dphone.subscriber.should eq '111-11-11'
+  end
 end
