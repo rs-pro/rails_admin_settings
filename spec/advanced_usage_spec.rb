@@ -47,11 +47,11 @@ describe 'Settings advanced usage' do
     Settings.tphone.should eq '906 111 11 11'
 
     Settings.get(:tphone).val.city.should eq '906'
-    Settings.get(:tphone).val.subscriber.should eq '111-11-11'
+    Settings.get(:tphone).val.formatted_subscriber.should eq '111-11-11'
 
     Settings.dphone(type: 'phone')
 
-    Settings.dphone.city.should eq '906'
-    Settings.dphone.subscriber.should eq '111-11-11'
+    Settings.dphone.city.should eq '000'
+    Settings.dphone.formatted_subscriber.should eq '000-00-00'
   end
 end

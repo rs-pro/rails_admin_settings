@@ -18,17 +18,17 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_runtime_dependency "mongoid"
+  spec.add_runtime_dependency "mongoid", '~> 3.1'
 
-  spec.add_development_dependency "bundler"
-  spec.add_development_dependency "rake"
-  spec.add_development_dependency "rspec"
-  spec.add_development_dependency "mongoid-rspec"
-  spec.add_development_dependency "simplecov"
-  spec.add_development_dependency "database_cleaner"
-  spec.add_development_dependency "factory_girl"
+  spec.add_development_dependency "bundler", "~> 1.3.4"
+  spec.add_development_dependency "rake", "~> 10.0.3"
+  spec.add_development_dependency "rspec", "~> 2.13.0"
+  spec.add_development_dependency "mongoid-rspec", "~> 1.7.0"
+  spec.add_development_dependency "simplecov", "~> 0.7.1"
+  spec.add_development_dependency "database_cleaner", "~> 0.9.1"
+  spec.add_development_dependency "factory_girl", "~> 4.2.0"
 
-  spec.add_development_dependency "safe_yaml"
-  spec.add_development_dependency "russian_phone"
-  spec.add_development_dependency "sanitize"
+  spec.add_development_dependency "safe_yaml", "~> 0.8.6"
+  spec.add_development_dependency "russian_phone", "~> 0.3.2"
+  spec.add_development_dependency "sanitize", "~> 2.0.3"
 end
