@@ -37,15 +37,14 @@ Supported:
 
     integer (stored as string)
     string
-    doublestring (it is needed much more ofthen than you'd think, like FB AppID + Key, phone number with code, lat+lng, etc)
+    text
     html
-    doublehtml
     yaml
 
 Strings and html support following replacement patterns:
 
-{{year}} -> current year
-{{year|2013}} -> 2013 in 2013, 2013-2014 in 2014, etc
+    {{year}} -> current year
+    {{year|2013}} -> 2013 in 2013, 2013-2014 in 2014, etc
 
 ## Usage with Rails Admin
 

@@ -21,9 +21,16 @@ describe Settings do
     Settings.email.should == email2
   end
 
-  context 'advanced usage' do
-    it 'should properly support dualstring' do
-      Settings.phone(mode: 'two').enabled?
-    end
+  it 'should properly unload' do
+    Settings.class_eval { cattr_accessor :loaded }
+    Settings.load!
+    Settings.loaded.should eq true
+    Settings.unload!
+    Settings.loaded.should eq false
+  end
+
+  it 'should support yaml mode' do
+    Settings.set(:data, '[one, two, three]', mode: 'yaml')
+    Settings.data.should eq ['one', 'two', 'three']
   end
 end

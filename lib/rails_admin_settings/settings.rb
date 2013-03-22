@@ -1,56 +1,74 @@
 class Settings
-  def initialize
-    @settings = []
-    Setting.all.each do |setting|
-      @settings[setting.code] = setting
+  class << self
+    def load!
+      unless @@loaded
+        @@settings = {}
+        @@loaded = true
+      end
+    end
+
+    def unload!
+      @@settings = {}
+      @@loaded = false
+    end
+
+    # returns processed setting value
+    def method_missing(key, *args)
+      if key[-1] == '='
+        key = key[0..-2]
+        options = args[1] || {}
+        options[:default] = args.first
+        create_setting(key, options)
+      elsif @@settings[key].nil?
+        create_setting(key, args.first || {})
+      else
+        @@settings[key]
+      end
+
+    end
+
+    def set(key, value, options = {})
+      load!
+      key = key.to_s
+      options.symbolize_keys!
+      if @@settings[key].nil?
+        @@settings[key] = RailsAdminSettings::Setting.create(options.merge(key: key, value: value))
+      else
+        @@settings[key].update_attributes!(options.merge(value: value))
+      end
+    end
+
+    # returns setting object
+    def get(key, options = {})
+      load!
+      key = key.to_s
+      @@settings[key]
+    end
+
+    def []=(key, value)
+      set(key, value)
+    end
+
+    def [](key)
+      get(key)
+    end
+
+    def save_default(key, value, options = {})
+      load!
+      create_setting(key, value, options) if @@settings[key].nil?
+    end
+
+    def create_setting(key, value, options = {})
+      load!
+      options.symbolize_keys!
+      @@settings[key] = RailsAdminSettings::Setting.create(options.merge(key: key, value: value)) if @@settings[key].nil?
+    end
+
+    # to satisfy rspec
+    def to_ary
+      ['Settings']
     end
   end
 
-  def method_missing(code, *args)
-    code = code.to_s
-
-    if code[-1] == '='
-      code = code[0..-2]
-      options = args[1] || {}
-      options[:default] = args.first
-      create_setting(code, options)
-    elsif @settings[code].nil?
-      create_setting(code, args.first || {})
-    else
-      @settings[code]
-    end
-  end
-
-  def save_default(code, value)
-    create_setting(code, default: value) if @settings[code].nil?
-  end
-
-  def self.save_default(code, value)
-    Settings.new.save_default(code, value)
-  end
-
-  def self.method_missing(code, *args)
-    Settings.new.send(code, *args).to_s
-  end
-
-  def to_a
-    @settings
-  end
-
-  # to statisfy rspec
-  def self.to_ary
-    ['Settings']
-  end
-
-  private
-
-  def create_setting(code, options = {})
-    options.symbolize_keys!
-    options = {code: code, enabled: true, mode: 'html', default: '', default_2: ''}.merge(options)
-    options[:content_1] = options.delete(:default)
-    options[:content_2] = options.delete(:default_2)
-    @settings[code] = RailsAdminSettings::Setting.find_or_create_by(code: code)
-    @settings[code].update_attributes!(options)
-    @settings[code]
-  end
+  self.unload!
 end

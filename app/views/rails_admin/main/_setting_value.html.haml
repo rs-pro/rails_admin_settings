@@ -1,0 +1,20 @@
+- if @object.type == 'string' || @object.type == 'integer'
+  = form.text_field :content, :value => field.value
+- elsif @object.type == 'text' || @object.type == 'yaml'
+  = form.text_area :content, :value => field.value, :rows => 10, :cols => 80
+- elsif @object.type == 'html'
+  - if form.respond_to?(:cktext_area)
+    = javascript_include_tag "ckeditor/init"
+    = form.cktext_area :content, :value => field.value, :rows => 10, :cols => 80
+  - elsif Object.const_defined?('Rich')
+    = form.text_area :content, :value => field.value, :rows => 10, :cols => 80
+
+    = javascript_include_tag "rich/base.js"
+    javascript:
+      var instance = CKEDITOR.instances['#{form.dom_id(field)}'];
+      if(instance) { CKEDITOR.remove(instance); }
+      CKEDITOR.replace('#{form.dom_id(field)}', #{Rich.options().to_json.html_safe});
+  - else
+    .alert.alert-error
+      = t('admin.settings.no_ckeditor_detected')
+    = form.text_area :content, :value => field.value, :rows => 10, :cols => 80

@@ -2,3 +2,14 @@ ru:
   admin:
     settings:
       label: 'Настройки'
+      no_ckeditor_detected: CKEditor не обнаружен &mdash; отображаю настройку как текстовое поле
+  mongoid:
+    models:
+      rails_admin_settings/setting: Настройки
+
+    attributes:
+      rails_admin_settings/setting:
+        key: Название
+        value: Значение
+        type: Тип
+
