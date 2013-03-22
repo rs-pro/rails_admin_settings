@@ -12,6 +12,7 @@ Pull request with AR support will be welcome
 - Lazy loading - loads settings only if they are needed during request
 - Loads all settings at once and caches them for the duration of request
 - Supports lots of setting types - yaml, html with ckeditor, phone numbers etc
+- Each setting can be enabled and disabled within rails_admin, if it's disabled it returns default value for type
 
 ## Installation
 
@@ -47,6 +48,7 @@ Or install it yourself as:
 
     Settings.content_block_1(mode: 'html', default: 'test')
     Settings.data(mode: 'yaml')
+    Settings.enabled?(:data, type: 'phone') # also creates setting if it doesn't exist
     Settings.data = [1, 2, 3]
 
 See more here: https://github.com/rs-pro/rails_admin_settings/blob/master/spec/advanced_usage_spec.rb

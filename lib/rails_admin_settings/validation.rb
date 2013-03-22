@@ -11,14 +11,27 @@ module RailsAdminSettings
 
       base.validate if: :phone_type? do
         require_russian_phone do
-          errors.add(:raw, t('admin.settings.phone_invalid')) if RussianPhone::Number.new(:raw).valid?
+          errors.add(:raw, I18n.t('admin.settings.phone_invalid')) unless raw.blank? || RussianPhone::Number.new(:raw).valid?
         end
       end
 
       base.validate if: :email_type? do
         require_validates_email_format_of do
-          errors.add(:raw, t('admin.settings.email_invalid')) unless ValidatesEmailFormatOf.validate_email_format(raw).nil?
+          errors.add(:raw, I18n.t('admin.settings.email_invalid')) unless raw.blank? || ValidatesEmailFormatOf.validate_email_format(raw).nil?
         end
+      end
+
+      base.validate if: :address_type? do
+        require_geocoder do
+          # just raise error if we are trying to use address type without geocoder
+        end
+      end
+
+      if Object.const_defined?('Geocoder')
+        base.field(:coordinates, type: Array)
+        base.send(:include, Geocoder::Model::Mongoid)
+        base.geocoded_by(:raw)
+        base.after_validation(:geocode, if: :address_type?)
       end
 
       base.validate if: :yaml_type? do
@@ -27,7 +40,7 @@ module RailsAdminSettings
             begin
               YAML.safe_load(raw)
             rescue Psych::SyntaxError => e
-              errors.add(:raw, t('admin.settings.yaml_invalid'))
+              errors.add(:raw, I18n.t('admin.settings.yaml_invalid'))
             end
           end
         end

@@ -24,8 +24,12 @@ module RailsAdminSettings
       'phone' == type
     end
 
-    def phone_type?
-      'phone' == type
+    def address_type?
+      'address' == type
+    end
+
+    def sanitized_type?
+      'sanitized' == type
     end
 
     def value
@@ -63,7 +67,7 @@ module RailsAdminSettings
         nil
       elsif phone_type?
         require_russian_phone do
-          RussianPhone::Number.new('(000) 000-00-00')
+          RussianPhone::Number.new('')
         end
       else
         nil

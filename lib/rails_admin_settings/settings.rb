@@ -53,6 +53,10 @@ class Settings
       end
     end
 
+    def enabled?(key, options = {})
+      get(key, options).enabled?
+    end
+
     # returns setting object
     def get(key, options = {})
       load!

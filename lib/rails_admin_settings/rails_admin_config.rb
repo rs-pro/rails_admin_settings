@@ -1,7 +1,7 @@
 module RailsAdminSettings
   module RailsAdminConfig
     def self.included(base)
-      rails_admin do
+      base.rails_admin do
         navigation_label t('admin.settings.label')
 
         object_label_method do

@@ -35,4 +35,9 @@ describe Settings do
     YAML.safe_load(Settings.get(:tdata).raw).should eq ['one', 'two', 'three']
     Settings.tdata.should eq ['one', 'two', 'three']
   end
+
+  it '#enabled? sets defaults' do
+    Settings.enabled?(:phone, type: 'phone').should eq true
+    Settings.get(:phone).type.should eq 'phone'
+  end
 end

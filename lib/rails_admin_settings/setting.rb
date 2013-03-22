@@ -4,6 +4,8 @@ module RailsAdminSettings
     include ::Mongoid::Document
     include ::Mongoid::Timestamps::Short
 
+    store_in collection: "rails_admin_settings"
+
     if Object.const_defined?('Mongoid') && Mongoid.const_defined?('Audit')
       include ::Mongoid::Audit::Trackable
       track_history track_create: true, track_destroy: true
