@@ -14,6 +14,13 @@ module RailsAdminSettings
           errors.add(:raw, t('admin.settings.phone_invalid')) if RussianPhone::Number.new(:raw).valid?
         end
       end
+
+      base.validate if: :email_type? do
+        require_validates_email_format_of do
+          errors.add(:raw, t('admin.settings.email_invalid')) unless ValidatesEmailFormatOf.validate_email_format(raw).nil?
+        end
+      end
+
       base.validate if: :yaml_type? do
         require_safe_yaml do
           unless raw.blank?

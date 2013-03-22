@@ -1,7 +1,7 @@
 module RailsAdminSettings
   module Processing
     def text_type?
-      ['string', 'html', 'sanitized'].include? type
+      ['string', 'html', 'sanitized', 'email'].include? type
     end
 
     def html_type?
@@ -16,12 +16,16 @@ module RailsAdminSettings
       'yaml' == type
     end
 
+    def email_type?
+      'email' == type
+    end
+
     def phone_type?
       'phone' == type
     end
 
-    def sanitized_type?
-      'sanitized' == type
+    def phone_type?
+      'phone' == type
     end
 
     def value

@@ -27,7 +27,17 @@ module RailsAdminSettings
         require 'sanitize'
         yield
       rescue LoadError => e
-        e.message << " [rails_admin_settings] Please install sanitize to use sanitized settings"
+        e.message << " [rails_admin_settings] Please add gem 'sanitize' to your Gemfile to use sanitized settings"
+        raise e
+      end
+    end
+
+    def require_validates_email_format_of
+      begin
+        require 'validates_email_format_of'
+        yield
+      rescue LoadError => e
+        e.message << " [rails_admin_settings] Please add gem 'validates_email_format_of' to your Gemfile to use email type settings"
         raise e
       end
     end

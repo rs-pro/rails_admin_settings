@@ -1,4 +1,4 @@
-- if @object.type == 'string' || @object.type == 'integer'
+- if ['string', 'integer', 'phone', 'email'].include?(@object.type)
   = form.text_field :raw, :value => field.value
 - elsif @object.type == 'text' || @object.type == 'yaml'
   = form.text_area :raw, :value => field.value, :rows => 10, :cols => 80

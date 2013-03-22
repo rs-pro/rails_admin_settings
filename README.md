@@ -27,6 +27,7 @@ Add this line to your application's Gemfile:
 - Put it after russian_phone to get built-in support
 - Put it after sanitized to get built-in support
 - Put it after safe_yaml to get built-in support
+- Put it after validates_email_format_of to get built-in support
 
 And then execute:
 
@@ -57,10 +58,12 @@ Supported types:
     string (input)
     text (textarea)
     html (supports Rich, glebtv-ckeditor, ckeditor, but does not require any of them)
+    sanitized (requires sanitize -- sanitizes HTML before saving to DB [Warning: uses RELAXED config!])
     integer (stored as string)
     yaml (requires safe_yaml)
     phone (requires russian_phone)
-    sanitized (requires sanitize)
+    email (requires validates_email_format_of)
+
 
 Strings and html support following replacement patterns:
 
