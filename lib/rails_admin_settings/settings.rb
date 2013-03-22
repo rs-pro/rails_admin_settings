@@ -17,24 +17,39 @@ class Settings
       if key[-1] == '='
         key = key[0..-2]
         options = args[1] || {}
-        options[:default] = args.first
-        create_setting(key, options)
-      elsif @@settings[key].nil?
-        create_setting(key, args.first || {})
+        value = args.first
+        set(key, value, options).val
       else
-        @@settings[key]
+        get(key, args.first || {}).val
       end
-
     end
 
-    def set(key, value, options = {})
+    def set(key, value = nil, options = {})
       load!
       key = key.to_s
       options.symbolize_keys!
+
+
+      if !options[:type].nil? && options[:type] == 'yaml' && !value.nil? && !valid_yaml?(value)
+        value = value.to_yaml
+      end
+
       if @@settings[key].nil?
-        @@settings[key] = RailsAdminSettings::Setting.create(options.merge(key: key, value: value))
+        @@settings[key] = RailsAdminSettings::Setting.create(options.merge(key: key, raw: value))
       else
-        @@settings[key].update_attributes!(options.merge(value: value))
+        @@settings[key].update_attributes!(options.merge(raw: value))
+        @@settings[key]
+      end
+    end
+
+    def valid_yaml?(value)
+      begin
+        YAML.safe_load(value)
+      rescue LoadError => e
+        e.message << " [rails_admin_settings] Please add gem 'safe_yaml' to your Gemfile to use yaml settings"
+        raise e
+      rescue Psych::SyntaxError => e
+        return false
       end
     end
 
@@ -42,7 +57,11 @@ class Settings
     def get(key, options = {})
       load!
       key = key.to_s
-      @@settings[key]
+      if @@settings[key].nil?
+        create_setting(key, options)
+      else
+        @@settings[key]
+      end
     end
 
     def []=(key, value)
@@ -55,13 +74,15 @@ class Settings
 
     def save_default(key, value, options = {})
       load!
-      create_setting(key, value, options) if @@settings[key].nil?
+      options.merge!(default: value)
+      create_setting(key, options) if @@settings[key].nil?
     end
 
-    def create_setting(key, value, options = {})
+    def create_setting(key, options = {})
       load!
       options.symbolize_keys!
-      @@settings[key] = RailsAdminSettings::Setting.create(options.merge(key: key, value: value)) if @@settings[key].nil?
+      options[:raw] = options.delete(:default)
+      @@settings[key] = RailsAdminSettings::Setting.create(options.merge(key: key)) if @@settings[key].nil?
     end
 
     # to satisfy rspec

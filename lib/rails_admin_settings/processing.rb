@@ -1,19 +1,63 @@
 module RailsAdminSettings
   module Processing
+    def text_type?
+      ['string', 'html', 'sanitized'].include? type
+    end
+
+    def html_type?
+      ['html', 'sanitized'].include? type
+    end
+
+    def integer_type?
+      'integer' == type
+    end
+
+    def yaml_type?
+      'yaml' == type
+    end
+
+    def phone_type?
+      'phone' == type
+    end
+
+    def sanitized_type?
+      'sanitized' == type
+    end
+
+    def value
+      if raw.blank? || disabled?
+        default_value
+      else
+        processed_value
+      end
+    end
+
+    def to_s
+      if yaml_type? || phone_type? || integer_type?
+        raw
+      else
+        value
+      end
+    end
+
+    private
+
     def sanitize_value
       require_sanitize do
-        self.value = Sanitize.clean(value, Sanitize::Config::RELAXED)
+        self.raw = Sanitize.clean(value, Sanitize::Config::RELAXED)
       end
     end
 
     def default_value
-      if text_mode?
+      if html_type?
+        ''.html_safe
+      elsif text_type?
         ''
-      elsif integer_mode?
+      elsif integer_type?
         0
-      elsif yaml_mode?
+      elsif yaml_type?
         nil
-      elsif phone_mode?
+      elsif phone_type?
         require_russian_phone do
           RussianPhone::Number.new('(000) 000-00-00')
         end
@@ -22,48 +66,53 @@ module RailsAdminSettings
       end
     end
 
-    def process(text)
-      if text_mode?
-        if text.blank? || disabled?
-          default_value
+    def process_text
+      replacer = Proc.new do |m|
+        if Time.now.strftime('%Y') == $1
+          $1
         else
-          text = text.dup
-          text.gsub!('{{year}}', Time.now.strftime('%Y'))
-          replacer = Proc.new do |m|
-            if Time.now.strftime('%Y') == $1
-              $1
-            else
-              "#{$1}-#{Time.now.strftime('%Y')}"
-            end
-          end
-          text.gsub!(/\{\{year\|([\d]{4})\}\}/, &replacer)
-          text
+          "#{$1}-#{Time.now.strftime('%Y')}"
         end
-      elsif integer_mode?
-        (text.blank? || disabled?) ? default_value : text.to_i
-      elsif yaml_mode?
-        (text.blank? || disabled?) ? default_value : load_yaml(text)
-      elsif phone_mode?
-        (text.blank? || disabled?) ? default_value : load_phone(text)
-      else
-        default_value
       end
+
+      text = raw.dup
+
+      text.gsub!('{{year}}', Time.now.strftime('%Y'))
+      text.gsub!(/\{\{year\|([\d]{4})\}\}/, &replacer)
+      text = text.html_safe if html_type?
+      text
     end
 
-    def load_phone(text)
+    def load_phone
       require_russian_phone do
-        RussianPhone::Number.new(text)
+        RussianPhone::Number.new(raw)
       end
     end
 
-    def load_yaml(text)
+    def load_yaml
       require_safe_yaml do
-        YAML.safe_load(text)
+        YAML.safe_load(raw)
       end
     end
 
-    def value
-      process value
+    def processed_value
+      if text_type?
+        process_text
+      elsif integer_type?
+        raw.to_i
+      elsif yaml_type?
+        load_yaml
+      elsif phone_type?
+        load_phone
+      else
+        nil
+      end
+    end
+
+    def self.included(base)
+      base.class_eval do
+        alias_method :val, :value
+      end
     end
   end
 end

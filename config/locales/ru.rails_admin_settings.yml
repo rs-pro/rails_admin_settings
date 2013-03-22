@@ -3,6 +3,8 @@ ru:
     settings:
       label: 'Настройки'
       no_ckeditor_detected: CKEditor не обнаружен &mdash; отображаю настройку как текстовое поле
+      phone_invalid: Неверный телефонный номер
+      yaml_invalid: Неверный синтаксис YAML
   mongoid:
     models:
       rails_admin_settings/setting: Настройки
@@ -10,6 +12,6 @@ ru:
     attributes:
       rails_admin_settings/setting:
         key: Название
-        value: Значение
+        raw: Значение
         type: Тип
 

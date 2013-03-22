@@ -1,9 +1,5 @@
 # coding: utf-8
 module RailsAdminSettings
-  def self.types
-    ['string', 'integer', 'html', 'sanitized', 'yaml', 'phone']
-  end
-
   class Setting
     include ::Mongoid::Document
     include ::Mongoid::Timestamps::Short
@@ -19,11 +15,11 @@ module RailsAdminSettings
     field :type, type: String, default: RailsAdminSettings.types.first
 
     field :key, type: String
-    field :value, type: String, default: ''
+    field :raw, type: String, default: ''
 
     include RailsAdminSettings::RequireHelpers
-    include RailsAdminSettings::TypeHelpers
     include RailsAdminSettings::Processing
+    include RailsAdminSettings::Validation
 
     def disabled?
       !enabled
@@ -33,7 +29,7 @@ module RailsAdminSettings
       enabled
     end
 
-
+    index(key: 1)
 
     if respond_to?(:rails_admin)
       include RailsAdminSettings::RailsAdminConfig

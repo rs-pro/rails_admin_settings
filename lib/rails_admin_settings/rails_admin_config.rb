@@ -1,6 +1,6 @@
 module RailsAdminSettings
   module RailsAdminConfig
-    included(base) do
+    def self.included(base)
       rails_admin do
         navigation_label t('admin.settings.label')
 
@@ -16,20 +16,20 @@ module RailsAdminSettings
           end
 
           field :key
-          field :mode
+          field :type
         end
 
         edit do
           field :enabled
 
-          field :value do
+          field :raw do
             partial "setting_value"
           end
 
           field :key do
             read_only true
           end
-          field :mode do
+          field :type do
             read_only true
           end
         end

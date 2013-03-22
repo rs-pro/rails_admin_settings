@@ -3,38 +3,43 @@
 require 'spec_helper'
 
 describe RailsAdminSettings::Setting do
-  it { should have_fields(:enabled, :code, :mode, :content_1, :content_2) }
+  it { should have_fields(:enabled, :key, :type, :raw) }
 
-  it "should correctly return content when enabled" do
+  it "correctly return content when enabled" do
     setting = FactoryGirl.create(:setting)
-    setting.c1.should eq "Контент 1"
     setting.to_s.should eq "Контент 1"
-    setting.c2.should eq "Контент 2"
   end
 
-  it "should return empty string when disabled" do
+  it "return empty string when disabled" do
     setting = FactoryGirl.create(:setting, enabled: false)
-
-    setting.c1.should eq ""
     setting.to_s.should eq ""
-    setting.c2.should eq ""
   end
 
-  it "should correctly process {{year}}" do
-    setting = FactoryGirl.create(:setting, content_1: '&copy; {{year}} company')
-
-    setting.c1.should eq "&copy; #{Time.now.strftime('%Y')} company"
+  it "correctly process {{year}}" do
+    setting = FactoryGirl.create(:setting, raw: '&copy; {{year}} company')
+    setting.val.should eq "&copy; #{Time.now.strftime('%Y')} company"
   end
 
-  it "should correctly process {{year|2010}}" do
-    setting = FactoryGirl.create(:setting, content_1: '&copy; {{year|2010}} company')
-
-    setting.c1.should eq "&copy; 2010-#{Time.now.strftime('%Y')} company"
+  it "correctly process {{year|2010}}" do
+    setting = FactoryGirl.create(:setting, raw: '&copy; {{year|2010}} company')
+    setting.val.should eq "&copy; 2010-#{Time.now.strftime('%Y')} company"
   end
 
-  it "should correctly process {{year|current_year}}" do
-    setting = FactoryGirl.create(:setting, content_1: "&copy; {{year|#{Time.now.strftime('%Y')}}} company")
+  it "correctly process {{year|current_year}}" do
+    setting = FactoryGirl.create(:setting, raw: '&copy; {{year|' + Time.now.strftime('%Y') + '}} company')
+    setting.val.should eq "&copy; #{Time.now.strftime('%Y')} company"
+    setting.val.class.name.should_not eq "ActiveSupport::SafeBuffer"
+  end
 
-    setting.c1.should eq "&copy; #{Time.now.strftime('%Y')} company"
+  it 'return html_safe string when in html mode' do
+    setting = FactoryGirl.create(:setting, raw: '&copy; {{year}} company', type: 'html')
+    setting.val.should eq "&copy; #{Time.now.strftime('%Y')} company"
+    setting.val.class.name.should eq "ActiveSupport::SafeBuffer"
+  end
+
+  it 'sanitize html when in sanitized mode' do
+    setting = FactoryGirl.create(:setting, raw: '&copy; {{year}} company <a href="javascript:alert()">test</a>', type: 'sanitized')
+    setting.val.should eq "© #{Time.now.strftime('%Y')} company <a>test</a>"
+    setting.val.class.name.should eq "ActiveSupport::SafeBuffer"
   end
 end

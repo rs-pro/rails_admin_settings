@@ -29,8 +29,10 @@ describe Settings do
     Settings.loaded.should eq false
   end
 
-  it 'should support yaml mode' do
-    Settings.set(:data, '[one, two, three]', mode: 'yaml')
-    Settings.data.should eq ['one', 'two', 'three']
+  it 'should support yaml type' do
+    Settings.tdata(type: 'yaml')
+    Settings.tdata = ['one', 'two', 'three']
+    YAML.safe_load(Settings.get(:tdata).raw).should eq ['one', 'two', 'three']
+    Settings.tdata.should eq ['one', 'two', 'three']
   end
 end

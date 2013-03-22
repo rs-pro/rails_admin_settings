@@ -2,10 +2,7 @@
 
 FactoryGirl.define do
   factory :setting, class: RailsAdminSettings::Setting do
-    sequence(:code){|n| "block_#{n}" }
-    mode "doublehtml"
-    content_1 "Контент 1"
-    content_2 "Контент 2"
-    enabled true
+    sequence(:key){|n| "setting_#{n}" }
+    raw "Контент 1"
   end
 end
