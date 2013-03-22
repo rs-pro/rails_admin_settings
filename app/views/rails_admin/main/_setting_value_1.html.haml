@@ -1,0 +1,5 @@
+- if @object.mode == 'one' || @object.mode == 'two'
+  = form.text_area :content_1, :value => field.value, :rows => 5, :cols => 48
+- else
+  = javascript_include_tag "ckeditor/init"
+  = form.cktext_area :content_1, :value => field.value, :rows => 5, :cols => 48
