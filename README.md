@@ -29,6 +29,7 @@ Add this line to your application's Gemfile:
 - Put it after sanitized to get built-in support
 - Put it after safe_yaml to get built-in support
 - Put it after validates_email_format_of to get built-in support
+- Put it after geocoder to get built-in support
 
 And then execute:
 
@@ -65,6 +66,7 @@ Supported types:
     yaml (requires safe_yaml)
     phone (requires russian_phone)
     email (requires validates_email_format_of)
+    address (requires geocoder)
 
 
 Strings and html support following replacement patterns:
