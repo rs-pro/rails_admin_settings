@@ -29,6 +29,18 @@ describe Settings do
     Settings.loaded.should eq false
   end
 
+  it 'should properly store settings to DB' do
+    Settings.class_eval { cattr_accessor :loaded }
+    Settings.unload!
+    Settings.loaded.should eq false
+    Settings.temp = '123'
+    Settings.loaded.should eq true
+    Settings.unload!
+    Settings.loaded.should eq false
+    Settings.temp.should eq '123'
+    Settings.loaded.should eq true
+  end
+
   it 'should support yaml type' do
     Settings.tdata(type: 'yaml')
     Settings.tdata = ['one', 'two', 'three']

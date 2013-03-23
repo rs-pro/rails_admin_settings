@@ -12,4 +12,6 @@ require "rails_admin_settings/settings"
 
 if Object.const_defined?('Rails')
   require "rails_admin_settings/engine"
+else
+  require File.dirname(__FILE__) + '/../app/models/rails_admin_settings/setting.rb'
 end

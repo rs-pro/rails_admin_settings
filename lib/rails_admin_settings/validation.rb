@@ -11,7 +11,7 @@ module RailsAdminSettings
 
       base.validate if: :phone_type? do
         require_russian_phone do
-          errors.add(:raw, I18n.t('admin.settings.phone_invalid')) unless raw.blank? || RussianPhone::Number.new(:raw).valid?
+          errors.add(:raw, I18n.t('admin.settings.phone_invalid')) unless raw.blank? || RussianPhone::Number.new(raw).valid?
         end
       end
 

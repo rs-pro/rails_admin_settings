@@ -3,6 +3,9 @@ class Settings
     def load!
       unless @@loaded
         @@settings = {}
+        RailsAdminSettings::Setting.all.each do |setting|
+          @@settings[setting.key] = setting
+        end
         @@loaded = true
       end
     end
@@ -86,7 +89,7 @@ class Settings
       load!
       options.symbolize_keys!
       options[:raw] = options.delete(:default)
-      @@settings[key] = RailsAdminSettings::Setting.create(options.merge(key: key)) if @@settings[key].nil?
+      @@settings[key] = RailsAdminSettings::Setting.create!(options.merge(key: key)) if @@settings[key].nil?
     end
 
     # to satisfy rspec

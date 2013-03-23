@@ -16,6 +16,7 @@ module RailsAdminSettings
               field :enabled
             end
             field :key
+            field :raw
             field :type
           end
 
