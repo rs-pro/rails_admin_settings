@@ -28,7 +28,7 @@ module RailsAdminSettings
       end
 
       if Object.const_defined?('Geocoder')
-        base.field(:coordinates, type: Array)
+        base.field(:coordinates, type: Array, default: [])
         base.send(:include, Geocoder::Model::Mongoid)
         base.geocoded_by(:raw)
         base.after_validation(:geocode, if: :address_type?)

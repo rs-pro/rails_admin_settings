@@ -1,7 +1,7 @@
 module RailsAdminSettings
   module Processing
     def text_type?
-      ['string', 'html', 'sanitized', 'email'].include? type
+      ['string', 'html', 'sanitized', 'email', 'address'].include? type
     end
 
     def html_type?

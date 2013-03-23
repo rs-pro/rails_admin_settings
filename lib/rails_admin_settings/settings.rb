@@ -1,18 +1,26 @@
 class Settings
   class << self
     def load!
-      unless @@loaded
+      if @@loaded
+        false
+      else
         @@settings = {}
         RailsAdminSettings::Setting.all.each do |setting|
           @@settings[setting.key] = setting
         end
         @@loaded = true
+        true
       end
     end
 
     def unload!
-      @@settings = {}
-      @@loaded = false
+      if @@loaded
+        @@settings = {}
+        @@loaded = false
+        true
+      else
+        false
+      end
     end
 
     # returns processed setting value
