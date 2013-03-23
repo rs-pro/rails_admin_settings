@@ -32,6 +32,14 @@ module RailsAdminSettings
             end
             field :raw do
               partial "setting_value"
+              visible do
+                !bindings[:object].file_type?
+              end
+            end
+            field :file do
+              visible do
+                bindings[:object].file_type?
+              end
             end
           end
         end

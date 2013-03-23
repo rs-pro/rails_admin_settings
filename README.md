@@ -30,6 +30,7 @@ Add this line to your application's Gemfile:
 - Put it after safe_yaml to get built-in support
 - Put it after validates_email_format_of to get built-in support
 - Put it after geocoder to get built-in support
+- Put it after carrierwave / paperclip to get built-in support
 
 And then execute:
 
@@ -67,7 +68,7 @@ Supported types:
     phone (requires russian_phone)
     email (requires validates_email_format_of)
     address (requires geocoder)
-
+    file (requires paperclip or carrierwave)
 
 Strings and html support following replacement patterns:
 

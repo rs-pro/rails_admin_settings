@@ -27,6 +27,13 @@ module RailsAdminSettings
         end
       end
 
+      base.validate if: :file_type? do
+        unless Settings.file_uploads_supported
+          raise '[rails_admin_settings] File type requires either CarrierWave or Paperclip. Check that rails_admin_settings is below them in Gemfile'
+        end
+      end
+
+
       if Object.const_defined?('Geocoder')
         base.field(:coordinates, type: Array, default: [])
         base.send(:include, Geocoder::Model::Mongoid)

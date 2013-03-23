@@ -1,4 +1,8 @@
 class Settings
+  cattr_accessor :file_uploads_supported, :file_uploads_engine
+  @@file_uploads_supported = false
+  @@file_uploads_engine = false
+
   class << self
     @@loaded = false
     @@settings = {}

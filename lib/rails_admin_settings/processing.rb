@@ -32,8 +32,14 @@ module RailsAdminSettings
       'sanitized' == type
     end
 
+    def file_type?
+      'file' == type
+    end
+
     def value
-      if raw.blank? || disabled?
+      if file_type?
+        file.url
+      elsif raw.blank? || disabled?
         default_value
       else
         processed_value
@@ -104,6 +110,7 @@ module RailsAdminSettings
     end
 
     def processed_value
+      puts "#{type} #{raw}"
       if text_type?
         process_text
       elsif integer_type?
@@ -112,7 +119,10 @@ module RailsAdminSettings
         load_yaml
       elsif phone_type?
         load_phone
+      elsif file_type?
+        file.url
       else
+        puts "[rails_admin_settings] Unknown field type: #{type}"
         nil
       end
     end
