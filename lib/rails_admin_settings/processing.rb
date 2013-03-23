@@ -110,7 +110,6 @@ module RailsAdminSettings
     end
 
     def processed_value
-      puts "#{type} #{raw}"
       if text_type?
         process_text
       elsif integer_type?
