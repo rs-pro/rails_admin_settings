@@ -56,4 +56,11 @@ describe 'Settings advanced usage' do
     Settings.dphone.formatted_area.should eq ''
     Settings.dphone.formatted_subscriber.should eq ''
   end
+
+  it 'should validate emails with email type' do
+    Settings.eml(type: 'email')
+    expect { Settings.eml = '1' }.to raise_error
+    Settings.eml = 'test@example.com'
+    Settings.eml.should eq 'test@example.com'
+  end
 end
