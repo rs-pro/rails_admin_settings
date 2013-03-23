@@ -2,3 +2,17 @@ ru:
   admin:
     settings:
       label: 'Settings'
+      no_ckeditor_detected: CKEditor not found &mdash; showing as text input
+      phone_invalid: Incorrect phone
+      email_invalid: Incorrect email
+      yaml_invalid: Incorrect YAML
+  mongoid:
+    models:
+      rails_admin_settings/setting: Settings
+
+    attributes:
+      rails_admin_settings/setting:
+        key: Key
+        raw: Value
+        type: Type
+

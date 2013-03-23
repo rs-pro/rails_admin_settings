@@ -10,7 +10,7 @@
     = form.text_area :raw, :value => field.value, :rows => 10, :cols => 80
 
     = javascript_include_tag "rich/base.js"
-    javascript:
+    :javascript
       var instance = CKEDITOR.instances['#{form.dom_id(field)}'];
       if(instance) { CKEDITOR.remove(instance); }
       CKEDITOR.replace('#{form.dom_id(field)}', #{Rich.options().to_json.html_safe});

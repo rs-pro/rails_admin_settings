@@ -33,8 +33,10 @@ module RailsAdminSettings
 
     index(key: 1)
 
-    if respond_to?(:rails_admin)
+    if Object.const_defined?('RailsAdmin')
       include RailsAdminSettings::RailsAdminConfig
+    else
+      puts "[rails_admin_settings] Rails Admin not detected -- put this gem after rails_admin in gemfile"
     end
   end
 end
