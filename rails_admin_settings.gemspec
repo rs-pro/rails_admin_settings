@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency "mongoid", '~> 3.1'
 
-  spec.add_development_dependency "bundler", "~> 1.3.4"
+  spec.add_development_dependency "bundler"
   spec.add_development_dependency "rake", "~> 10.0.3"
   spec.add_development_dependency "rspec", "~> 2.13.0"
   spec.add_development_dependency "mongoid-rspec", "~> 1.7.0"
