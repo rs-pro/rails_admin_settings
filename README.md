@@ -31,6 +31,7 @@ Add this line to your application's Gemfile:
 - Put it after validates_email_format_of to get built-in support
 - Put it after geocoder to get built-in support
 - Put it after carrierwave / paperclip to get built-in support
+- Put it after addressable to get built-in support
 
 And then execute:
 
@@ -69,6 +70,9 @@ Supported types:
     email (requires validates_email_format_of)
     address (requires geocoder)
     file (requires paperclip or carrierwave)
+    url (requires addressable)
+    domain (requires addressable)
+
 
 Strings and html support following replacement patterns:
 

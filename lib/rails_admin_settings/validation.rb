@@ -33,6 +33,17 @@ module RailsAdminSettings
         end
       end
 
+      base.before_validation if: :url_type? do
+        require_addressable do
+          self.raw = Addressable::URI.heuristic_parse(self.raw) unless self.raw.blank?
+        end
+      end
+
+      base.before_validation if: :domain_type? do
+        require_addressable do
+          self.raw = Addressable::URI.heuristic_parse(self.raw).host unless self.raw.blank?
+        end
+      end
 
       if Object.const_defined?('Geocoder')
         base.field(:coordinates, type: Array, default: [])

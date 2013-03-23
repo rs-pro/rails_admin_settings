@@ -1,7 +1,7 @@
 module RailsAdminSettings
   module Processing
     def text_type?
-      ['string', 'html', 'sanitized', 'email', 'address'].include? type
+      ['string', 'html', 'sanitized', 'email', 'address', 'url', 'domain'].include? type
     end
 
     def html_type?
@@ -34,6 +34,14 @@ module RailsAdminSettings
 
     def file_type?
       'file' == type
+    end
+
+    def url_type?
+      'url' == type
+    end
+
+    def domain_type?
+      'domain' == type
     end
 
     def value

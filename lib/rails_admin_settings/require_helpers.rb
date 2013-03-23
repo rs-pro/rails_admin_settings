@@ -51,6 +51,16 @@ module RailsAdminSettings
         raise e
       end
     end
+
+    def require_addressable
+      begin
+        require 'addressable/uri'
+        yield
+      rescue LoadError => e
+        e.message << " [rails_admin_settings] Please add gem 'addressable' to your Gemfile to use url/domain type settings"
+        raise e
+      end
+    end
   end
 end
 

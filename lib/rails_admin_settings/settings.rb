@@ -53,7 +53,7 @@ class Settings
       end
 
       if @@settings[key].nil?
-        @@settings[key] = RailsAdminSettings::Setting.create(options.merge(key: key, raw: value))
+        write_to_database(key, options.merge(key: key, raw: value))
       else
         @@settings[key].update_attributes!(options.merge(raw: value))
         @@settings[key]
@@ -97,19 +97,42 @@ class Settings
     def save_default(key, value, options = {})
       load!
       options.merge!(default: value)
-      create_setting(key, options) if @@settings[key].nil?
+      if @@settings[key].nil?
+        create_setting(key, options)
+      else
+        @@settings[key]
+      end
     end
 
     def create_setting(key, options = {})
       load!
       options.symbolize_keys!
       options[:raw] = options.delete(:default)
-      @@settings[key] = RailsAdminSettings::Setting.create!(options.merge(key: key)) if @@settings[key].nil?
+      if @@settings[key].nil?
+        write_to_database(key, options.merge(key: key))
+      else
+        @@settings[key]
+      end
     end
 
     # to satisfy rspec
     def to_ary
       ['Settings']
+    end
+
+    def write_to_database(key, options)
+      begin
+        @@settings[key] = RailsAdminSettings::Setting.create!(options)
+      rescue Mongoid::Errors::Validations => e
+        if @@settings[key].errors[:key].any?
+          @@settings[key] = RailsAdminSettings::Setting.where(key: key).first
+          @@settings[key].update_attributes!(options)
+        end
+
+        if @@settings[key].nil?
+          @@settings[key] = RailsAdminSettings::Setting.new(options)
+        end
+      end
     end
   end
 end

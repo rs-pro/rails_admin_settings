@@ -63,4 +63,10 @@ describe 'Settings advanced usage' do
     Settings.eml = 'test@example.com'
     Settings.eml.should eq 'test@example.com'
   end
+
+  it 'should process urls with url type' do
+    Settings.url(type: 'url')
+    Settings.url = 'test.ru'
+    Settings.url.should eq 'http://test.ru'
+  end
 end
