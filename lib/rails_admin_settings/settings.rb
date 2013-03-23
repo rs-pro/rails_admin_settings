@@ -1,5 +1,8 @@
 class Settings
   class << self
+    @@loaded = false
+    @@settings = {}
+
     def load!
       if @@loaded
         false
@@ -105,6 +108,4 @@ class Settings
       ['Settings']
     end
   end
-
-  self.unload!
 end
