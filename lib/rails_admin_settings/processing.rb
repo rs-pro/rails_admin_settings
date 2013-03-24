@@ -54,6 +54,16 @@ module RailsAdminSettings
       end
     end
 
+    def blank?
+      if file_type?
+        file.url.nil?
+      elsif raw.blank? || disabled?
+        true
+      else
+        false
+      end
+    end
+
     def to_s
       if yaml_type? || phone_type? || integer_type?
         raw

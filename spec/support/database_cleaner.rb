@@ -4,6 +4,7 @@ RSpec.configure do |config|
   end
   config.after :each do
     DatabaseCleaner.clean
+    Settings.destroy_all!
   end
 end
 

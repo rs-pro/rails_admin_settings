@@ -5,12 +5,16 @@ require 'spec_helper'
 describe Settings do
 
   it "should works as RailsSettings" do
+    Settings.destroy_all!
+
     email = "my@mail.ru"
     Settings.email = email
     Settings.email.should == email
   end
 
   it "should save default" do
+    Settings.destroy_all!
+
     email = "my@mail.ru"
     email2 = "my2@mail.ru"
     Settings.save_default(:email, email)

@@ -10,7 +10,7 @@ describe 'Settings advanced usage' do
   end
 
   it 'support html mode' do
-    Settings.get(:email, type: 'html').to_s.should eq 'test@example.com'
+    Settings.get(:email, type: 'html', default: 'test@example.com').to_s.should eq 'test@example.com'
   end
 
   it 'support integer mode' do

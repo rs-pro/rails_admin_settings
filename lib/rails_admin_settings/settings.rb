@@ -1,5 +1,5 @@
 class Settings
-  cattr_accessor :file_uploads_supported, :file_uploads_engine
+  cattr_accessor :file_uploads_supported, :file_uploads_engine, :settings
   @@file_uploads_supported = false
   @@file_uploads_engine = false
 
@@ -32,6 +32,8 @@ class Settings
 
     # returns processed setting value
     def method_missing(key, *args)
+      key = key.to_s
+
       if key[-1] == '='
         key = key[0..-2]
         options = args[1] || {}
@@ -96,16 +98,22 @@ class Settings
 
     def save_default(key, value, options = {})
       load!
+      key = key.to_s
       options.merge!(default: value)
       if @@settings[key].nil?
-        create_setting(key, options)
+        create_setting(key, options).val
       else
-        @@settings[key]
+        if @@settings[key].blank?
+          set(key, value).val
+        else
+          @@settings[key].val
+        end
       end
     end
 
     def create_setting(key, options = {})
       load!
+      key = key.to_s
       options.symbolize_keys!
       options[:raw] = options.delete(:default)
       if @@settings[key].nil?
@@ -120,19 +128,45 @@ class Settings
       ['Settings']
     end
 
+    def destroy(key)
+      raise 'please call destroy! to delete setting'
+    end
+
+    def destroy_all
+      raise 'please call destroy_all! to delete all settings'
+    end
+
+    def destroy!(key)
+      load!
+      key = key.to_s
+      unless @@settings[key].nil?
+        @@settings[key].destroy
+        @@settings.delete(key)
+      end
+    end
+
+    def destroy_all!
+      RailsAdminSettings::Setting.destroy_all
+      unload!
+    end
+
+
     def write_to_database(key, options)
-      begin
-        @@settings[key] = RailsAdminSettings::Setting.create!(options)
-      rescue Mongoid::Errors::Validations => e
+      key = key.to_s
+      @@settings[key] = RailsAdminSettings::Setting.create(options)
+      unless @@settings[key].persisted?
         if @@settings[key].errors[:key].any?
           @@settings[key] = RailsAdminSettings::Setting.where(key: key).first
-          @@settings[key].update_attributes!(options)
-        end
-
-        if @@settings[key].nil?
-          @@settings[key] = RailsAdminSettings::Setting.new(options)
+          if options[:raw].blank? && !@@settings[key].blank?
+            # do not update setting if it's not blank in DB and we want to make it blank
+          else
+            unless @@settings[key].update_attributes(options)
+              raise RailsAdminSettings::PersistenceException
+            end
+          end
         end
       end
+      @@settings[key]
     end
   end
 end

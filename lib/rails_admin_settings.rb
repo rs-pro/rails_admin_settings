@@ -1,6 +1,9 @@
 require "rails_admin_settings/version"
 
 module RailsAdminSettings
+  class PersistenceException < Exception
+  end
+
   autoload :Processing,       "rails_admin_settings/processing"
   autoload :Validation,       "rails_admin_settings/validation"
   autoload :RequireHelpers,   "rails_admin_settings/require_helpers"
