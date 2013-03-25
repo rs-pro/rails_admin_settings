@@ -51,8 +51,11 @@ Or install it yourself as:
 
     Settings.content_block_1(mode: 'html', default: 'test')
     Settings.data(mode: 'yaml')
-    Settings.enabled?(:data, type: 'phone') # also creates setting if it doesn't exist
     Settings.data = [1, 2, 3]
+    
+    Settings.enabled?(:phone, type: 'phone', default: '906 111-11-11') # also creates setting if it doesn't exist
+    Settings.phone.area
+    Settings.phone.subscriber
 
 See more here: https://github.com/rs-pro/rails_admin_settings/blob/master/spec/advanced_usage_spec.rb
 
