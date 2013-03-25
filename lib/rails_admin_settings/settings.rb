@@ -7,16 +7,6 @@ class Settings
     @@loaded = false
     @@settings = {}
 
-    def file_uploads_supported
-      load!
-      @@file_uploads_supported
-    end
-
-    def file_uploads_engine
-      load!
-      @@file_uploads_engine
-    end
-
     def load!
       if @@loaded
         false

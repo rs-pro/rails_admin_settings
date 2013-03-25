@@ -21,8 +21,9 @@ module RailsAdminSettings
 
     include RailsAdminSettings::RequireHelpers
     include RailsAdminSettings::Processing
-    include RailsAdminSettings::Validation
     include RailsAdminSettings::Uploads
+    include RailsAdminSettings::Validation
+
 
     def disabled?
       !enabled

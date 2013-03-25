@@ -36,9 +36,11 @@ module RailsAdminSettings
                 !bindings[:object].file_type?
               end
             end
-            field :file do
-              visible do
-                bindings[:object].file_type?
+            if Settings.file_uploads_supported
+              field :file, Settings.file_uploads_engine do
+                visible do
+                  bindings[:object].file_type?
+                end
               end
             end
           end
