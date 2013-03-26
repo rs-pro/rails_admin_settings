@@ -52,6 +52,10 @@ module RailsAdminSettings
         base.after_validation(:geocode, if: :address_type?)
       end
 
+      base.validate if: :color_type? do
+        base.validates_with(RailsAdminSettings::HexColorValidator, attributes: :raw)
+      end
+
       base.validate if: :yaml_type? do
         require_safe_yaml do
           unless raw.blank?

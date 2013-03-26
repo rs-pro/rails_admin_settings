@@ -6,6 +6,7 @@ ru:
       phone_invalid: Incorrect phone
       email_invalid: Incorrect email
       yaml_invalid: Incorrect YAML
+      color_invalid: Incorrect color
   mongoid:
     models:
       rails_admin_settings/setting: Settings

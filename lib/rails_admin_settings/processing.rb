@@ -1,47 +1,17 @@
 module RailsAdminSettings
   module Processing
+    RailsAdminSettings.types.each do |dtype|
+      define_method "#{dtype}_type?" do
+        dtype == type
+      end
+    end
+
     def text_type?
-      ['string', 'html', 'sanitized', 'email', 'address', 'url', 'domain'].include? type
+      (RailsAdminSettings.types - ['phone', 'integer', 'yaml']).include? type
     end
 
     def html_type?
       ['html', 'sanitized'].include? type
-    end
-
-    def integer_type?
-      'integer' == type
-    end
-
-    def yaml_type?
-      'yaml' == type
-    end
-
-    def email_type?
-      'email' == type
-    end
-
-    def phone_type?
-      'phone' == type
-    end
-
-    def address_type?
-      'address' == type
-    end
-
-    def sanitized_type?
-      'sanitized' == type
-    end
-
-    def file_type?
-      'file' == type
-    end
-
-    def url_type?
-      'url' == type
-    end
-
-    def domain_type?
-      'domain' == type
     end
 
     def value
