@@ -69,18 +69,15 @@ module RailsAdminSettings
     end
 
     def process_text
-      replacer = Proc.new do |m|
+      text = raw.dup
+      text.gsub!('{{year}}', Time.now.strftime('%Y'))
+      text.gsub! /\{\{year\|([\d]{4})\}\}/ do
         if Time.now.strftime('%Y') == $1
           $1
         else
           "#{$1}-#{Time.now.strftime('%Y')}"
         end
       end
-
-      text = raw.dup
-
-      text.gsub!('{{year}}', Time.now.strftime('%Y'))
-      text.gsub!(/\{\{year\|([\d]{4})\}\}/, &replacer)
       text = text.html_safe if html_type?
       text
     end
