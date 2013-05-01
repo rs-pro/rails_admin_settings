@@ -56,4 +56,5 @@ describe Settings do
     Settings.enabled?(:phone, type: 'phone').should eq true
     Settings.get(:phone).type.should eq 'phone'
   end
+
 end

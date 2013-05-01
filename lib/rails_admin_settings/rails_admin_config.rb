@@ -6,7 +6,7 @@ module RailsAdminSettings
           navigation_label I18n.t('admin.settings.label')
 
           object_label_method do
-            :key
+            :label
           end
 
           list do
@@ -15,14 +15,14 @@ module RailsAdminSettings
             else
               field :enabled
             end
-            field :key
+            field :label
             field :raw
             field :type
           end
 
           edit do
             field :enabled
-            field :key do
+            field :label do
               read_only true
               help false
             end

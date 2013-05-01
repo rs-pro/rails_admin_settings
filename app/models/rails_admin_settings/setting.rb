@@ -18,6 +18,7 @@ module RailsAdminSettings
 
     field :key, type: String
     field :raw, type: String, default: ''
+    field :label
 
     include RailsAdminSettings::RequireHelpers
     include RailsAdminSettings::Processing
@@ -31,6 +32,10 @@ module RailsAdminSettings
 
     def enabled?
       enabled
+    end
+
+    before_save do
+      self.label = self.key  unless self.label.present?
     end
 
     index(key: 1)

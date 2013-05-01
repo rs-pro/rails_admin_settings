@@ -168,5 +168,9 @@ class Settings
       end
       @@settings[key]
     end
+
+    def label key
+      get(key).label
+    end
   end
 end
