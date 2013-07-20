@@ -6,7 +6,7 @@ module RailsAdminSettings
       # carrierwave
       if base.respond_to?(:mount_uploader)
         # puts "[rails_admin_settings] CarrierWave detected"
-        base.field(:file, type: String)
+        # base.field(:file, type: String)
         base.mount_uploader(:file, RailsAdminSettings::Uploads::CarrierWave)
         Settings.file_uploads_supported = true
         Settings.file_uploads_engine = :carrierwave
