@@ -10,8 +10,8 @@ module RailsAdminSettings
       include ::Mongoid::Audit::Trackable
       track_history track_create: true, track_destroy: true
     end
-
-    field :enabled, type: Boolean, default: true
+    
+    field :enabled, type: Mongoid::VERSION.to_i < 4 ? Boolean : Mongoid::Boolean, default: true
     scope :enabled, where(enabled: true)
 
     field :type, type: String, default: RailsAdminSettings.types.first
