@@ -4,6 +4,7 @@ en:
       label: 'Settings'
       no_ckeditor_detected: CKEditor not found &mdash; showing as text input
       phone_invalid: Incorrect phone
+      phones_invalid: "Incorrect phone: %{phones}"
       email_invalid: Incorrect email
       yaml_invalid: Incorrect YAML
       color_invalid: Incorrect color

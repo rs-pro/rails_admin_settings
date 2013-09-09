@@ -15,6 +15,18 @@ module RailsAdminSettings
         end
       end
 
+      base.validate if: :phones_type? do
+        require_russian_phone do
+          unless raw.blank?
+            invalid_phones = raw.gsub("\r", '').split("\n").inject([]) do |memo, value|
+              memo << value unless RussianPhone::Number.new(value).valid?
+              memo
+            end
+            errors.add(:raw, I18n.t('admin.settings.phones_invalid', phones: invalid_phones * ', ')) unless invalid_phones.empty?
+          end
+        end
+      end
+
       base.validate if: :email_type? do
         require_validates_email_format_of do
           errors.add(:raw, I18n.t('admin.settings.email_invalid')) unless raw.blank? || ValidatesEmailFormatOf.validate_email_format(raw).nil?

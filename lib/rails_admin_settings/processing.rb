@@ -7,7 +7,7 @@ module RailsAdminSettings
     end
 
     def text_type?
-      (RailsAdminSettings.types - ['phone', 'integer', 'yaml']).include? type
+      (RailsAdminSettings.types - ['phone', 'phones', 'integer', 'yaml']).include? type
     end
 
     def html_type?
@@ -53,7 +53,7 @@ module RailsAdminSettings
     def default_value
       if html_type?
         ''.html_safe
-      elsif text_type?
+      elsif text_type? || phones_type?
         ''
       elsif integer_type?
         0
@@ -88,6 +88,12 @@ module RailsAdminSettings
       end
     end
 
+    def load_phones
+      require_russian_phone do
+        raw.gsub("\r", '').split("\n").map{|i| RussianPhone::Number.new(i)}
+      end
+    end
+
     def load_yaml
       require_safe_yaml do
         YAML.safe_load(raw)
@@ -103,6 +109,8 @@ module RailsAdminSettings
         load_yaml
       elsif phone_type?
         load_phone
+      elsif phones_type?
+        load_phones
       elsif file_type?
         file.url
       else
