@@ -2,7 +2,7 @@ module RailsAdminSettings
   module Validation
     def self.included(base)
       base.before_validation do
-        self.raw = default_value if raw.blank?
+        self.raw = default_serializable_value if raw.blank?
       end
       base.before_validation :sanitize_value, if: :sanitized_type?
       base.validates_uniqueness_of :key

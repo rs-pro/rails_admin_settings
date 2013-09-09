@@ -53,7 +53,7 @@ module RailsAdminSettings
     def default_value
       if html_type?
         ''.html_safe
-      elsif text_type? || phones_type?
+      elsif text_type?
         ''
       elsif integer_type?
         0
@@ -63,8 +63,18 @@ module RailsAdminSettings
         require_russian_phone do
           RussianPhone::Number.new('')
         end
+      elsif phones_type?
+        []
       else
         nil
+      end
+    end
+
+    def default_serializable_value
+      if phones_type?
+        ''
+      else
+        default_value
       end
     end
 
