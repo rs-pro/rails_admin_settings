@@ -25,7 +25,6 @@ module RailsAdminSettings
     include RailsAdminSettings::Uploads
     include RailsAdminSettings::Validation
 
-
     def disabled?
       !enabled
     end

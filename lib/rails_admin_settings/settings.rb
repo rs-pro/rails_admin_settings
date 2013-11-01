@@ -1,32 +1,39 @@
+require 'thread'
+
 class Settings
   cattr_accessor :file_uploads_supported, :file_uploads_engine, :settings
   @@file_uploads_supported = false
   @@file_uploads_engine = false
+  @@mutex = Mutex.new
 
   class << self
     @@loaded = false
     @@settings = {}
 
     def load!
-      if @@loaded
-        false
-      else
-        @@settings = {}
-        RailsAdminSettings::Setting.all.each do |setting|
-          @@settings[setting.key] = setting
+      @@mutex.synchronize do
+        if @@loaded
+          false
+        else
+          @@settings = {}
+          RailsAdminSettings::Setting.all.each do |setting|
+            @@settings[setting.key] = setting
+          end
+          @@loaded = true
+          true
         end
-        @@loaded = true
-        true
       end
     end
 
     def unload!
-      if @@loaded
-        @@settings = {}
-        @@loaded = false
-        true
-      else
-        false
+      @@mutex.synchronize do
+        if @@loaded
+          @@settings = {}
+          @@loaded = false
+          true
+        else
+          false
+        end
       end
     end
 
@@ -54,12 +61,29 @@ class Settings
         value = value.to_yaml
       end
 
-      if @@settings[key].nil?
-        write_to_database(key, options.merge(key: key, raw: value))
+      is_file = !options[:type].nil? && (options[:type] == 'image' || options[:type] == 'file')
+      if is_file
+        options[:raw] = ''
       else
-        @@settings[key].update_attributes!(options.merge(raw: value))
-        @@settings[key]
+        options[:raw] = value
       end
+
+      if @@settings[key].nil?
+        write_to_database(key, options.merge(key: key))
+      else
+        @@mutex.synchronize do
+          @@settings[key].update_attributes!(options)
+        end
+      end
+
+      if is_file
+        @@mutex.synchronize do
+          @@settings[key].file = value
+          @@settings[key].save!
+        end
+      end
+
+      @@settings[key]
     end
 
     def valid_yaml?(value)
@@ -100,6 +124,7 @@ class Settings
       load!
       key = key.to_s
       options.merge!(default: value)
+
       if @@settings[key].nil?
         create_setting(key, options).val
       else
@@ -116,6 +141,7 @@ class Settings
       key = key.to_s
       options.symbolize_keys!
       options[:raw] = options.delete(:default)
+
       if @@settings[key].nil?
         write_to_database(key, options.merge(key: key))
       else
@@ -139,9 +165,12 @@ class Settings
     def destroy!(key)
       load!
       key = key.to_s
-      unless @@settings[key].nil?
-        @@settings[key].destroy
-        @@settings.delete(key)
+
+      @@mutex.synchronize do
+        unless @@settings[key].nil?
+          @@settings[key].destroy
+          @@settings.delete(key)
+        end
       end
     end
 
@@ -153,20 +182,23 @@ class Settings
 
     def write_to_database(key, options)
       key = key.to_s
-      @@settings[key] = RailsAdminSettings::Setting.create(options)
-      unless @@settings[key].persisted?
-        if @@settings[key].errors[:key].any?
-          @@settings[key] = RailsAdminSettings::Setting.where(key: key).first
-          if options[:raw].blank? && !@@settings[key].blank?
-            # do not update setting if it's not blank in DB and we want to make it blank
-          else
-            unless @@settings[key].update_attributes(options)
-              raise RailsAdminSettings::PersistenceException
+
+      @@mutex.synchronize do
+        @@settings[key] = RailsAdminSettings::Setting.create(options)
+        unless @@settings[key].persisted?
+          if @@settings[key].errors[:key].any?
+            @@settings[key] = RailsAdminSettings::Setting.where(key: key).first
+            if options[:raw].blank? && !@@settings[key].blank?
+              # do not update setting if it's not blank in DB and we want to make it blank
+            else
+              unless @@settings[key].update_attributes(options)
+                raise RailsAdminSettings::PersistenceException
+              end
             end
           end
         end
+        @@settings[key]
       end
-      @@settings[key]
     end
 
     def label key

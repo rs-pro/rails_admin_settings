@@ -34,4 +34,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "validates_email_format_of", "~> 1.5.3"
   spec.add_development_dependency "geocoder", "~> 1.1.6"
   spec.add_development_dependency "addressable", "~> 2.3.3"
+
+  spec.add_development_dependency "glebtv-carrierwave-mongoid"
+  spec.add_development_dependency "glebtv-mongoid-paperclip"
 end

@@ -10,13 +10,21 @@ module RailsAdminSettings
       (RailsAdminSettings.types - ['phone', 'integer', 'yaml']).include? type
     end
 
+    def upload_type?
+      ['file', 'image'].include? type
+    end
+
     def html_type?
       ['html', 'sanitized'].include? type
     end
 
     def value
-      if file_type?
-        file.url
+      if upload_type?
+        if file?
+          file.url
+        else
+          nil
+        end
       elsif raw.blank? || disabled?
         default_value
       else

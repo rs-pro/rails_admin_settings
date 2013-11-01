@@ -1,5 +1,20 @@
 language: ruby
 services: mongodb
+
+notifications:
+  email: false
+
 rvm:
   - 1.9.3
+  - 2.0.0
+  - jruby-19mode
 
+env:
+- "UPLOADS=paperclip"
+- "UPLOADS=carrierwave"
+
+gemfile:
+  - Gemfile
+  - gemfiles/mongoid-3.0.gemfile
+  - gemfiles/mongoid-3.1.gemfile
+  - gemfiles/mongoid-4.0.gemfile
