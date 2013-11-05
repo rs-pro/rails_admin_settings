@@ -10,11 +10,10 @@ rvm:
   - jruby-19mode
 
 env:
-- "UPLOADS=paperclip"
-- "UPLOADS=carrierwave"
+  - "UPLOADS=paperclip"
+  - "UPLOADS=carrierwave"
 
 gemfile:
   - Gemfile
-  - gemfiles/mongoid-3.0.gemfile
   - gemfiles/mongoid-3.1.gemfile
   - gemfiles/mongoid-4.0.gemfile
