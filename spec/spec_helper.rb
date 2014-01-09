@@ -12,6 +12,16 @@ require 'database_cleaner'
 require 'factory_girl'
 require 'mongoid-rspec'
 
+require "glebtv-mongoid-paperclip" if ENV['UPLOADS'] == 'paperclip'
+if ENV['UPLOADS'] == 'carrierwave'
+  require "glebtv-carrierwave-mongoid"
+  CarrierWave.configure do |config|
+    config.asset_host = proc do |file|
+      "http://localhost"
+    end
+  end
+end
+
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each do |f|
   require f
 end

@@ -15,7 +15,11 @@ module RailsAdminSettings
         base.send(:include, Mongoid::Paperclip)
         # puts "[rails_admin_settings] PaperClip detected"
         base.field(:file, type: String)
-        base.has_mongoid_attached_file(:file)
+        if defined?(Rails)
+          base.has_mongoid_attached_file(:file)
+        else
+          base.has_mongoid_attached_file(:file, path: "#{File.dirname(__FILE__)}/../../uploads/:filename", url: '/uploads/:filename')
+        end
         base.send(:attr_accessor, :delete_file)
         base.before_validation { self.file.clear if self.delete_file == '1' }
 
