@@ -12,7 +12,7 @@ module RailsAdminSettings
     end
     
     field :enabled, type: Mongoid::VERSION.to_i < 4 ? Boolean : Mongoid::Boolean, default: true
-    scope :enabled, where(enabled: true)
+    scope :enabled, -> { where(enabled: true) }
 
     field :type, type: String, default: RailsAdminSettings.types.first
 
