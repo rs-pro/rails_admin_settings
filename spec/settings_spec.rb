@@ -2,14 +2,25 @@
 
 require 'spec_helper'
 
-describe Settings do
-
+describe 'Settings' do
   it "should works as RailsSettings" do
     Settings.destroy_all!
 
     email = "my@mail.ru"
     Settings.email = email
     Settings.email.should == email
+  end
+
+  it '#get should return new setting when setting does not exist' do
+    t = Settings.get(:test)
+    t.class.name.should eq 'RailsAdminSettings::Setting'
+    t.persisted?.should eq true
+    t.value.should eq ''
+  end
+
+  it '#name should return empty string when setting does not exist' do
+    Settings.test.should eq ''
+    Settings['test'].value.should eq ''
   end
 
   it "should save default" do
@@ -26,7 +37,6 @@ describe Settings do
   end
 
   it 'should properly unload' do
-    Settings.class_eval { cattr_accessor :loaded }
     Settings.load!
     Settings.loaded.should eq true
     Settings.unload!
@@ -34,7 +44,6 @@ describe Settings do
   end
 
   it 'should properly store settings to DB' do
-    Settings.class_eval { cattr_accessor :loaded }
     Settings.unload!
     Settings.loaded.should eq false
     Settings.temp = '123'

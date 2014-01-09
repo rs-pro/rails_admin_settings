@@ -8,6 +8,9 @@ module RailsAdminSettings
           after_filter { Settings.unload! }
         end
       end
+
+      RailsAdminSettings::Setting.where(:ns.exists => false).update_all(ns: 'main')
+      Settings.apply_defaults!(Rails.root.join('config/settings.yml'))
     end
   end
 end

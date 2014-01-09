@@ -5,7 +5,7 @@ module RailsAdminSettings
         self.raw = default_value if raw.blank?
       end
       base.before_validation :sanitize_value, if: :sanitized_type?
-      base.validates_uniqueness_of :key
+      base.validates_uniqueness_of :key, scope: :ns
       base.validates_inclusion_of :type, in: RailsAdminSettings.types
       base.validates_numericality_of :raw, if: :integer_type?
 
@@ -52,9 +52,7 @@ module RailsAdminSettings
         base.after_validation(:geocode, if: :address_type?)
       end
 
-      base.validate if: :color_type? do
-        base.validates_with(RailsAdminSettings::HexColorValidator, attributes: :raw)
-      end
+      base.validates_with(RailsAdminSettings::HexColorValidator, attributes: :raw, if: :color_type?)
 
       base.validate if: :yaml_type? do
         require_safe_yaml do

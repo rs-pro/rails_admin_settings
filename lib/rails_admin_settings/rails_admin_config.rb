@@ -5,19 +5,16 @@ module RailsAdminSettings
         base.rails_admin do
           navigation_label I18n.t('admin.settings.label')
 
-          object_label_method do
-            :label
-          end
-
           list do
             if Object.const_defined?('RailsAdminToggleable')
               field :enabled, :toggle
             else
               field :enabled
             end
-            field :label
-            field :raw
             field :type
+            field :ns
+            field :name
+            field :raw
           end
 
           edit do

@@ -29,6 +29,11 @@ describe "Uploads" do
 
       File.exists?("#{File.dirname(__FILE__)}/../uploads/1024x768.gif").should be_true
     end
+
+    it 'supports defaults' do
+      Settings.apply_defaults!(File.join(File.dirname(__FILE__), 'support/defaults_w_file.yml'))
+      File.exists?(Settings.root_file_path.join("uploads/1024x768.gif")).should be_true
+    end
   end
 end
 

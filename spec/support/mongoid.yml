@@ -1,7 +1,7 @@
 test:
   sessions:
     default:
-      database: mongoid-history
+      database: rails_admin_settings
       hosts:
         - localhost:27017
       options:

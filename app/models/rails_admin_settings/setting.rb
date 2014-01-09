@@ -16,9 +16,14 @@ module RailsAdminSettings
 
     field :type, type: String, default: RailsAdminSettings.types.first
 
+    field :ns, type: String, default: 'main'
     field :key, type: String
-    field :raw, type: String, default: ''
-    field :label
+    index({ns: 1, key: 1}, {unique: true, sparse: true})
+
+    field :raw, type: String
+    field :label, type: String
+
+    scope :ns, ->(ns) { where(ns: ns) }
 
     include RailsAdminSettings::RequireHelpers
     include RailsAdminSettings::Processing
@@ -33,11 +38,28 @@ module RailsAdminSettings
       enabled
     end
 
-    before_save do
-      self.label = self.key  unless self.label.present?
+    def name
+      label.blank? ? key : label
     end
 
-    index(key: 1)
+    def to_path
+      if value.nil?
+        nil
+      else
+        URI.parse(value).path
+      end
+    end
+
+    def as_yaml(options = {})
+      v = {type: type, enabled: enabled, label: label}
+      if upload_type?
+        v[:value] = to_path
+      else
+        v[:value] = raw
+      end
+      v.stringify_keys!
+      v
+    end
 
     if Object.const_defined?('RailsAdmin')
       include RailsAdminSettings::RailsAdminConfig

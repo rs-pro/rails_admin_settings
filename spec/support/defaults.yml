@@ -1,0 +1,15 @@
+main:
+  footer:
+    type: html
+    value: 'test <b></b>'
+
+  phone:
+    type: 'phone'
+    value: '906 1111111'
+  
+  disabled:
+    enabled: false
+  
+other:
+  footer:
+    value: 'zzz'
