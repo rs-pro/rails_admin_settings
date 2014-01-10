@@ -163,6 +163,7 @@ module RailsAdminSettings
       end
 
       options.delete(:value)
+      options.delete(:default)
       options[:ns] = @name
 
       if @settings[key].nil?

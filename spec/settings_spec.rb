@@ -43,6 +43,12 @@ describe 'Settings' do
     Settings.loaded.should eq false
   end
 
+  it 'should work with type and default' do
+    Settings.phone(type: 'phone', default: '906 111 11 11').should eq '+7 (906) 111-11-11'
+    Settings.phone = '906 222 22 22'
+    Settings.phone(type: 'phone', default: '906 111 11 11').should eq '+7 (906) 222-22-22'
+  end
+  
   it 'should properly store settings to DB' do
     Settings.unload!
     Settings.loaded.should eq false
