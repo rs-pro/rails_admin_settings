@@ -4,5 +4,3 @@ test:
       database: rails_admin_settings
       hosts:
         - localhost:27017
-      options:
-        consistency: :strong
