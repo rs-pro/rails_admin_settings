@@ -10,11 +10,15 @@ ru:
   mongoid:
     models:
       rails_admin_settings/setting: Настройки
-
     attributes:
       rails_admin_settings/setting:
-        label: Название
+        c_at: Создано
+        u_at: Обновлено
+        enabled: Включено
+        ns: Группа
+        name: Название
         key: Ключ
         raw: Значение
         type: Тип
+        label: Подпись
 

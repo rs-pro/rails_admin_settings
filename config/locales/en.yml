@@ -10,10 +10,15 @@ en:
   mongoid:
     models:
       rails_admin_settings/setting: Settings
-
     attributes:
       rails_admin_settings/setting:
+        c_at: Created
+        u_at: Updated
+        enabled: Enabled
+        ns: Group
+        name: Name
         key: Key
         raw: Value
         type: Type
+        label: Label
 
