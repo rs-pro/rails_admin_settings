@@ -13,29 +13,24 @@ class Settings < BasicObject
   @@ns_default = 'main'
   @@ns_fallback = nil
 
-
+  cattr_reader :mutex
 
   class << self
     def ns(name, options = {})
       options.symbolize_keys!
-      if name.nil? || name == 'main'
+      if name.nil? || name == Settings.ns_default
         name = @@ns_default.to_s
-        options[:fallback] = @@ns_fallback.to_s
       else
         name = name.to_s
       end
       @@mutex.synchronize do
         @@namespaces[name] ||= ::RailsAdminSettings::Namespaced.new(name.to_s)
       end
-      if options[:fallback].nil?
-        @@namespaces[name]
-      else
-        ::RailsAdminSettings::Fallback.new(@@namespaces[name], options[:fallback])
-      end
+      ::RailsAdminSettings::Fallback.new(@@namespaces[name], options[:fallback])
     end
 
     def get_default_ns
-      ns(@@ns_default, fallback: @@ns_fallback)
+      ns(nil, fallback: @@ns_fallback)
     end
 
     def unload!
@@ -85,22 +80,12 @@ class Settings < BasicObject
 
     def get(key, options = {})
       options.symbolize_keys!
-
-      if options[:ns].nil? || options[:ns].to_s == 'main'
-        get_default_ns.get(key, options)
-      else
-        ns(options[:ns]).get(key, options)
-      end
+      ns(options[:ns], options).get(key, options)
     end
 
     def set(key, value = nil, options = {})
       options.symbolize_keys!
-
-      if options[:ns].nil? || options[:ns].to_s == 'main'
-        get_default_ns.set(key, value, options)
-      else
-        ns(options[:ns]).set(key, value, options)
-      end
+      ns(options[:ns], options).set(key, value, options)
     end
 
     def save_default(key, value, options = {})

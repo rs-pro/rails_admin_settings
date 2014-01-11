@@ -3,11 +3,12 @@ module RailsAdminSettings
   # Kernel or Object
   class Namespaced < BasicObject
     attr_accessor :settings, :fallback
-    attr_reader :loaded, :mutex
+    attr_reader :loaded, :mutex, :ns_mutex, :name
 
     def initialize(name)
       self.settings = {}
       @mutex = ::Mutex.new
+      @ns_mutex = ::Mutex.new
       @loaded = false
       @locked = false
       @name = name
@@ -49,7 +50,7 @@ module RailsAdminSettings
         @locked = true
         v = @settings[key]
         if v.nil?
-          unless @fallback.nil?
+          unless @fallback.nil? || @fallback == @name
             v = ::Settings.ns(@fallback).getnc(key)
           end
           if v.nil?

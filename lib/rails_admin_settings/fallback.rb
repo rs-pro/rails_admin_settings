@@ -12,8 +12,10 @@ module RailsAdminSettings
     end
 
     def method_missing(*args)
-      @ns.fallback = @fb
-      @ns.__send__(*args)
+      @ns.ns_mutex.synchronize do
+        @ns.fallback = @fb
+        @ns.__send__(*args)
+      end
     end
   end
 end

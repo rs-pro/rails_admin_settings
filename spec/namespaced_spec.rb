@@ -38,4 +38,13 @@ describe 'Namespaced settings' do
     ns.get(:phone).val.city.should eq '906'
     ns.get(:phone).val.formatted_subscriber.should eq '111-11-11'
   end
+
+  it 'works with custom defaults' do
+    Settings.ns_default = 'hitfood'
+    Settings.ns_fallback = 'main'
+    Settings.test.should eq ''
+    Settings.test = 'zzz'
+    Settings.get(:test, ns: 'hitfood').raw.should eq 'zzz'
+    Settings.get(:test, ns: 'main').raw.should eq ''
+  end
 end
