@@ -43,6 +43,32 @@ describe 'Settings loading defaults' do
     Settings.ns(:etc, fallback: :other).footer.should eq 'zzz'
   end
 
+  it 'works with custom default namespace' do
+    Settings.ns_default = 'other'
+    Settings.ns_fallback = 'other'
+    Settings.ns(:main).phone.should eq '906 1111111'
+    Settings.ns(:other).footer.should eq 'zzz'
+    Settings.ns(:main).footer.should eq 'test <b></b>'
+    Settings.footer.should eq 'zzz'
+
+    Settings.ns(:etc, fallback: :main).phone.should eq '906 1111111'
+    Settings.ns(:etc, fallback: :main).footer.should eq 'test <b></b>'
+    Settings.ns(:other, fallback: :main).footer.should eq 'zzz'
+    Settings.ns(:etc, fallback: :other).footer.should eq 'zzz'
+
+    Settings.ns_default = :etc
+    Settings.ns_fallback = :main
+    Settings.phone.should eq '906 1111111'
+    Settings.footer.should eq 'test <b></b>'
+
+    Settings.ns_fallback = :other
+    Settings.footer.should eq 'zzz'
+
+    Settings.ns_default = :other
+    Settings.ns_fallback = :main
+    Settings.footer.should eq 'zzz'
+  end
+
   it "doesn't overwrite" do
     Settings.ns(:main).phone = '906 2222222'
     Settings.ns(:other).footer = 'xxx'

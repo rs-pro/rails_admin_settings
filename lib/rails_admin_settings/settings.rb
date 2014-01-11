@@ -9,11 +9,18 @@ class Settings < BasicObject
   @@namespaces = {}
   @@mutex = ::Mutex.new
 
+  cattr_accessor :ns_default, :ns_fallback
+  @@ns_default = 'main'
+  @@ns_fallback = nil
+
+
+
   class << self
     def ns(name, options = {})
       options.symbolize_keys!
-      if name.nil?
-        name = 'main'
+      if name.nil? || name == 'main'
+        name = @@ns_default.to_s
+        options[:fallback] = @@ns_fallback.to_s
       else
         name = name.to_s
       end
@@ -27,10 +34,16 @@ class Settings < BasicObject
       end
     end
 
+    def get_default_ns
+      ns(@@ns_default, fallback: @@ns_fallback)
+    end
+
     def unload!
       @@mutex.synchronize do
         @@namespaces.values.map(&:unload!)
         @@namespaces = {}
+        @@ns_default = 'main'
+        @@ns_fallback = nil
       end
     end
 
@@ -74,7 +87,7 @@ class Settings < BasicObject
       options.symbolize_keys!
 
       if options[:ns].nil? || options[:ns].to_s == 'main'
-        ns('main').get(key, options)
+        get_default_ns.get(key, options)
       else
         ns(options[:ns]).get(key, options)
       end
@@ -84,7 +97,7 @@ class Settings < BasicObject
       options.symbolize_keys!
 
       if options[:ns].nil? || options[:ns].to_s == 'main'
-        ns('main').set(key, value, options)
+        get_default_ns.set(key, value, options)
       else
         ns(options[:ns]).set(key, value, options)
       end
@@ -99,7 +112,7 @@ class Settings < BasicObject
     end
 
     def method_missing(*args)
-      ns('main').__send__(*args)
+      get_default_ns.__send__(*args)
     end
   end
 end
