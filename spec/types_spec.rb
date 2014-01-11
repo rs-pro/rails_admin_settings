@@ -30,6 +30,19 @@ describe 'Settings types' do
     Settings.get(:tphone).val.formatted_subscriber.should eq '111-11-11'
   end
 
+  it 'supports phones type' do
+    Settings.set(:tphone, ['906 111 11 11', '907 111 11 11'] * "\n", type: 'phones')
+    Settings.get(:tphone).val.class.name.should eq 'Array'
+    Settings.tphone.class.name.should eq 'Array'
+    Settings.get(:tphone).val.first.class.name.should eq 'RussianPhone::Number'
+    Settings.tphone.first.class.name.should eq 'RussianPhone::Number'
+    Settings.tphone.first.should eq '906 111 11 11'
+    Settings.get(:tphone).phones_type?.should be_true
+    Settings.get(:tphone).val.first.city.should eq '906'
+    Settings.get(:tphone).val.last.city.should eq '907'
+    Settings.get(:tphone).val.first.formatted_subscriber.should eq '111-11-11'
+  end
+
   it 'defaults for phone' do
     Settings.dphone(type: 'phone')
     Settings.get(:dphone).phone_type?.should be_true

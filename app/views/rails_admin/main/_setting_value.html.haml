@@ -2,7 +2,7 @@
   = form.text_field :raw, :value => field.value
 - if @object.type == 'color'
   = form.text_field :raw, :value => field.value, 'data-color' => true, style: "background-color: ##{field.value}"
-- elsif @object.type == 'text' || @object.type == 'yaml'
+- elsif %w(text yaml phones).include?( @object.type )
   = form.text_area :raw, :value => field.value, :rows => 10, :cols => 80
 - elsif @object.type == 'html'
   - if form.respond_to?(:cktext_area)

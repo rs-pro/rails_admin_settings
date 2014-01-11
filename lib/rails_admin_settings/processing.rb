@@ -7,7 +7,7 @@ module RailsAdminSettings
     end
 
     def text_type?
-      (RailsAdminSettings.types - ['phone', 'integer', 'yaml']).include? type
+      (RailsAdminSettings.types - ['phone', 'phones', 'integer', 'yaml']).include? type
     end
 
     def upload_type?
@@ -71,8 +71,18 @@ module RailsAdminSettings
         require_russian_phone do
           RussianPhone::Number.new('')
         end
+      elsif phones_type?
+        []
       else
         nil
+      end
+    end
+
+    def default_serializable_value
+      if phones_type?
+        ''
+      else
+        default_value
       end
     end
 
@@ -96,6 +106,12 @@ module RailsAdminSettings
       end
     end
 
+    def load_phones
+      require_russian_phone do
+        raw.gsub("\r", '').split("\n").map{|i| RussianPhone::Number.new(i)}
+      end
+    end
+
     def load_yaml
       require_safe_yaml do
         YAML.safe_load(raw)
@@ -111,6 +127,8 @@ module RailsAdminSettings
         load_yaml
       elsif phone_type?
         load_phone
+      elsif phones_type?
+        load_phones
       elsif file_type?
         file.url
       else

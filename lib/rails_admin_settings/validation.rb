@@ -2,7 +2,7 @@ module RailsAdminSettings
   module Validation
     def self.included(base)
       base.before_validation do
-        self.raw = default_value if raw.blank?
+        self.raw = default_serializable_value if raw.blank?
       end
       base.before_validation :sanitize_value, if: :sanitized_type?
       base.validates_uniqueness_of :key, scope: :ns
@@ -12,6 +12,18 @@ module RailsAdminSettings
       base.validate if: :phone_type? do
         require_russian_phone do
           errors.add(:raw, I18n.t('admin.settings.phone_invalid')) unless raw.blank? || RussianPhone::Number.new(raw).valid?
+        end
+      end
+
+      base.validate if: :phones_type? do
+        require_russian_phone do
+          unless raw.blank?
+            invalid_phones = raw.gsub("\r", '').split("\n").inject([]) do |memo, value|
+              memo << value unless RussianPhone::Number.new(value).valid?
+              memo
+            end
+            errors.add(:raw, I18n.t('admin.settings.phones_invalid', phones: invalid_phones * ', ')) unless invalid_phones.empty?
+          end
         end
       end
 

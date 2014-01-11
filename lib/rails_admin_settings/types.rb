@@ -7,6 +7,7 @@ module RailsAdminSettings
       'sanitized',
       'yaml',
       'phone',
+      'phones',
       'email',
       'address',
       'file',
