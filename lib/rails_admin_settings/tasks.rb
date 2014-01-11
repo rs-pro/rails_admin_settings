@@ -12,8 +12,12 @@ namespace :settings do
   end
 
   desc "Dump settings to config/settings.yml"
-  task :dump => ['settings:require'] do
-    path = Settings.root_file_path.join('config/settings.yml')
+  task :dump, [:as_env] => ['settings:require'] do |t, args|
+    if args.empty?
+      path = Settings.root_file_path.join('config/settings.yml')
+    else
+      path = Settings.root_file_path.join("config/settings.#{args[:as_env]}.yml")
+    end
     RailsAdminSettings::Dumper.dump(path)
     puts "dumped settings to #{path}"
   end

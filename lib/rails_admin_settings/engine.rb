@@ -10,6 +10,7 @@ module RailsAdminSettings
       end
 
       RailsAdminSettings::Setting.where(:ns.exists => false).update_all(ns: 'main')
+      Settings.apply_defaults!(Rails.root.join("config/settings.#{Rails.env.to_s}.yml"))
       Settings.apply_defaults!(Rails.root.join('config/settings.yml'))
     end
   end
