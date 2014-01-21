@@ -13,7 +13,7 @@ namespace :settings do
 
   desc "Dump settings to config/settings.yml; use rake settings:dump[production] to create env-specific template"
   task :dump, [:as_env] => ['settings:require'] do |t, args|
-    if args.empty?
+    if args.empty? || args[:as_env].blank?
       path = Settings.root_file_path.join('config/settings.yml')
     else
       path = Settings.root_file_path.join("config/settings.#{args[:as_env]}.yml")
