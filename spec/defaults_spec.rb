@@ -47,6 +47,8 @@ describe 'Settings loading defaults' do
     Settings.ns_default = 'other'
     Settings.ns_fallback = 'other'
     Settings.ns(:main).phone.should eq '906 1111111'
+    Settings.ns(:main).true_setting.should be_true
+    Settings.ns(:main).false_setting.should be_false
     Settings.ns(:other).footer.should eq 'zzz'
     Settings.ns(:main).footer.should eq 'test <b></b>'
     Settings.footer.should eq 'zzz'

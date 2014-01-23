@@ -7,7 +7,7 @@ module RailsAdminSettings
     end
 
     def text_type?
-      (RailsAdminSettings.types - ['phone', 'phones', 'integer', 'yaml']).include? type
+      (RailsAdminSettings.types - ['phone', 'phones', 'integer', 'yaml', 'boolean']).include? type
     end
 
     def upload_type?
@@ -16,6 +16,10 @@ module RailsAdminSettings
 
     def html_type?
       ['html', 'sanitized'].include? type
+    end
+
+    def boolean_type?
+      type == 'boolean'
     end
 
     def value
@@ -65,6 +69,8 @@ module RailsAdminSettings
         ''
       elsif integer_type?
         0
+      elsif boolean_type?
+        false
       elsif yaml_type?
         nil
       elsif phone_type?
@@ -81,6 +87,8 @@ module RailsAdminSettings
     def default_serializable_value
       if phones_type?
         ''
+      elsif boolean_type?
+        'false'
       else
         default_value
       end
@@ -123,6 +131,8 @@ module RailsAdminSettings
         process_text
       elsif integer_type?
         raw.to_i
+      elsif boolean_type?
+        raw == 'true'
       elsif yaml_type?
         load_yaml
       elsif phone_type?

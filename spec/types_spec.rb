@@ -3,6 +3,15 @@
 require 'spec_helper'
 
 describe 'Settings types' do
+  it 'boolean' do
+    Settings.get(:testbool, type: 'boolean').value.should be_false
+    Settings.get(:testbool, default: true, type: 'boolean').value.should be_false
+    Settings.get(:testbool2, default: true, type: 'boolean').value.should be_true
+    Settings.testbool2.should be_true
+    Settings.set(:testbool3, true, type: 'boolean')
+    Settings.testbool3.should be_true
+  end
+
   it 'html' do
     Settings.get(:email, type: 'html', default: 'test@example.com').to_s.should eq 'test@example.com'
   end

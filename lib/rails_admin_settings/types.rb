@@ -3,6 +3,7 @@ module RailsAdminSettings
     [
       'string',
       'integer',
+      'boolean',
       'html',
       'sanitized',
       'yaml',

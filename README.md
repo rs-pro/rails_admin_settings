@@ -65,6 +65,7 @@ Supported types:
 
     string (input)
     text (textarea)
+    boolean (checkbox)
     color (uses built-in RailsAdmin color picker)
     html (supports Rich, glebtv-ckeditor, ckeditor, but does not require any of them)
     sanitized (requires sanitize -- sanitizes HTML before saving to DB [Warning: uses RELAXED config!])
