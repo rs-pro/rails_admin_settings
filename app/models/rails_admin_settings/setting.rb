@@ -46,7 +46,7 @@ module RailsAdminSettings
       if value.nil?
         nil
       else
-        URI.parse(value).path
+        'public' + URI.parse(value).path
       end
     end
 
