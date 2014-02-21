@@ -14,7 +14,17 @@ module RailsAdminSettings
             field :type
             field :ns
             field :name
-            field :raw
+            field :raw do
+              pretty_value do
+                if bindings[:object].file_type?
+                  "<a href='#{CGI::escapeHTML(bindings[:object].file.url)}'>#{CGI::escapeHTML(bindings[:object].to_path)}</a>".html_safe
+                elsif bindings[:object].image_type?
+                  "<a href='#{CGI::escapeHTML(bindings[:object].file.url)}'><img src='#{CGI::escapeHTML(bindings[:object].file.url)}' /></a>".html_safe
+                else
+                  value
+                end
+              end
+            end
           end
 
           edit do
@@ -30,13 +40,13 @@ module RailsAdminSettings
             field :raw do
               partial "setting_value"
               visible do
-                !bindings[:object].file_type?
+                !bindings[:object].upload_type?
               end
             end
             if Settings.file_uploads_supported
               field :file, Settings.file_uploads_engine do
                 visible do
-                  bindings[:object].file_type?
+                  bindings[:object].upload_type?
                 end
               end
             end
