@@ -57,6 +57,7 @@ class Settings < BasicObject
 
     def apply_defaults!(file)
       if File.file?(file)
+        puts "[settings] Loading from #{file}"
         yaml = YAML.load(File.read(file), safe: true)
         yaml.each_pair do |namespace, vals|
           vals.symbolize_keys!
@@ -71,6 +72,7 @@ class Settings < BasicObject
             else
               value = val.delete(:value)
             end
+            puts "#{key} - default '#{value}' current '#{Settings.get(key).raw}'"
             n.set(key, value, val.merge(overwrite: false))
           end
           n.unload!

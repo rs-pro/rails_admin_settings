@@ -183,7 +183,8 @@ module RailsAdminSettings
         @settings[key] = v
       else
         opts = options.dup
-        if options[:overwrite] == false
+        #::Kernel.p options, key, @settings[key].value, @settings[key].value.blank?
+        if options[:overwrite] == false && !@settings[key].value.blank?
           opts.delete(:raw)
           opts.delete(:value)
           opts.delete(:enabled)
