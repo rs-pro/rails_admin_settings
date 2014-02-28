@@ -2,6 +2,7 @@ module RailsAdminSettings
   def self.types
     [
       'string',
+      'text',
       'integer',
       'html',
       'sanitized',
