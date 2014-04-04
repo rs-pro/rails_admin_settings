@@ -49,8 +49,8 @@ Or install it yourself as:
 
 ## Advanced Usage
 
-    Settings.content_block_1(mode: 'html', default: 'test')
-    Settings.data(mode: 'yaml')
+    Settings.content_block_1(type: 'html', default: 'test')
+    Settings.data(type: 'yaml')
     Settings.data = [1, 2, 3]
     
     Settings.enabled?(:phone, type: 'phone', default: '906 111-11-11') # also creates setting if it doesn't exist
