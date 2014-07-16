@@ -24,8 +24,8 @@ namespace :settings do
   
   desc "Load settings from config/settings.yml without overwriting current values"
   task :load => ['settings:require'] do
-    Settings.apply_defaults!(Rails.root.join("config/settings.#{Rails.env.to_s}.yml"))
-    Settings.apply_defaults!(Rails.root.join('config/settings.yml'))
+    Settings.apply_defaults!(Rails.root.join("config/settings.#{Rails.env.to_s}.yml"), true)
+    Settings.apply_defaults!(Rails.root.join('config/settings.yml'), true)
   end
 
   desc "Delete all settings"
