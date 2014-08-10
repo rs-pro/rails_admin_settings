@@ -5,7 +5,7 @@ require 'spec_helper'
 describe 'Settings advanced usage' do
   it 'with defaults' do
     s = Settings.email(default: 'test@example.com')
-    s.should eq 'test@example.com'
-    Settings.get(:email).to_s.should eq 'test@example.com'
+    expect(s).to eq 'test@example.com'
+    expect(Settings.get(:email).to_s).to eq 'test@example.com'
   end
 end

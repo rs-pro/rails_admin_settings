@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rails_admin_settings (0.7.8)
+    rails_admin_settings (0.7.9)
       mongoid (>= 3.0, < 4.1)
 
 GEM

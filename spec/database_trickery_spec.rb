@@ -10,39 +10,39 @@ describe 'Database trickery' do
     email = "my@mail.ru"
     email2 = "my2@mail.ru"
     Settings.email = email
-    Settings.email.should == email
+    expect(Settings.email).to eq(email)
     RailsAdminSettings::Setting.destroy_all
     # settings are still cached
-    Settings.email.should == email
+    expect(Settings.email).to eq(email)
 
     Settings.email = email2
-    Settings.email.should == email2
+    expect(Settings.email).to eq(email2)
   end
 
   it "should handle settings appearing in DB when settings are loaded" do
-    Settings.tst2.should == ''
+    expect(Settings.tst2).to eq('')
     RailsAdminSettings::Setting.create!(key: 'tst', raw: 'tst')
     # settings are still cached, but when we try to create a setting it sees updated value in DB
-    Settings.tst.should == 'tst'
+    expect(Settings.tst).to eq('tst')
   end
 
   it "should handle settings appearing in DB when settings are not loaded" do
     RailsAdminSettings::Setting.create(key: 'tst', raw: 'tst')
     Settings.tst = 'str'
-    Settings.tst.should == 'str'
+    expect(Settings.tst).to eq('str')
   end
 
   it "#destroy_all!" do
     Settings.tst = 'str'
     Settings.destroy_all!
-    Settings.tst.should == ''
+    expect(Settings.tst).to eq('')
   end
 
   it "#destroy!" do
     Settings.tst = 'str'
     Settings.tst2 = 'str2'
     Settings.destroy!(:tst)
-    Settings.tst.should == ''
-    Settings.tst2.should == 'str2'
+    expect(Settings.tst).to eq('')
+    expect(Settings.tst2).to eq('str2')
   end
 end

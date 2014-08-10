@@ -13,67 +13,67 @@ describe 'Settings loading defaults' do
   end
 
   it 'sets value' do
-    Settings.footer.should eq 'test <b></b>'
-    Settings.get(:footer).type.should eq 'html'
+    expect(Settings.footer).to eq 'test <b></b>'
+    expect(Settings.get(:footer).type).to eq 'html'
   end
 
   it 'sets type' do
-    Settings.get(:phone).phone_type?.should be_true
-    Settings.get(:phone).val.city.should eq '906'
-    Settings.get(:phone).val.formatted_subscriber.should eq '111-11-11'
+    expect(Settings.get(:phone).phone_type?).to be_truthy
+    expect(Settings.get(:phone).val.city).to eq '906'
+    expect(Settings.get(:phone).val.formatted_subscriber).to eq '111-11-11'
   end
 
   it 'sets enabled' do
-    Settings.phone_enabled?.should eq true
-    Settings.disabled_enabled?.should eq false
-    Settings.enabled?(:disabled).should eq false
+    expect(Settings.phone_enabled?).to eq true
+    expect(Settings.disabled_enabled?).to eq false
+    expect(Settings.enabled?(:disabled)).to eq false
   end
 
   it 'works with namespace' do
-    Settings.ns(:main).phone.should eq '906 1111111'
-    Settings.ns(:other).footer.should eq 'zzz'
-    Settings.footer.should eq 'test <b></b>'
-    Settings.ns(:main).footer.should eq 'test <b></b>'
+    expect(Settings.ns(:main).phone).to eq '906 1111111'
+    expect(Settings.ns(:other).footer).to eq 'zzz'
+    expect(Settings.footer).to eq 'test <b></b>'
+    expect(Settings.ns(:main).footer).to eq 'test <b></b>'
   end
 
   it 'works with fallback' do
-    Settings.ns(:etc, fallback: :main).phone.should eq '906 1111111'
-    Settings.ns(:etc, fallback: :main).footer.should eq 'test <b></b>'
-    Settings.ns(:other, fallback: :main).footer.should eq 'zzz'
-    Settings.ns(:etc, fallback: :other).footer.should eq 'zzz'
+    expect(Settings.ns(:etc, fallback: :main).phone).to eq '906 1111111'
+    expect(Settings.ns(:etc, fallback: :main).footer).to eq 'test <b></b>'
+    expect(Settings.ns(:other, fallback: :main).footer).to eq 'zzz'
+    expect(Settings.ns(:etc, fallback: :other).footer).to eq 'zzz'
   end
 
   it 'works with custom default namespace' do
     Settings.ns_default = 'other'
     Settings.ns_fallback = 'other'
-    Settings.ns(:main).phone.should eq '906 1111111'
-    Settings.ns(:other).footer.should eq 'zzz'
-    Settings.ns(:main).footer.should eq 'test <b></b>'
-    Settings.footer.should eq 'zzz'
+    expect(Settings.ns(:main).phone).to eq '906 1111111'
+    expect(Settings.ns(:other).footer).to eq 'zzz'
+    expect(Settings.ns(:main).footer).to eq 'test <b></b>'
+    expect(Settings.footer).to eq 'zzz'
 
-    Settings.ns(:etc, fallback: :main).phone.should eq '906 1111111'
-    Settings.ns(:etc, fallback: :main).footer.should eq 'test <b></b>'
-    Settings.ns(:other, fallback: :main).footer.should eq 'zzz'
-    Settings.ns(:etc, fallback: :other).footer.should eq 'zzz'
+    expect(Settings.ns(:etc, fallback: :main).phone).to eq '906 1111111'
+    expect(Settings.ns(:etc, fallback: :main).footer).to eq 'test <b></b>'
+    expect(Settings.ns(:other, fallback: :main).footer).to eq 'zzz'
+    expect(Settings.ns(:etc, fallback: :other).footer).to eq 'zzz'
 
     Settings.ns_default = :etc
     Settings.ns_fallback = :main
-    Settings.phone.should eq '906 1111111'
-    Settings.footer.should eq 'test <b></b>'
+    expect(Settings.phone).to eq '906 1111111'
+    expect(Settings.footer).to eq 'test <b></b>'
 
     Settings.ns_fallback = :other
-    Settings.footer.should eq 'zzz'
+    expect(Settings.footer).to eq 'zzz'
 
     Settings.ns_default = :other
     Settings.ns_fallback = :main
-    Settings.footer.should eq 'zzz'
+    expect(Settings.footer).to eq 'zzz'
   end
 
   it "doesn't overwrite" do
     Settings.ns(:main).phone = '906 2222222'
     Settings.ns(:other).footer = 'xxx'
     Settings.apply_defaults!(File.join(File.dirname(__FILE__), 'support/defaults.yml'))
-    Settings.ns(:main).phone.should eq '906 2222222'
-    Settings.ns(:other).footer.should eq 'xxx'
+    expect(Settings.ns(:main).phone).to eq '906 2222222'
+    expect(Settings.ns(:other).footer).to eq 'xxx'
   end
 end

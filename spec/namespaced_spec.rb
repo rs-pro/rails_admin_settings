@@ -10,18 +10,18 @@ describe 'Namespaced settings' do
   it 'reads namespaced from cache' do
     ns = Settings.ns(:other)
     ns.test = 'test'
-    ns.test.should eq 'test'
+    expect(ns.test).to eq 'test'
   end
 
   it 'reads namespaced from db' do
     Settings.ns(:other).test = 'test'
-    Settings.ns(:other).test.should eq 'test'
+    expect(Settings.ns(:other).test).to eq 'test'
   end
 
   it 'destroys' do
     Settings.ns(:other).test = 'test'
     Settings.ns(:other).destroy_all!
-    Settings.ns(:other).test.should eq ''
+    expect(Settings.ns(:other).test).to eq ''
   end
 
   it 'sets type' do
@@ -29,22 +29,22 @@ describe 'Namespaced settings' do
       Settings.ns(:other).set(:phone, 'test', type: 'phone')
     }.to raise_error
     Settings.ns(:other).set(:phone, '906 111 11 11', type: 'phone')
-    Settings.get(:phone, ns: 'other').phone_type?.should be_true
-    Settings.get(:phone, ns: 'other').val.city.should eq '906'
-    Settings.get(:phone, ns: 'other').val.formatted_subscriber.should eq '111-11-11'
+    expect(Settings.get(:phone, ns: 'other').phone_type?).to be_truthy
+    expect(Settings.get(:phone, ns: 'other').val.city).to eq '906'
+    expect(Settings.get(:phone, ns: 'other').val.formatted_subscriber).to eq '111-11-11'
 
     ns = Settings.ns(:other)
-    ns.get(:phone).phone_type?.should be_true
-    ns.get(:phone).val.city.should eq '906'
-    ns.get(:phone).val.formatted_subscriber.should eq '111-11-11'
+    expect(ns.get(:phone).phone_type?).to be_truthy
+    expect(ns.get(:phone).val.city).to eq '906'
+    expect(ns.get(:phone).val.formatted_subscriber).to eq '111-11-11'
   end
 
   it 'works with custom defaults' do
     Settings.ns_default = 'hitfood'
     Settings.ns_fallback = 'main'
-    Settings.test.should eq ''
+    expect(Settings.test).to eq ''
     Settings.test = 'zzz'
-    Settings.get(:test, ns: 'hitfood').raw.should eq 'zzz'
-    Settings.get(:test, ns: 'main').raw.should eq ''
+    expect(Settings.get(:test, ns: 'hitfood').raw).to eq 'zzz'
+    expect(Settings.get(:test, ns: 'main').raw).to eq ''
   end
 end

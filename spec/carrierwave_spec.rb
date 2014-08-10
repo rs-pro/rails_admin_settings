@@ -16,9 +16,9 @@ describe "Uploads" do
       # because we're not inside Rails
       Settings.get(:file).file.root = '/'
 
-      Settings.get(:file).file.file.file.should eq "#{File.dirname(__FILE__).gsub('/spec', '/')}uploads/1024x768.gif"
+      expect(Settings.get(:file).file.file.file).to eq "#{File.dirname(__FILE__).gsub('/spec', '/')}uploads/1024x768.gif"
 
-      File.exists?(Settings.root_file_path.join("uploads/1024x768.gif")).should be_true
+      expect(File.exists?(Settings.root_file_path.join("uploads/1024x768.gif"))).to be_truthy
     end
 
     it 'supports image type' do
@@ -27,14 +27,14 @@ describe "Uploads" do
       # because we're not inside Rails
       Settings.get(:file).file.root = '/'
 
-      Settings.get(:file).file.file.file.should eq "#{File.dirname(__FILE__).gsub('/spec', '/')}uploads/1024x768.gif"
+      expect(Settings.get(:file).file.file.file).to eq "#{File.dirname(__FILE__).gsub('/spec', '/')}uploads/1024x768.gif"
 
-      File.exists?(Settings.root_file_path.join("uploads/1024x768.gif")).should be_true
+      expect(File.exists?(Settings.root_file_path.join("uploads/1024x768.gif"))).to be_truthy
     end
 
     it 'supports defaults' do
       Settings.apply_defaults!(File.join(File.dirname(__FILE__), 'support/defaults_w_file.yml'))
-      File.exists?(Settings.root_file_path.join("uploads/1024x768.gif")).should be_true
+      expect(File.exists?(Settings.root_file_path.join("uploads/1024x768.gif"))).to be_truthy
     end
   end
 end
