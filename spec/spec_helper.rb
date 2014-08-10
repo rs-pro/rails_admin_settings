@@ -7,6 +7,7 @@ SimpleCov.start
 
 require 'pry'
 require 'bundler/setup'
+require 'active_support'
 require 'active_support/core_ext'
 require 'mongoid'
 require 'database_cleaner'

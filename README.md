@@ -1,6 +1,7 @@
 # RailsAdminSettings
 
 [![Build Status](https://secure.travis-ci.org/rs-pro/rails_admin_settings.png?branch=master)](http://travis-ci.org/rs-pro/rails_admin_settings)
+[![Dependency Status](https://www.versioneye.com/user/projects/53e73e2735080d9f08000134/badge.svg?style=flat)](https://www.versioneye.com/user/projects/53e73e2735080d9f08000134)
 
 Note: This gem currently supports Mongoid 3/4 only, as I don't need AR support.
 
