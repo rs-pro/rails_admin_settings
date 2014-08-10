@@ -18,23 +18,21 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_runtime_dependency "mongoid", ">= 3.1"
+  spec.add_runtime_dependency "mongoid", [">= 3.0", "< 4.1"]
 
   spec.add_development_dependency "bundler"
-  spec.add_development_dependency "rake", "~> 10.1.1"
+  spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec", "~> 2.14.1"
-  spec.add_development_dependency "mongoid-rspec", "~> 1.10.0"
-  spec.add_development_dependency "simplecov", "~> 0.8.2"
-  spec.add_development_dependency "database_cleaner", "~> 1.2.0"
-  spec.add_development_dependency "factory_girl", "~> 4.3.0"
-
-  spec.add_development_dependency "safe_yaml", "~> 1.0.0"
-  spec.add_development_dependency "russian_phone", "~> 0.3.2"
-  spec.add_development_dependency "sanitize", "~> 2.1.0"
-  spec.add_development_dependency "validates_email_format_of", "~> 1.5.3"
-  spec.add_development_dependency "geocoder", "~> 1.1.6"
-  spec.add_development_dependency "addressable", "~> 2.3.3"
-
+  spec.add_development_dependency "mongoid-rspec"
+  spec.add_development_dependency "simplecov"
+  spec.add_development_dependency "database_cleaner"
+  spec.add_development_dependency "factory_girl"
+  spec.add_development_dependency "safe_yaml"
+  spec.add_development_dependency "russian_phone"
+  spec.add_development_dependency "sanitize"
+  spec.add_development_dependency "validates_email_format_of"
+  spec.add_development_dependency "geocoder"
+  spec.add_development_dependency "addressable"
   spec.add_development_dependency "glebtv-carrierwave-mongoid"
   spec.add_development_dependency "glebtv-mongoid-paperclip"
   spec.add_development_dependency "pry"
