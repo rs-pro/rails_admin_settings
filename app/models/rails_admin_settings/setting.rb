@@ -5,11 +5,6 @@ module RailsAdminSettings
     include ::Mongoid::Timestamps::Short
 
     store_in collection: "rails_admin_settings"
-
-    if Object.const_defined?('Mongoid') && Mongoid.const_defined?('Audit')
-      include ::Mongoid::Audit::Trackable
-      track_history track_create: true, track_destroy: true
-    end
     
     field :enabled, type: Mongoid::VERSION.to_i < 4 ? Boolean : Mongoid::Boolean, default: true
     scope :enabled, -> { where(enabled: true) }

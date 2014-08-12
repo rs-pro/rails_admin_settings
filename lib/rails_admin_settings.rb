@@ -13,6 +13,11 @@ module RailsAdminSettings
   autoload :Uploads,           "rails_admin_settings/uploads"
   autoload :HexColorValidator, "rails_admin_settings/hex_color_validator"
   autoload :Dumper,            "rails_admin_settings/dumper"
+
+  def self.track_history!
+    RailsAdminSettings::Setting.send(:include, ::Mongoid::History::Trackable)
+    RailsAdminSettings::Setting.send(:track_history, {track_create: true, track_destroy: true})
+  end
 end
 
 require "rails_admin_settings/types"
