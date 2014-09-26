@@ -2,7 +2,7 @@ class CreateRailsAdminSettings < ActiveRecord::Migration
   def change
     create_table :rails_admin_settings do |t|
       t.boolean :enabled, default: true
-      t.string :type, null: false, default: 'string'
+      t.string :kind, null: false, default: 'string'
       t.string :ns, default: 'main'
       t.string :key, null: false
       if Object.const_defined?('Geocoder')
