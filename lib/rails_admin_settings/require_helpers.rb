@@ -37,7 +37,7 @@ module RailsAdminSettings
         require 'validates_email_format_of'
         yield
       rescue LoadError => e
-        e.message << " [rails_admin_settings] Please add gem 'validates_email_format_of' to your Gemfile to use email type settings"
+        e.message << " [rails_admin_settings] Please add gem 'validates_email_format_of' to your Gemfile to use email kind settings"
         raise e
       end
     end
@@ -47,7 +47,7 @@ module RailsAdminSettings
         require 'geocoder'
         yield
       rescue LoadError => e
-        e.message << " [rails_admin_settings] Please add gem 'validates_email_format_of' to your Gemfile to use email type settings"
+        e.message << " [rails_admin_settings] Please add gem 'validates_email_format_of' to your Gemfile to use email kind settings"
         raise e
       end
     end
@@ -57,7 +57,7 @@ module RailsAdminSettings
         require 'addressable/uri'
         yield
       rescue LoadError => e
-        e.message << " [rails_admin_settings] Please add gem 'addressable' to your Gemfile to use url/domain type settings"
+        e.message << " [rails_admin_settings] Please add gem 'addressable' to your Gemfile to use url/domain kind settings"
         raise e
       end
     end

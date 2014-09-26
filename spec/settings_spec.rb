@@ -43,10 +43,10 @@ describe 'Settings' do
     expect(Settings.loaded).to eq false
   end
 
-  it 'should work with type and default' do
-    expect(Settings.phone(type: 'phone', default: '906 111 11 11')).to eq '+7 (906) 111-11-11'
+  it 'should work with kind and default' do
+    expect(Settings.phone(kind: 'phone', default: '906 111 11 11')).to eq '+7 (906) 111-11-11'
     Settings.phone = '906 222 22 22'
-    expect(Settings.phone(type: 'phone', default: '906 111 11 11')).to eq '+7 (906) 222-22-22'
+    expect(Settings.phone(kind: 'phone', default: '906 111 11 11')).to eq '+7 (906) 222-22-22'
   end
   
   it 'should properly store settings to DB' do
@@ -60,16 +60,16 @@ describe 'Settings' do
     expect(Settings.loaded).to eq true
   end
 
-  it 'should support yaml type' do
-    Settings.tdata(type: 'yaml')
+  it 'should support yaml kind' do
+    Settings.tdata(kind: 'yaml')
     Settings.tdata = ['one', 'two', 'three']
     expect(YAML.safe_load(Settings.get(:tdata).raw)).to eq ['one', 'two', 'three']
     expect(Settings.tdata).to eq ['one', 'two', 'three']
   end
 
   it '#enabled? sets defaults' do
-    expect(Settings.enabled?(:phone, type: 'phone')).to eq true
-    expect(Settings.get(:phone).type).to eq 'phone'
+    expect(Settings.enabled?(:phone, kind: 'phone')).to eq true
+    expect(Settings.get(:phone).kind).to eq 'phone'
   end
 
 end

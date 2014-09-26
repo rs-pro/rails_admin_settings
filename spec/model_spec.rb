@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe RailsAdminSettings::Setting do
-  it { is_expected.to have_fields(:enabled, :key, :type, :raw) }
+  it { is_expected.to have_fields(:enabled, :key, :kind, :raw) }
 
   it "correctly return content when enabled" do
     setting = FactoryGirl.create(:setting)
@@ -32,13 +32,13 @@ describe RailsAdminSettings::Setting do
   end
 
   it 'return html_safe string when in html mode' do
-    setting = FactoryGirl.create(:setting, raw: '&copy; {{year}} company', type: 'html')
+    setting = FactoryGirl.create(:setting, raw: '&copy; {{year}} company', kind: 'html')
     expect(setting.val).to eq "&copy; #{Time.now.strftime('%Y')} company"
     expect(setting.val.class.name).to eq "ActiveSupport::SafeBuffer"
   end
 
   it 'sanitize html when in sanitized mode' do
-    setting = FactoryGirl.create(:setting, raw: '&copy; {{year}} company <a href="javascript:alert()">test</a>', type: 'sanitized')
+    setting = FactoryGirl.create(:setting, raw: '&copy; {{year}} company <a href="javascript:alert()">test</a>', kind: 'sanitized')
     expect(setting.val).to eq "© #{Time.now.strftime('%Y')} company <a>test</a>"
     expect(setting.val.class.name).to eq "ActiveSupport::SafeBuffer"
   end

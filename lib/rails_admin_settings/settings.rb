@@ -23,6 +23,9 @@ class Settings < BasicObject
       else
         name = name.to_s
       end
+      if options.key?(:type)
+        options[:kind] = options.delete(:type)
+      end
       @@mutex.synchronize do
         @@namespaces[name] ||= ::RailsAdminSettings::Namespaced.new(name.to_s)
       end
@@ -31,6 +34,10 @@ class Settings < BasicObject
 
     def get_default_ns
       ns(nil, fallback: @@ns_fallback)
+    end
+
+    def table_exists?
+      RailsAdminSettings::Setting.table_exists?
     end
 
     def unload!

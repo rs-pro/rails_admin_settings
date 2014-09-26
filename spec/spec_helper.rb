@@ -9,7 +9,11 @@ require 'pry'
 require 'bundler/setup'
 require 'active_support'
 require 'active_support/core_ext'
-require 'mongoid'
+
+unless ENV['ACTIVERECORD']
+  require 'mongoid'
+end
+
 require 'database_cleaner'
 require 'factory_girl'
 require 'mongoid-rspec'

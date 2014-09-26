@@ -1,25 +1,31 @@
 module RailsAdminSettings
   module Processing
-    RailsAdminSettings.types.each do |dtype|
-      define_method "#{dtype}_type?" do
-        dtype == type
+    RailsAdminSettings.kinds.each do |dkind|
+      define_method "#{dkind}_kind?" do
+        dkind == kind
+      end
+      define_method "#{dkind}_type?" do
+        dkind == kind
       end
     end
 
-    def text_type?
-      (RailsAdminSettings.types - ['phone', 'phones', 'integer', 'yaml']).include? type
+    def text_kind?
+      (RailsAdminSettings.kinds - ['phone', 'phones', 'integer', 'yaml']).include? kind
     end
 
-    def upload_type?
-      ['file', 'image'].include? type
+    def upload_kind?
+      ['file', 'image'].include? kind
     end
 
-    def html_type?
-      ['html', 'sanitized'].include? type
+    def html_kind?
+      ['html', 'sanitized'].include? kind
     end
+    alias_method :text_type?, :text_kind?
+    alias_method :upload_type?, :upload_kind?
+    alias_method :html_type?, :html_kind?
 
     def value
-      if upload_type?
+      if upload_kind?
         if file?
           file.url
         else
@@ -33,7 +39,7 @@ module RailsAdminSettings
     end
 
     def blank?
-      if file_type?
+      if file_kind?
         file.url.nil?
       elsif raw.blank? || disabled?
         true
@@ -43,7 +49,7 @@ module RailsAdminSettings
     end
 
     def to_s
-      if yaml_type? || phone_type? || integer_type?
+      if yaml_kind? || phone_kind? || integer_kind?
         raw
       else
         value
@@ -59,19 +65,19 @@ module RailsAdminSettings
     end
 
     def default_value
-      if html_type?
+      if html_kind?
         ''.html_safe
-      elsif text_type?
+      elsif text_kind?
         ''
-      elsif integer_type?
+      elsif integer_kind?
         0
-      elsif yaml_type?
+      elsif yaml_kind?
         nil
-      elsif phone_type?
+      elsif phone_kind?
         require_russian_phone do
           RussianPhone::Number.new('')
         end
-      elsif phones_type?
+      elsif phones_kind?
         []
       else
         nil
@@ -79,7 +85,7 @@ module RailsAdminSettings
     end
 
     def default_serializable_value
-      if phones_type?
+      if phones_kind?
         ''
       else
         default_value
@@ -96,7 +102,7 @@ module RailsAdminSettings
           "#{$1}-#{Time.now.strftime('%Y')}"
         end
       end
-      text = text.html_safe if html_type?
+      text = text.html_safe if html_kind?
       text
     end
 
@@ -119,20 +125,20 @@ module RailsAdminSettings
     end
 
     def processed_value
-      if text_type?
+      if text_kind?
         process_text
-      elsif integer_type?
+      elsif integer_kind?
         raw.to_i
-      elsif yaml_type?
+      elsif yaml_kind?
         load_yaml
-      elsif phone_type?
+      elsif phone_kind?
         load_phone
-      elsif phones_type?
+      elsif phones_kind?
         load_phones
-      elsif file_type?
+      elsif file_kind?
         file.url
       else
-        puts "[rails_admin_settings] Unknown field type: #{type}"
+        puts "[rails_admin_settings] Unknown field kind: #{kind}"
         nil
       end
     end

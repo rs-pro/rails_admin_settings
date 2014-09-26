@@ -1,10 +1,10 @@
 main:
   footer:
-    type: html
+    kind: html
     value: 'test <b></b>'
 
   phone:
-    type: 'phone'
+    kind: 'phone'
     value: '906 1111111'
   
   disabled:
@@ -15,5 +15,5 @@ other:
     value: 'zzz'
   
   img:
-    type: 'image'
+    kind: 'image'
     value: 'spec/support/1024x768.gif'

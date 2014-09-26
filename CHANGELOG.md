@@ -1,3 +1,8 @@
+## 0.9.0
+
+- Added ActiveRecord support
+- [!!!] Type renamed to Kind to avoid messing with AR STI column
+
 ## 0.6.0
 
 - Added namespaced settings

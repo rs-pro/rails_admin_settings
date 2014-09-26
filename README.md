@@ -7,18 +7,33 @@ Note: This gem currently supports Mongoid 3/4 only, as I don't need AR support.
 
 Pull request with AR support will be welcome
 
+## 0.9.0 is not backwards-compatible with 0.8
+
+Type renamed to Kind to avoid messing with AR STI column
+Column should be renamed automatically upon first app startup with new gem version.
+
+Also, active record is now supported in addition to mongoid.
+
 ## Features
 
 - Lazy loading - loads settings only if they are needed during request
 - Loads all settings at once and caches them for the duration of request
-- Supports lots of setting types - yaml, html with ckeditor, phone numbers etc
-- Each setting can be enabled and disabled within rails_admin, if it's disabled it returns default value for type
+- Supports lots of setting kinds - yaml, html with ckeditor, phone numbers etc
+- Each setting can be enabled and disabled within rails_admin, if it's disabled it returns default value for kind
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
     gem 'rails_admin_settings'
+
+For activerecord, generage migration:
+
+    rails g rails_admin_settings:migration
+
+Then migrate:
+
+    rake db:migrate
 
 ## Gemfile order matters
 
@@ -49,11 +64,11 @@ Or install it yourself as:
 
 ## Advanced Usage
 
-    Settings.content_block_1(type: 'html', default: 'test')
-    Settings.data(type: 'yaml')
+    Settings.content_block_1(kind: 'html', default: 'test')
+    Settings.data(kind: 'yaml')
     Settings.data = [1, 2, 3]
     
-    Settings.enabled?(:phone, type: 'phone', default: '906 111-11-11') # also creates setting if it doesn't exist
+    Settings.enabled?(:phone, kind: 'phone', default: '906 111-11-11') # also creates setting if it doesn't exist
     Settings.phone.area
     Settings.phone.subscriber
 

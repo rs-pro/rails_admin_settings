@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = RailsAdminSettings::VERSION
   spec.authors       = ["Gleb Tv"]
   spec.email         = ["glebtv@gmail.com"]
-  spec.description   = %q{Mongoid / RailsAdmin App Settings management}
-  spec.summary       = %q{Setting for Rails app with mongoid and RailsAdmin}
+  spec.description   = %q{Mongoid / ActiveRecord + RailsAdmin App Settings management}
+  spec.summary       = %q{}
   spec.homepage      = "https://github.com/rs-pro/rails_admin_settings"
   spec.license       = "MIT"
 
@@ -18,8 +18,9 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_runtime_dependency "mongoid", [">= 3.0", "< 4.1"]
 
+  spec.add_development_dependency "mongoid", [">= 3.0", "< 4.1"]
+  spec.add_development_dependency "rails"
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec"

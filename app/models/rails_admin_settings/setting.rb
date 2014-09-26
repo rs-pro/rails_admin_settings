@@ -1,23 +1,22 @@
-# coding: utf-8
+if RailsAdminSettings.active_record?
+  module RailsAdminSettings
+    class Setting < ActiveRecord::Base
+    end
+  end
+end
+
 module RailsAdminSettings
   class Setting
-    include ::Mongoid::Document
-    include ::Mongoid::Timestamps::Short
+    #binding.pry
+    if RailsAdminSettings.mongoid?
+      include RailsAdminSettings::Mongoid
+    end
 
-    store_in collection: "rails_admin_settings"
-    
-    field :enabled, type: Mongoid::VERSION.to_i < 4 ? Boolean : Mongoid::Boolean, default: true
+    if RailsAdminSettings.active_record?
+      self.table_name = "rails_admin_settings"
+    end
+
     scope :enabled, -> { where(enabled: true) }
-
-    field :type, type: String, default: RailsAdminSettings.types.first
-
-    field :ns, type: String, default: 'main'
-    field :key, type: String
-    index({ns: 1, key: 1}, {unique: true, sparse: true})
-
-    field :raw, type: String
-    field :label, type: String
-
     scope :ns, ->(ns) { where(ns: ns) }
 
     include RailsAdminSettings::RequireHelpers
@@ -35,6 +34,10 @@ module RailsAdminSettings
 
     def name
       label.blank? ? key : label
+    end
+
+    def type
+      kind
     end
 
     def to_path

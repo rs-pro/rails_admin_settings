@@ -1,5 +1,5 @@
 module RailsAdminSettings
-  def self.types
+  def self.kinds
     [
       'string',
       'text',
@@ -17,5 +17,9 @@ module RailsAdminSettings
       'domain',
       'color'
     ]
+  end
+
+  def self.types
+    self.kinds
   end
 end

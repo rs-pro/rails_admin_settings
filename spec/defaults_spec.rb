@@ -14,11 +14,11 @@ describe 'Settings loading defaults' do
 
   it 'sets value' do
     expect(Settings.footer).to eq 'test <b></b>'
-    expect(Settings.get(:footer).type).to eq 'html'
+    expect(Settings.get(:footer).kind).to eq 'html'
   end
 
-  it 'sets type' do
-    expect(Settings.get(:phone).phone_type?).to be_truthy
+  it 'sets kind' do
+    expect(Settings.get(:phone).phone_kind?).to be_truthy
     expect(Settings.get(:phone).val.city).to eq '906'
     expect(Settings.get(:phone).val.formatted_subscriber).to eq '111-11-11'
   end

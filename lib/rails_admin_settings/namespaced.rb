@@ -133,10 +133,15 @@ module RailsAdminSettings
       elsif key.end_with?('_enabled=')
         key = key[0..-10]
         v = get(key)
-        if ::Mongoid::VERSION >= "4.0.0"
-          v.set(enabled: args.first)
+        if ::RailsAdminSettings.mongoid?
+          if ::Mongoid::VERSION >= "4.0.0"
+            v.set(enabled: args.first)
+          else
+            v.set("enabled", args.first)
+          end
         else
-          v.set("enabled", args.first)
+          v.enabled = args.first
+          v.save!
         end
         v.enabled
       elsif key.end_with?('=')
