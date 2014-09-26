@@ -37,7 +37,7 @@ class Settings < BasicObject
     end
 
     def table_exists?
-      RailsAdminSettings::Setting.table_exists?
+      RailsAdminSettings.mongoid? || RailsAdminSettings::Setting.table_exists?
     end
 
     def unload!

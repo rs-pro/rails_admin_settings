@@ -10,8 +10,8 @@ module RailsAdminSettings
         Settings.file_uploads_supported = true
         Settings.file_uploads_engine = :carrierwave
       # mongoid-paperclip
-      elsif RailsAdminSettings.mongoid? && Mongoid.const_defined?('Paperclip')
-        base.send(:include, Mongoid::Paperclip)
+      elsif RailsAdminSettings.mongoid? && ::Mongoid.const_defined?('Paperclip')
+        base.send(:include, ::Mongoid::Paperclip)
         # puts "[rails_admin_settings] PaperClip detected"
         base.field(:file, type: String)
         if defined?(Rails)
