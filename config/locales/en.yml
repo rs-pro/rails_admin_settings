@@ -8,7 +8,7 @@ en:
       email_invalid: Incorrect email
       yaml_invalid: Incorrect YAML
       color_invalid: Incorrect color
-  mongoid:
+  mongoid: &mongoid
     models:
       rails_admin_settings/setting: Settings
     attributes:
@@ -22,4 +22,6 @@ en:
         raw: Value
         type: Type
         label: Label
+  activerecord:
+    <<: *mongoid
 
