@@ -52,13 +52,13 @@ module RailsAdminSettings
     return false unless Settings.table_exists?
 
     if mongoid?
-      if Mongoid.const_defined?('History')
+      if ::Mongoid.const_defined?('History')
         RailsAdminSettings::Setting.send(:include, ::Mongoid::History::Trackable)
         RailsAdminSettings::Setting.send(:track_history, {track_create: true, track_destroy: true})
       else
         puts "[rails_admin_settings] WARN unable to track_history: Mongoid::History not loaded!"
       end
-      if Mongoid.const_defined?('Userstamp')
+      if ::Mongoid.const_defined?('Userstamp')
         RailsAdminSettings::Setting.send(:include, ::Mongoid::Userstamp)
       else
         puts "[rails_admin_settings] WARN unable to track_history: Mongoid::Userstamp not loaded!"

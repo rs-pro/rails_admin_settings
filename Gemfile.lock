@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rails_admin_settings (0.9.0.pre.2)
+    rails_admin_settings (0.9.0.pre.3)
 
 GEM
   remote: https://rubygems.org/
@@ -155,92 +155,6 @@ GEM
     tilt (1.4.1)
     treetop (1.4.15)
       polyglot
-      polyglot
-      polyglot
-      polyglot
-      polyglot
-      polyglot
-      polyglot
-      polyglot
-      polyglot
-      polyglot
-      polyglot
-      polyglot
-      polyglot
-      polyglot
-      polyglot
-      polyglot
-      polyglot
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
-      polyglot (>= 0.3.1)
       polyglot (>= 0.3.1)
     tzinfo (0.3.41)
     validates_email_format_of (1.6.1)
