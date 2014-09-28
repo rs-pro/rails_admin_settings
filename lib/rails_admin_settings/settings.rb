@@ -9,16 +9,16 @@ class Settings < BasicObject
   @@namespaces = {}
   @@mutex = ::Mutex.new
 
-  cattr_accessor :ns_default, :ns_fallback
   @@ns_default = 'main'
   @@ns_fallback = nil
+  cattr_accessor :ns_default, :ns_fallback, :namespaces
 
   cattr_reader :mutex
 
   class << self
     def ns(name, options = {})
       options.symbolize_keys!
-      if name.nil? || name == Settings.ns_default
+      if name.nil? || name == @@ns_default
         name = @@ns_default.to_s
       else
         name = name.to_s

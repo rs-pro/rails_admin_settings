@@ -21,6 +21,7 @@ ru:
         key: Ключ
         raw: Значение
         type: Тип
+        kind: Тип
         label: Подпись
   activerecord:
     <<: *mongoid

@@ -21,6 +21,7 @@ en:
         key: Key
         raw: Value
         type: Type
+        kind: Type
         label: Label
   activerecord:
     <<: *mongoid
