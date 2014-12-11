@@ -1,3 +1,9 @@
+## 0.9.1
+
+  Settings.ns(ns) now defaults to fallback to Settings.ns_fallback
+  If you want an NS without fallback, specify nil:
+  Settings.ns(ns, fallback: nil)
+
 ## 0.9.0
 
 - Added ActiveRecord support

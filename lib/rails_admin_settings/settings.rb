@@ -29,7 +29,8 @@ class Settings < BasicObject
       @@mutex.synchronize do
         @@namespaces[name] ||= ::RailsAdminSettings::Namespaced.new(name.to_s)
       end
-      ::RailsAdminSettings::Fallback.new(@@namespaces[name], options[:fallback])
+      fallback = options.key?(:fallback) ? options[:fallback] : @@ns_fallback
+      ::RailsAdminSettings::Fallback.new(@@namespaces[name], fallback)
     end
 
     def get_default_ns

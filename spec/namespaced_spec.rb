@@ -3,6 +3,10 @@
 require 'spec_helper'
 
 describe 'Namespaced settings' do
+  before :each do 
+   Settings.destroy_all!
+  end
+
   it 'sets namespaced' do
     Settings.ns(:other).test = 'test'
   end
@@ -46,5 +50,18 @@ describe 'Namespaced settings' do
     Settings.test = 'zzz'
     expect(Settings.get(:test, ns: 'hitfood').raw).to eq 'zzz'
     expect(Settings.get(:test, ns: 'main').raw).to eq ''
+  end
+
+  it 'falls back to default ns' do
+    Settings.ns_default = 'main'
+    Settings.ns_fallback = 'main'
+
+    Settings.ns(:main).test = 'main'
+    Settings.ns(:other).test = 'other'
+
+    expect(Settings.ns('main').test).to eq 'main'
+    expect(Settings.ns('other').test).to eq 'other'
+    expect(Settings.ns('other1').test).to eq 'main'
+    expect(Settings.ns('other2', fallback: nil).test).to eq ''
   end
 end
