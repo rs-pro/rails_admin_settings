@@ -12,8 +12,6 @@ module RailsAdminSettings
           after_filter { Settings.unload! }
         end
       end
-
-      RailsAdminSettings.migrate!
     end
   end
 end

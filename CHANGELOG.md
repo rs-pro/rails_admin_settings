@@ -1,3 +1,11 @@
+## 1.0.0.pre.1
+
+Disable auto migrate. To migrate from 0.8 run:
+
+```
+RailsAdminSettings.migrate!
+```
+
 ## 0.9.1
 
   Settings.ns(ns) now defaults to fallback to Settings.ns_fallback

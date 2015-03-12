@@ -10,7 +10,10 @@ Pull request with AR support will be welcome
 ## 0.9.0 is not backwards-compatible with 0.8
 
 Type renamed to Kind to avoid messing with AR STI column
-Column should be renamed automatically upon first app startup with new gem version.
+
+Rename it in all invocations, then run migrate DB with: 
+
+    RailsAdminSettings.migrate!
 
 Also, active record is now supported in addition to mongoid.
 
