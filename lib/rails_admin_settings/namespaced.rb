@@ -160,7 +160,7 @@ module RailsAdminSettings
     end
 
     def write_to_database(key, options)
-      is_file = !options[:type].nil? && (options[:type] == 'image' || options[:type] == 'file')
+      is_file = !options[:kind].nil? && (options[:kind] == 'image' || options[:kind] == 'file')
       if is_file
         options[:raw] = ''
         file = options[:value]
