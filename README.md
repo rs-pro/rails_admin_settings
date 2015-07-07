@@ -1,7 +1,7 @@
 # RailsAdminSettings
 
 [![Build Status](https://secure.travis-ci.org/rs-pro/rails_admin_settings.png?branch=master)](http://travis-ci.org/rs-pro/rails_admin_settings)
-[![Dependency Status](https://www.versioneye.com/user/projects/53e73e2735080d9f08000134/badge.svg?style=flat)](https://www.versioneye.com/user/projects/53e73e2735080d9f08000134)
+[![Dependency Status](https://gemnasium.com/rs-pro/rails_admin_settings.svg)](https://gemnasium.com/rs-pro/rails_admin_settings)
 
 ## Since 1.0 AR is fully supported but not well tested yet.
 
