@@ -75,6 +75,26 @@ Or install it yourself as:
 
 See more here: https://github.com/rs-pro/rails_admin_settings/blob/master/spec/advanced_usage_spec.rb
 
+## Namespacing
+
+Settings can have namespaces (useful for locale, etc)
+
+    Settings.ns('test').s1 = 123
+    Settings.ns('test').s1
+    > "123"
+    Settings.ns('main').s1
+    > ""
+    Settings.s1
+    > ""
+    Settings.ns_default = 'test'
+    Settings.s1
+    > "123"
+    Settings.ns_default = 'main'
+    Settings.ns_fallback = 'test'
+    Settings.s1
+    > "123"
+
+
 ## Value types
 
 Supported types:
