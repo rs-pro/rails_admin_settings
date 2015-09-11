@@ -25,7 +25,7 @@ module RailsAdminSettings
 
         Settings.file_uploads_supported = true
         Settings.file_uploads_engine = :paperclip
-      elsif RailsAdminSettings.active_record? && defined?('Paperclip')
+      elsif RailsAdminSettings.active_record? && defined?(Paperclip)
         if defined?(Rails)
           base.has_attached_file(:file)
         else
