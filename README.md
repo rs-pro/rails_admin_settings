@@ -3,17 +3,9 @@
 [![Build Status](https://secure.travis-ci.org/rs-pro/rails_admin_settings.png?branch=master)](http://travis-ci.org/rs-pro/rails_admin_settings)
 [![Dependency Status](https://gemnasium.com/rs-pro/rails_admin_settings.svg)](https://gemnasium.com/rs-pro/rails_admin_settings)
 
-## Since 1.0 AR is fully supported but not well tested yet.
+App settings editable via RailsAdmin with support for ActiveRecord and Mongoid.
 
-## 0.9.0 is not backwards-compatible with 0.8
-
-Type renamed to Kind to avoid messing with AR STI column
-
-Rename it in all invocations, then run migrate DB with: 
-
-    RailsAdminSettings.migrate!
-
-Also, active record is now supported in addition to mongoid.
+Supports images, files, html with or without sanitization, code with codemirror, etc.
 
 ## Features
 
@@ -68,7 +60,7 @@ Or install it yourself as:
     Settings.content_block_1(kind: 'html', default: 'test')
     Settings.data(kind: 'yaml')
     Settings.data = [1, 2, 3]
-    
+
     Settings.enabled?(:phone, kind: 'phone', default: '906 111-11-11') # also creates setting if it doesn't exist
     Settings.phone.area
     Settings.phone.subscriber

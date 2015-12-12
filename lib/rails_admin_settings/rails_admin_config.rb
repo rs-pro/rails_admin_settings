@@ -25,6 +25,8 @@ module RailsAdminSettings
                 end
               end
             end
+            nss = ::RailsAdminSettings::Setting.pluck(:ns).uniq.map { |c| "ns_#{c.gsub('-', '_')}".to_sym }
+            scopes([nil] + nss)
           end
 
           edit do

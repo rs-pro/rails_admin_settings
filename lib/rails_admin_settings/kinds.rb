@@ -5,6 +5,7 @@ module RailsAdminSettings
       'text',
       'integer',
       'html',
+      'code',
       'sanitized',
       'yaml',
       'phone',

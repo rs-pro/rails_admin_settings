@@ -1,3 +1,16 @@
+## 1.1.2
+
+- Add namespace tabs in rails_admin
+- Add code type with codemirror (requires glebtv-ckeditor)
+
+## 1.1.0
+
+- Fix file type
+
+## 1.0.0
+
+- Support ActiveRecord
+
 ## 1.0.0.pre.1
 
 Disable auto migrate. To migrate from 0.8 run:
@@ -16,6 +29,10 @@ RailsAdminSettings.migrate!
 
 - Added ActiveRecord support
 - [!!!] Type renamed to Kind to avoid messing with AR STI column
+
+Rename it in all invocations, then run migrate DB with:
+
+    RailsAdminSettings.migrate!
 
 ## 0.6.0
 

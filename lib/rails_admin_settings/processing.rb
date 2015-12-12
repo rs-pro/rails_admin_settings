@@ -18,7 +18,7 @@ module RailsAdminSettings
     end
 
     def html_kind?
-      ['html', 'sanitized'].include? kind
+      ['html', 'code', 'sanitized'].include? kind
     end
     alias_method :text_type?, :text_kind?
     alias_method :upload_type?, :upload_kind?
