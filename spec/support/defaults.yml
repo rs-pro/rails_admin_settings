@@ -8,16 +8,16 @@ main:
     value: '906 1111111'
 
   true_setting:
-    type: 'boolean'
+    kind: 'boolean'
     value: true
 
   false_setting:
-    type: 'boolean'
+    kind: 'boolean'
     value: false
-  
+
   disabled:
     enabled: false
-  
+
 other:
   footer:
     value: 'zzz'
