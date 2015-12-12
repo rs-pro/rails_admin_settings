@@ -10,7 +10,7 @@ module RailsAdminSettings
     end
 
     def text_kind?
-      (RailsAdminSettings.kinds - ['phone', 'phones', 'integer', 'yaml']).include? kind
+      (RailsAdminSettings.kinds - ['phone', 'phones', 'integer', 'yaml', 'boolean']).include? kind
     end
 
     def upload_kind?
@@ -23,6 +23,10 @@ module RailsAdminSettings
     alias_method :text_type?, :text_kind?
     alias_method :upload_type?, :upload_kind?
     alias_method :html_type?, :html_kind?
+
+    def boolean_type?
+      type == 'boolean'
+    end
 
     def value
       if upload_kind?
@@ -71,7 +75,13 @@ module RailsAdminSettings
         ''
       elsif integer_kind?
         0
+<<<<<<< HEAD
       elsif yaml_kind?
+=======
+      elsif boolean_type?
+        false
+      elsif yaml_type?
+>>>>>>> 25fbbd8f621da0765095a0db961f23d7782ab1bb
         nil
       elsif phone_kind?
         require_russian_phone do
@@ -87,6 +97,8 @@ module RailsAdminSettings
     def default_serializable_value
       if phones_kind?
         ''
+      elsif boolean_type?
+        'false'
       else
         default_value
       end
@@ -129,7 +141,13 @@ module RailsAdminSettings
         process_text
       elsif integer_kind?
         raw.to_i
+<<<<<<< HEAD
       elsif yaml_kind?
+=======
+      elsif boolean_type?
+        raw == 'true'
+      elsif yaml_type?
+>>>>>>> 25fbbd8f621da0765095a0db961f23d7782ab1bb
         load_yaml
       elsif phone_kind?
         load_phone

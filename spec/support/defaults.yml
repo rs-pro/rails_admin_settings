@@ -6,6 +6,14 @@ main:
   phone:
     kind: 'phone'
     value: '906 1111111'
+
+  true_setting:
+    type: 'boolean'
+    value: true
+
+  false_setting:
+    type: 'boolean'
+    value: false
   
   disabled:
     enabled: false
