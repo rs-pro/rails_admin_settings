@@ -2,6 +2,8 @@
 
 - Add namespace tabs in rails_admin
 - Add code type with codemirror (requires glebtv-ckeditor)
+- Fixed Paperclip installation checking #6. Thx @tanelj
+- Add boolean data type #2. Thx @teonimesic
 
 ## 1.1.0
 
