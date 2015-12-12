@@ -46,10 +46,18 @@ describe 'Settings loading defaults' do
   it 'works with custom default namespace' do
     Settings.ns_default = 'other'
     Settings.ns_fallback = 'other'
+
     expect(Settings.ns(:main).phone).to eq '906 1111111'
     expect(Settings.ns(:other).footer).to eq 'zzz'
     expect(Settings.ns(:main).footer).to eq 'test <b></b>'
     expect(Settings.footer).to eq 'zzz'
+
+    Settings.ns(:main).phone.should eq '906 1111111'
+    Settings.ns(:main).true_setting.should be true
+    Settings.ns(:main).false_setting.should be false
+    Settings.ns(:other).footer.should eq 'zzz'
+    Settings.ns(:main).footer.should eq 'test <b></b>'
+    Settings.footer.should eq 'zzz'
 
     expect(Settings.ns(:etc, fallback: :main).phone).to eq '906 1111111'
     expect(Settings.ns(:etc, fallback: :main).footer).to eq 'test <b></b>'

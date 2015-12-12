@@ -6,10 +6,18 @@ main:
   phone:
     kind: 'phone'
     value: '906 1111111'
-  
+
+  true_setting:
+    kind: 'boolean'
+    value: true
+
+  false_setting:
+    kind: 'boolean'
+    value: false
+
   disabled:
     enabled: false
-  
+
 other:
   footer:
     value: 'zzz'

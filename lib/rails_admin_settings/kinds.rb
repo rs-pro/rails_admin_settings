@@ -4,6 +4,7 @@ module RailsAdminSettings
       'string',
       'text',
       'integer',
+      'boolean',
       'html',
       'code',
       'sanitized',
