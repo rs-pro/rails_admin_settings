@@ -60,10 +60,12 @@ module RailsAdminSettings
     end
 
     # t = {_all: 'Все'}
-    ::RailsAdminSettings::Setting.pluck(:ns).uniq.each do |c|
-       s = "ns_#{c.gsub('-', '_')}".to_sym
-       scope s, -> { where(ns: c) }
-       # t[s] = c
+    if ::Settings.table_exists?
+      ::RailsAdminSettings::Setting.pluck(:ns).uniq.each do |c|
+         s = "ns_#{c.gsub('-', '_')}".to_sym
+         scope s, -> { where(ns: c) }
+         # t[s] = c
+       end
      end
      # I18n.backend.store_translations(:ru, {admin: {scopes: {'rails_admin_settings/setting': t}}})
 

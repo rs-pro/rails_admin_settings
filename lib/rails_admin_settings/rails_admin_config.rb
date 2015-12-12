@@ -25,8 +25,10 @@ module RailsAdminSettings
                 end
               end
             end
-            nss = ::RailsAdminSettings::Setting.pluck(:ns).uniq.map { |c| "ns_#{c.gsub('-', '_')}".to_sym }
-            scopes([nil] + nss)
+            if ::Settings.table_exists?
+              nss = ::RailsAdminSettings::Setting.pluck(:ns).uniq.map { |c| "ns_#{c.gsub('-', '_')}".to_sym }
+              scopes([nil] + nss)
+            end
           end
 
           edit do

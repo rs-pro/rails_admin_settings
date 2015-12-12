@@ -1,3 +1,7 @@
+## 1.1.3
+
+- Fix for namespace tabs when database table does not exist yet.
+
 ## 1.1.2
 
 - Add namespace tabs in rails_admin
