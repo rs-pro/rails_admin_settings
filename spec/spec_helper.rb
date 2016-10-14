@@ -20,7 +20,7 @@ require 'mongoid-rspec'
 
 require "glebtv-mongoid-paperclip" if ENV['UPLOADS'] == 'paperclip'
 if ENV['UPLOADS'] == 'carrierwave'
-  require "glebtv-carrierwave-mongoid"
+  require "carrierwave/mongoid"
   CarrierWave.configure do |config|
     config.asset_host = proc do |file|
       "http://localhost"
