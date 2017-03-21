@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
 
-  spec.add_development_dependency "mongoid", '~> 6.0'
+  spec.add_development_dependency "mongoid", '~> 6.1'
   spec.add_development_dependency "rails"
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "rake"
@@ -35,6 +35,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "geocoder"
   spec.add_development_dependency "addressable"
   spec.add_development_dependency "carrierwave-mongoid"
-  spec.add_development_dependency "glebtv-mongoid-paperclip"
+  spec.add_development_dependency "mongoid-paperclip"
   spec.add_development_dependency "pry"
 end

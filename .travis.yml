@@ -5,8 +5,8 @@ notifications:
   email: false
 
 rvm:
-  - 2.2.2
-  
+  - 2.3.3
+
 env:
   - "UPLOADS=paperclip"
   - "UPLOADS=carrierwave"
