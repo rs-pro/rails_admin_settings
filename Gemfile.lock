@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rails_admin_settings (1.2.0)
+    rails_admin_settings (1.2.1)
 
 GEM
   remote: https://rubygems.org/
@@ -157,7 +157,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.5.0)
     rspec-support (3.5.0)
-    russian_phone (0.5.3)
+    russian_phone (0.6.0)
     safe_yaml (1.0.4)
     sanitize (4.4.0)
       crass (~> 1.0.2)
