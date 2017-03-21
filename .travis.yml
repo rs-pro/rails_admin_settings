@@ -12,6 +12,6 @@ env:
   - "UPLOADS=carrierwave"
 
 gemfile:
-  - gemfiles/mongoid-3.1.gemfile
-  - gemfiles/mongoid-4.0.gemfile
+  - gemfiles/mongoid-6.0.gemfile
+  - gemfiles/mongoid-6.1.gemfile
 
