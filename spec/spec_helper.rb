@@ -18,7 +18,7 @@ require 'database_cleaner'
 require 'factory_girl'
 require 'mongoid-rspec'
 
-require "glebtv-mongoid-paperclip" if ENV['UPLOADS'] == 'paperclip'
+require "mongoid-paperclip" if ENV['UPLOADS'] == 'paperclip'
 if ENV['UPLOADS'] == 'carrierwave'
   require "carrierwave/mongoid"
   CarrierWave.configure do |config|
@@ -28,7 +28,7 @@ if ENV['UPLOADS'] == 'carrierwave'
   end
 end
 
-I18n.enforce_available_locales = true 
+I18n.enforce_available_locales = true
 I18n.load_path << File.join(File.dirname(__FILE__), "..", "config", "locales", "en.yml")
 
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each do |f|
