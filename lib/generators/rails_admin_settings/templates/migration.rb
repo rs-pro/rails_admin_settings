@@ -1,4 +1,4 @@
-class CreateRailsAdminSettings < ActiveRecord::Migration
+class CreateRailsAdminSettings < ActiveRecord::Migration[5.0]
   def change
     create_table :rails_admin_settings do |t|
       t.boolean :enabled, default: true
