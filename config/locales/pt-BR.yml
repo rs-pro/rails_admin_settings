@@ -1,0 +1,27 @@
+en:
+  admin:
+    settings:
+      label: 'Configurações'
+      no_ckeditor_detected: CKEditor não encontrado &mdash; exibindo como texto simples
+      phone_invalid: Telefone incorreto
+      phones_invalid: "Telefone incorreto: %{phones}"
+      email_invalid: Email incorreto
+      yaml_invalid: YAML incorreto
+      color_invalid: Cor incorreta
+  mongoid: &mongoid
+    models:
+      rails_admin_settings/setting: Configurações
+    attributes:
+      rails_admin_settings/setting:
+        c_at: Criado
+        u_at: Atualizado
+        enabled: Ativado
+        ns: Grupo
+        name: Nome
+        key: Chave
+        raw: Valor
+        type: Tipo
+        kind: Tipo
+        label: Legenda
+  activerecord:
+    <<: *mongoid
