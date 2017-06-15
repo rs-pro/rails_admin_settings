@@ -1,3 +1,7 @@
+## 1.3.1
+
+add pt-BR locale (thanks @prem-prakash)
+
 ## 1.1.3
 
 - Fix for namespace tabs when database table does not exist yet.
