@@ -1,6 +1,6 @@
 module RailsAdminSettings
   module Uploads
-    autoload :CarrierWave, "rails_admin_settings/storage/carrierwave"
+    autoload :CarrierWaveUploader, "rails_admin_settings/storage/carrier_wave_uploader"
 
     def self.paperclip_options
       if defined?(Rails)
@@ -15,7 +15,7 @@ module RailsAdminSettings
       if base.respond_to?(:mount_uploader)
         # puts "[rails_admin_settings] CarrierWave detected"
         # base.field(:file, type: String)
-        base.mount_uploader(:file, RailsAdminSettings::Uploads::CarrierWave)
+        base.mount_uploader(:file, RailsAdminSettings::Uploads::CarrierWaveUploader)
         Settings.file_uploads_supported = true
         Settings.file_uploads_engine = :carrierwave
       # mongoid-paperclip
