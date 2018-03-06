@@ -18,7 +18,7 @@ module RailsAdminSettings
     end
 
     def html_kind?
-      ['html', 'code', 'sanitized'].include? kind
+      ['html', 'code', 'sanitize', 'sanitize_code', 'strip_tags', 'simple_format', 'simple_format_raw', 'sanitized'].include? kind
     end
     alias_method :text_type?, :text_kind?
     alias_method :upload_type?, :upload_kind?
@@ -49,7 +49,7 @@ module RailsAdminSettings
     end
 
     def to_s
-      if yaml_kind? || phone_kind? || integer_kind?
+      if yaml_kind? || json_kind? || phone_kind? || integer_kind?
         raw
       else
         value
@@ -97,6 +97,28 @@ module RailsAdminSettings
       end
     end
 
+    def process_html_types(text)
+      case kind
+        when 'strip_tags'
+          require_rails do
+            text = ActionController::Base.helpers.strip_tags(text)
+          end
+        when 'simple_format'
+          require_rails do
+            text = ActionController::Base.helpers.simple_format(text)
+          end
+        when 'simple_format_raw'
+          require_rails do
+            text = ActionController::Base.helpers.simple_format(text, {}, sanitize: false)
+          end
+        when 'sanitize'
+          require_rails do
+            text = RailsAdminSettings.scrubber.sanitize(text)
+          end
+      end
+      text
+    end
+
     def process_text
       text = raw.dup
       text.gsub!('{{year}}', Time.now.strftime('%Y'))
@@ -107,6 +129,7 @@ module RailsAdminSettings
           "#{$1}-#{Time.now.strftime('%Y')}"
         end
       end
+      text = process_html_types(text)
       text = text.html_safe if html_kind?
       text
     end
@@ -124,8 +147,18 @@ module RailsAdminSettings
     end
 
     def load_yaml
-      require_safe_yaml do
-        YAML.safe_load(raw)
+      if defined?(Psych) && Psych.respond_to?(:safe_load)
+        Psych.safe_load(raw)
+      else
+        require_safe_yaml do
+          YAML.safe_load(raw)
+        end
+      end
+    end
+
+    def load_json
+      require_multi_json do
+        MultiJSON.load(raw)
       end
     end
 
@@ -136,6 +169,8 @@ module RailsAdminSettings
         raw.to_i
       elsif yaml_kind?
         load_yaml
+      elsif json_kind?
+        load_json
       elsif boolean_kind?
         raw == 'true'
       elsif phone_kind?

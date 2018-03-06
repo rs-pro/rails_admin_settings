@@ -32,6 +32,18 @@ module RailsAdminSettings
       end
     end
 
+    def require_rails
+      if defined?(Rails) &&
+          defined?(ActionController) &&
+          defined?(ActionController::Base) &&
+          !RailsAdminSettings.scrubber.nil?
+        yield
+      else
+        e.message << " [rails_admin_settings] sanitize, simple_format and strip_tags types require Rails, please add this gem after Rails in your Gemfile"
+        raise e
+      end
+    end
+
     def require_validates_email_format_of
       begin
         require 'validates_email_format_of'

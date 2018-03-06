@@ -48,7 +48,7 @@ describe 'Settings' do
     Settings.phone = '906 222 22 22'
     expect(Settings.phone(kind: 'phone', default: '906 111 11 11')).to eq '+7 (906) 222-22-22'
   end
-  
+
   it 'should properly store settings to DB' do
     Settings.unload!
     expect(Settings.loaded).to eq false

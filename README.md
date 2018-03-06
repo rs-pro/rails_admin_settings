@@ -95,17 +95,32 @@ Supported types:
     text (textarea)
     boolean (checkbox)
     color (uses built-in RailsAdmin color picker)
-    html (supports Rich, glebtv-ckeditor, ckeditor, but does not require any of them)
-    sanitized (requires sanitize -- sanitizes HTML before saving to DB [Warning: uses RELAXED config!])
+    html (does NOT sanitize (allows ANY javascript) - for trusted admin, supports Rich, glebtv-ckeditor, ckeditor, but does not require any of them)
+    code (does NOT sanitize (allows ANY javascript) - shows as codemirror, requires glebtv-ckeditor for codemirror)
+    sanitized (requires sanitize gem -- sanitizes HTML before saving to DB [Warning: uses RELAXED config!])
     integer (stored as string)
     yaml (requires safe_yaml)
     phone (requires russian_phone)
+    phones (requires russian_phone - multiple phones)
     email (requires validates_email_format_of)
     address (requires geocoder)
     file (requires paperclip or carrierwave)
     url (requires addressable)
     domain (requires addressable)
+    sanitize (uses rails sanitize helper with default settings, shows as html)
+    sanitize_code (uses rails sanitize helper with default settings, shows as codemirror textarea, can provide custom scrubber, defaults to Rails::Html::WhiteListSanitizer)
+    strip_tags (uses strip_tags rails helper)
+    simple_format (uses simple_format rails helper)
+    simple_format_raw (does NOT sanitize (allows ANY javascript) - uses simple_format rails helper with sanitize: false)
+    json
 
+#### Sanitize settings
+
+Sanitizer can be changed like this:
+```
+RalsAdminSettings.scrubber = Rails::Html::WhiteListSanitizer.new
+```
+defaults to Rails::Html::WhiteListSanitizer
 
 Strings and html support following replacement patterns:
 

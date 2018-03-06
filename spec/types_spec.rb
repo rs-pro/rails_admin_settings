@@ -4,12 +4,12 @@ require 'spec_helper'
 
 describe 'Settings kind' do
   it 'boolean' do
-    Settings.get(:testbool, kind: 'boolean').value.should be false
-    Settings.get(:testbool, default: true, kind: 'boolean').value.should be false
-    Settings.get(:testbool2, default: true, kind: 'boolean').value.should be true
-    Settings.testbool2.should be true
+    expect(Settings.get(:testbool, kind: 'boolean').value).to be(false)
+    expect(Settings.get(:testbool, default: true, kind: 'boolean').value).to be(false)
+    expect(Settings.get(:testbool2, default: true, kind: 'boolean').value).to be(true)
+    expect(Settings.testbool2).to be(true)
     Settings.set(:testbool3, true, kind: 'boolean')
-    Settings.testbool3.should be true
+    expect(Settings.testbool3).to be(true)
   end
 
   it 'html' do

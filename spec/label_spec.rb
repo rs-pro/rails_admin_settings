@@ -3,7 +3,6 @@
 require 'spec_helper'
 
 describe 'Settings label' do
-  
   it "should have label" do
     label = "E-Mail"
     Settings.email(label: label, default: "my@mail.ru")
@@ -14,5 +13,4 @@ describe 'Settings label' do
     Settings.email(default: "my@mail.ru")
     expect(Settings.get(:email).name).to eq('email')
   end
-
 end

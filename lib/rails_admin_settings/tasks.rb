@@ -21,7 +21,7 @@ namespace :settings do
     RailsAdminSettings::Dumper.dump(path)
     puts "dumped settings to #{path}"
   end
-  
+
   desc "Load settings from config/settings.yml without overwriting current values"
   task :load => ['settings:require'] do
     Settings.apply_defaults!(Rails.root.join("config/settings.#{Rails.env.to_s}.yml"), true)

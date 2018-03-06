@@ -17,7 +17,11 @@ module RailsAdminSettings
       'image',
       'url',
       'domain',
-      'color'
+      'color',
+      'strip_tags',
+      'simple_format',
+      'simple_format_raw',
+      'json',
     ]
   end
 

@@ -15,7 +15,7 @@ unless ENV['ACTIVERECORD']
 end
 
 require 'database_cleaner'
-require 'factory_girl'
+require 'factory_bot'
 require 'mongoid-rspec'
 
 require "mongoid-paperclip" if ENV['UPLOADS'] == 'paperclip'
@@ -40,3 +40,7 @@ require 'rails_admin_settings'
 Dir["#{File.dirname(__FILE__)}/factories/**/*.rb"].each do |f|
   require f
 end
+
+#RSpec.configure do |config|
+  #config.expect_with(:rspec) { |c| c.syntax = :should }
+#end

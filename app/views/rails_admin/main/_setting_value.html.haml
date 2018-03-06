@@ -4,9 +4,9 @@
   = form.check_box :raw, {:value => field.value}, 'true', 'false'
 - if @object.type == 'color'
   = form.text_field :raw, :value => field.value, 'data-color' => true, style: "background-color: ##{field.value}"
-- elsif %w(text yaml phones).include?( @object.type )
+- elsif %w(text simple_format simple_format_raw strip_tags yaml json phones).include?( @object.type )
   = form.text_area :raw, :value => field.value, :rows => 10, :cols => 80
-- elsif @object.type == 'code'
+- elsif @object.type == 'code' || @object.type == 'sanitize_code'
   :ruby
     #binding.pry
     js_data = {
@@ -24,7 +24,7 @@
     }
 
   = form.text_area field.method_name, field.html_attributes.reverse_merge(data: { richtext: 'codemirror', options: js_data.to_json }).reverse_merge({ value: field.form_value })
-- elsif @object.type == 'html' || @object.type == 'sanitized'
+- elsif @object.type == 'html' || @object.type == 'sanitized' || @object.type == 'sanitize'
   - if form.respond_to?(:cktext_area)
     = javascript_include_tag "ckeditor/init"
     = form.cktext_area :raw, :value => field.value, :rows => 10, :cols => 80

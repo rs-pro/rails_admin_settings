@@ -27,7 +27,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "mongoid-rspec"
   spec.add_development_dependency "simplecov"
   spec.add_development_dependency "database_cleaner"
-  spec.add_development_dependency "factory_girl"
+  spec.add_development_dependency "factory_bot"
   spec.add_development_dependency "safe_yaml"
   spec.add_development_dependency "russian_phone"
   spec.add_development_dependency "sanitize"

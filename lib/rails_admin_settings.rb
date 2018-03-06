@@ -1,6 +1,11 @@
 require "rails_admin_settings/version"
 
 module RailsAdminSettings
+  if defined?(Rails) && defined?(Rails::Html) && defined?(Rails::Html::WhiteListSanitizer)
+    @@scrubber = Rails::Html::WhiteListSanitizer.new
+  end
+  cattr_accessor :scrubber
+
   class << self
     def orm
       if defined?(::Mongoid)

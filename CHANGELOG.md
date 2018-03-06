@@ -1,3 +1,14 @@
+## 1.4.0
+
+Add new kinds
+
+strip_tags (uses strip_tags rails helper)
+simple_format (uses simple_format rails helper)
+simple_format_raw (does NOT sanitize (allows ANY javascript) - uses simple_format rails helper with sanitize: false)
+json
+
+Use Psych.safe_load for yaml if available
+
 ## 1.3.1
 
 add pt-BR locale (thanks @prem-prakash)
