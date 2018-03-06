@@ -1,4 +1,13 @@
 module RailsAdminSettings
+  class NoRailsError  < StandardError
+    def initialize(message)
+      @message = message
+    end
+    def to_s
+      @message
+    end
+  end
+
   module RequireHelpers
     private
 
@@ -39,8 +48,7 @@ module RailsAdminSettings
           !RailsAdminSettings.scrubber.nil?
         yield
       else
-        e.message << " [rails_admin_settings] sanitize, simple_format and strip_tags types require Rails, please add this gem after Rails in your Gemfile"
-        raise e
+        raise NoRailsError.new("[rails_admin_settings] sanitize, simple_format and strip_tags types require Rails, please add this gem after Rails in your Gemfile")
       end
     end
 

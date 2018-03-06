@@ -7,6 +7,7 @@ ru:
       phones_invalid: "Неверный телефонный номер: %{phones}"
       email_invalid: Неверный email
       yaml_invalid: Неверный синтаксис YAML
+      json_invalid: Неверный синтаксис JSON
       color_invalid: Неверный цвет
   mongoid: &mongoid
     models:

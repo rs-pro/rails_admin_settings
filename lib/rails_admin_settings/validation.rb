@@ -4,7 +4,7 @@ module RailsAdminSettings
       base.before_validation do
         self.raw = default_serializable_value if raw.blank?
       end
-      base.before_validation :sanitize_value, if: :sanitized_kind?
+      base.before_validation :preprocess_value, if: :preprocessed_kind?
       base.validates_uniqueness_of :key, scope: :ns
       base.validates_inclusion_of :kind, in: RailsAdminSettings.kinds
       base.validates_numericality_of :raw, if: :integer_kind?
@@ -76,6 +76,16 @@ module RailsAdminSettings
             rescue Psych::SyntaxError => e
               errors.add(:raw, I18n.t('admin.settings.yaml_invalid'))
             end
+          end
+        end
+      end
+
+      base.validate if: :json_kind? do
+        unless raw.blank?
+          begin
+            JSON.load(raw)
+          rescue JSON::ParserError => e
+            errors.add(:raw, I18n.t('admin.settings.json_invalid'))
           end
         end
       end

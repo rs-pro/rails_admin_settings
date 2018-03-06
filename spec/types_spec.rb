@@ -23,10 +23,16 @@ describe 'Settings kind' do
     expect(Settings.testint2).to eq 5
   end
 
-  it 'yaml' do
+  it 'does yaml' do
     Settings.set(:data, '[one, two, three]', kind: 'yaml')
     expect(Settings.get(:data).raw).to eq '[one, two, three]'
     expect(Settings.data).to eq ['one', 'two', 'three']
+  end
+
+  it 'does json' do
+    Settings.set(:data, '{"a": 1, "b": 2}', kind: 'json')
+    expect(Settings.get(:data).raw).to eq '{"a": 1, "b": 2}'
+    expect(Settings.data).to eq({"a" => 1, "b" => 2})
   end
 
   it 'phone' do

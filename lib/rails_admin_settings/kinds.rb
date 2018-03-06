@@ -19,6 +19,8 @@ module RailsAdminSettings
       'domain',
       'color',
       'strip_tags',
+      'sanitize',
+      'sanitize_code',
       'simple_format',
       'simple_format_raw',
       'json',

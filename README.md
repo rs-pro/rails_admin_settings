@@ -127,6 +127,9 @@ Strings and html support following replacement patterns:
     {{year}} -> current year
     {{year|2013}} -> 2013 in 2013, 2013-2014 in 2014, etc
 
+Sanitized types sanitize before storing to DB and not on display for performance.
+Simple format types are stored in db as-is.
+
 ## Usage with Rails Admin
 
 Rails admin management for settings is supported out of the box

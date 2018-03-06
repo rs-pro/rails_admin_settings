@@ -7,6 +7,7 @@ en:
       phones_invalid: "Incorrect phone: %{phones}"
       email_invalid: Incorrect email
       yaml_invalid: Incorrect YAML
+      json_invalid: Incorrect JSON
       color_invalid: Incorrect color
   mongoid: &mongoid
     models:

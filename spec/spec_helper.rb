@@ -35,6 +35,16 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each do |f|
   require f
 end
 
+require "active_model/railtie"
+require "action_controller/railtie"
+require "action_view/railtie"
+module RAS
+  class Application < Rails::Application
+  end
+end
+# Initialize the Rails application.
+Rails.application.initialize!
+
 require 'rails_admin_settings'
 
 Dir["#{File.dirname(__FILE__)}/factories/**/*.rb"].each do |f|

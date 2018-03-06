@@ -10,7 +10,7 @@ module RailsAdminSettings
     end
 
     def text_kind?
-      (RailsAdminSettings.kinds - ['phone', 'phones', 'integer', 'yaml', 'boolean']).include? kind
+      (RailsAdminSettings.kinds - ['phone', 'phones', 'integer', 'yaml', 'json', 'boolean']).include? kind
     end
 
     def upload_kind?
@@ -20,6 +20,11 @@ module RailsAdminSettings
     def html_kind?
       ['html', 'code', 'sanitize', 'sanitize_code', 'strip_tags', 'simple_format', 'simple_format_raw', 'sanitized'].include? kind
     end
+
+    def preprocessed_kind?
+      ['sanitize', 'sanitize_code', 'strip_tags', 'simple_format', 'simple_format_raw', 'sanitized'].include? kind
+    end
+
     alias_method :text_type?, :text_kind?
     alias_method :upload_type?, :upload_kind?
     alias_method :html_type?, :html_kind?
@@ -58,9 +63,20 @@ module RailsAdminSettings
 
     private
 
-    def sanitize_value
-      require_sanitize do
-        self.raw = Sanitize.clean(value, Sanitize::Config::RELAXED)
+    def preprocess_value
+      case kind
+        when 'strip_tags'
+          require_rails do
+            self.raw = ActionController::Base.helpers.strip_tags(raw)
+          end
+        when 'sanitize'
+          require_rails do
+            self.raw = RailsAdminSettings.scrubber.sanitize(raw)
+          end
+        when 'sanitized'
+          require_sanitize do
+            self.raw = Sanitize.clean(value, Sanitize::Config::RELAXED)
+          end
       end
     end
 
@@ -72,10 +88,11 @@ module RailsAdminSettings
       elsif integer_kind?
         0
       elsif yaml_kind?
+        nil
+      elsif json_kind?
+        nil
       elsif boolean_kind?
         false
-      elsif yaml_type?
-        nil
       elsif phone_kind?
         require_russian_phone do
           RussianPhone::Number.new('')
@@ -99,10 +116,6 @@ module RailsAdminSettings
 
     def process_html_types(text)
       case kind
-        when 'strip_tags'
-          require_rails do
-            text = ActionController::Base.helpers.strip_tags(text)
-          end
         when 'simple_format'
           require_rails do
             text = ActionController::Base.helpers.simple_format(text)
@@ -110,10 +123,6 @@ module RailsAdminSettings
         when 'simple_format_raw'
           require_rails do
             text = ActionController::Base.helpers.simple_format(text, {}, sanitize: false)
-          end
-        when 'sanitize'
-          require_rails do
-            text = RailsAdminSettings.scrubber.sanitize(text)
           end
       end
       text
@@ -157,9 +166,7 @@ module RailsAdminSettings
     end
 
     def load_json
-      require_multi_json do
-        MultiJSON.load(raw)
-      end
+      JSON.load(raw)
     end
 
     def processed_value

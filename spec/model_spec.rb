@@ -42,4 +42,34 @@ describe RailsAdminSettings::Setting do
     expect(setting.val).to eq "© #{Time.now.strftime('%Y')} company <a>test</a>"
     expect(setting.val.class.name).to eq "ActiveSupport::SafeBuffer"
   end
+
+  it 'sanitize html when in sanitize mode' do
+    setting = FactoryBot.create(:setting, raw: '&copy; {{year}} company <a href="javascript:alert()">test</a>', kind: 'sanitize')
+    expect(setting.val).to eq "© #{Time.now.strftime('%Y')} company <a>test</a>"
+    expect(setting.val.class.name).to eq "ActiveSupport::SafeBuffer"
+  end
+
+  it 'sanitize html when in sanitize_code mode' do
+    setting = FactoryBot.create(:setting, raw: '&copy; {{year}} company <a href="javascript:alert()">test</a>', kind: 'sanitize')
+    expect(setting.val).to eq "© #{Time.now.strftime('%Y')} company <a>test</a>"
+    expect(setting.val.class.name).to eq "ActiveSupport::SafeBuffer"
+  end
+
+  it 'remove html when in strip_tags mode' do
+    setting = FactoryBot.create(:setting, raw: '&copy; {{year}} company <a href="javascript:alert()">test</a>', kind: 'strip_tags')
+    expect(setting.val).to eq "© #{Time.now.strftime('%Y')} company test"
+    expect(setting.val.class.name).to eq "ActiveSupport::SafeBuffer"
+  end
+
+  it 'formats text and cleans html in simple_format mode' do
+    setting = FactoryBot.create(:setting, raw: "&copy; {{year}}\n\ncompany <a href='javascript:alert()'>test</a>", kind: 'simple_format')
+    expect(setting.val).to eq "<p>© #{Time.now.strftime('%Y')}</p>\n\n<p>company <a>test</a></p>"
+    expect(setting.val.class.name).to eq "ActiveSupport::SafeBuffer"
+  end
+
+  it 'formats text and DOESNT html in simple_format_raw mode' do
+    setting = FactoryBot.create(:setting, raw: "&copy; {{year}}\n\ncompany <a href='javascript:alert()'>test</a>", kind: 'simple_format_raw')
+    expect(setting.val).to eq "<p>&copy; #{Time.now.strftime('%Y')}</p>\n\n<p>company <a href='javascript:alert()'>test</a></p>"
+    expect(setting.val.class.name).to eq "ActiveSupport::SafeBuffer"
+  end
 end
