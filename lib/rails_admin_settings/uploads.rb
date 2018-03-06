@@ -1,6 +1,15 @@
 module RailsAdminSettings
   module Uploads
     autoload :CarrierWave, "rails_admin_settings/storage/carrierwave"
+
+    def self.paperclip_options
+      if defined?(Rails)
+        {}
+      else
+        {path: "#{File.dirname(__FILE__)}/../../uploads/:filename", url: '/uploads/:filename'}
+      end
+    end
+
     def self.included(base)
       # carrierwave
       if base.respond_to?(:mount_uploader)
@@ -14,11 +23,7 @@ module RailsAdminSettings
         base.send(:include, ::Mongoid::Paperclip)
         # puts "[rails_admin_settings] PaperClip detected"
         base.field(:file, type: String)
-        if defined?(Rails)
-          base.has_mongoid_attached_file(:file)
-        else
-          base.has_mongoid_attached_file(:file, path: "#{File.dirname(__FILE__)}/../../uploads/:filename", url: '/uploads/:filename')
-        end
+        base.has_mongoid_attached_file(:file, self.paperclip_options)
         if base.respond_to?(:do_not_validate_attachment_file_type)
           base.do_not_validate_attachment_file_type :file
         end
@@ -26,11 +31,7 @@ module RailsAdminSettings
         Settings.file_uploads_supported = true
         Settings.file_uploads_engine = :paperclip
       elsif RailsAdminSettings.active_record? && defined?(Paperclip)
-        if defined?(Rails)
-          base.has_attached_file(:file)
-        else
-          base.has_attached_file(:file, path: "#{File.dirname(__FILE__)}/../../uploads/:filename", url: '/uploads/:filename')
-        end
+        base.has_mongoid_attached_file(:file, self.paperclip_options)
         if base.respond_to?(:do_not_validate_attachment_file_type)
           base.do_not_validate_attachment_file_type :file
         end

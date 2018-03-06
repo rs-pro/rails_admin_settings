@@ -56,7 +56,7 @@ class Settings < BasicObject
     end
 
     def root_file_path
-      if Object.const_defined?('Rails')
+      if defined?(:Rails)
         Rails.root
       else
         Pathname.new(File.dirname(__FILE__)).join('../..')

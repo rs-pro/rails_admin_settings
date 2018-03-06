@@ -10,6 +10,7 @@ rvm:
 env:
   - "UPLOADS=paperclip"
   - "UPLOADS=carrierwave"
+  - "RAILS=1 UPLOADS=paperclip"
 
 gemfile:
   - gemfiles/mongoid-6.0.gemfile

@@ -65,11 +65,18 @@ module RailsAdminSettings
 
     def preprocess_value
       case kind
+        # just to raise error if not in rails
+        when 'simple_format'
+          require_rails do
+          end
+        when 'simple_format_raw'
+          require_rails do
+          end
         when 'strip_tags'
           require_rails do
             self.raw = ActionController::Base.helpers.strip_tags(raw)
           end
-        when 'sanitize'
+        when 'sanitize', 'sanitize_code'
           require_rails do
             self.raw = RailsAdminSettings.scrubber.sanitize(raw)
           end

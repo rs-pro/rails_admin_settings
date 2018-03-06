@@ -18,7 +18,10 @@ require 'database_cleaner'
 require 'factory_bot'
 require 'mongoid-rspec'
 
-require "mongoid-paperclip" if ENV['UPLOADS'] == 'paperclip'
+p ENV["UPLOADS"]
+if ENV['UPLOADS'] == 'paperclip'
+  require "mongoid-paperclip"
+end
 if ENV['UPLOADS'] == 'carrierwave'
   require "carrierwave/mongoid"
   CarrierWave.configure do |config|
@@ -35,17 +38,29 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each do |f|
   require f
 end
 
-require "active_model/railtie"
-require "action_controller/railtie"
-require "action_view/railtie"
-module RAS
-  class Application < Rails::Application
+if ENV['RAILS'] == '1'
+  require "active_model/railtie"
+  require "action_controller/railtie"
+  require "action_view/railtie"
+  module RAS
+    class Application < Rails::Application
+    end
   end
+  # Initialize the Rails application.
+  Rails.application.initialize!
 end
-# Initialize the Rails application.
-Rails.application.initialize!
 
 require 'rails_admin_settings'
+
+
+if ENV['UPLOADS'] == 'paperclip'
+  module RailsAdminSettings::Uploads
+    def self.paperclip_options
+      {path: "#{File.dirname(__FILE__)}/../uploads/:filename", url: '/uploads/:filename'}
+    end
+  end
+end
+
 
 Dir["#{File.dirname(__FILE__)}/factories/**/*.rb"].each do |f|
   require f
