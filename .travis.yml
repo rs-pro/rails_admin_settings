@@ -12,8 +12,9 @@ env:
   - "UPLOADS=paperclip"
   - "UPLOADS=carrierwave"
   - "RAILS=1 UPLOADS=paperclip"
+  - "RAILS=1 UPLOADS=carrierwave"
 
 gemfile:
   - gemfiles/mongoid-6.0.gemfile
-  - gemfiles/mongoid-6.1.gemfile
+  - gemfiles/mongoid-6.3.gemfile
 
