@@ -57,7 +57,7 @@ Or install it yourself as:
 
 ## Advanced Usage
 
-    Settings.content_block_1(kind: 'html', default: 'test')
+    Settings.content_block_1(kind: 'html', default: 'test', label: "Test Value")
     Settings.data(kind: 'yaml')
     Settings.data = [1, 2, 3]
 
