@@ -11,11 +11,11 @@ rvm:
 env:
   global:
     - CC_TEST_REPORTER_ID=787a2f89b15c637323c7340d65ec17e898ac44480706b4b4122ea040c2a88f1d
-
-  - "UPLOADS=paperclip"
-  - "UPLOADS=carrierwave"
-  - "RAILS=1 UPLOADS=paperclip"
-  - "RAILS=1 UPLOADS=carrierwave"
+  matrix:
+    - "UPLOADS=paperclip"
+    - "UPLOADS=carrierwave"
+    - "RAILS=1 UPLOADS=paperclip"
+    - "RAILS=1 UPLOADS=carrierwave"
 
 gemfile:
   - gemfiles/mongoid-6.0.gemfile
