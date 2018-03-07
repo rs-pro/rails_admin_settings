@@ -52,8 +52,8 @@ module RailsAdminSettings
         vals.each_pair do |key, val|
           val.symbolize_keys!
           if !val[:kind].nil? && (val[:kind] == 'file' || val[:kind] == 'image')
-            unless @@file_uploads_supported
-              ::Kernel.raise ::RailsAdminSettings::PersistenceException, "Fatal: setting #{key} is #{val[:type]} but file upload engine is not detected"
+            unless Settings.file_uploads_supported
+              raise PersistenceException, "Fatal: setting #{key} is #{val[:type]} but file upload engine is not detected"
             end
             value = File.open(root_file_path.join(val.delete(:value)))
           else
