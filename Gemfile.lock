@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rails_admin_settings (1.4.0)
+    rails_admin_settings (1.4.1)
 
 GEM
   remote: https://rubygems.org/
