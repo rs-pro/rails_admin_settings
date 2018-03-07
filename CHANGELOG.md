@@ -1,3 +1,8 @@
+## 1.4.1 (2018-03-07)
+
+Fix activerecord + paperclip uploads
+Minor code cleanup
+
 ## 1.4.0
 
 Add new kinds
