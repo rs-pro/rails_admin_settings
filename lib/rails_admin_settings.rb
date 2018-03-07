@@ -60,7 +60,7 @@ module RailsAdminSettings
           unless Settings.file_uploads_supported
             raise PersistenceException, "Fatal: setting #{key} is #{val[:type]} but file upload engine is not detected"
           end
-          value = File.open(root_file_path.join(val.delete(:value)))
+          value = File.open(Settings.root_file_path.join(val.delete(:value)))
         else
           value = val.delete(:value)
         end
