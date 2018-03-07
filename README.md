@@ -3,6 +3,9 @@
 [![Build Status](https://secure.travis-ci.org/rs-pro/rails_admin_settings.png?branch=master)](http://travis-ci.org/rs-pro/rails_admin_settings)
 [![Dependency Status](https://gemnasium.com/rs-pro/rails_admin_settings.svg)](https://gemnasium.com/rs-pro/rails_admin_settings)
 [![Gem Version](https://badge.fury.io/rb/rails_admin_settings.svg)](https://badge.fury.io/rb/rails_admin_settings)
+[![security](https://hakiri.io/github/rs-pro/rails_admin_settings/master.svg)](https://hakiri.io/github/rs-pro/rails_admin_settings/master)
+[![Maintainability](https://api.codeclimate.com/v1/badges/de00cbec10559ebd2b4b/maintainability)](https://codeclimate.com/github/rs-pro/rails_admin_settings/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/de00cbec10559ebd2b4b/test_coverage)](https://codeclimate.com/github/rs-pro/rails_admin_settings/test_coverage)
 
 App settings editable via RailsAdmin with support for ActiveRecord and Mongoid.
 
