@@ -18,7 +18,6 @@ require 'database_cleaner'
 require 'factory_bot'
 require 'mongoid-rspec'
 
-p ENV["UPLOADS"]
 if ENV['UPLOADS'] == 'paperclip'
   require "mongoid-paperclip"
 end
