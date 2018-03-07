@@ -135,6 +135,13 @@ Simple format types are stored in db as-is.
 
 Rails admin management for settings is supported out of the box
 
+It is recommended to disable new/create page (it is not supported by design, settings are defined in ruby code).
+Disable via cancan:
+
+```
+cannot :create, RailsAdminSettings::Setting
+```
+
 ## Contributing
 
 1. Fork it
