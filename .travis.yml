@@ -10,7 +10,7 @@ rvm:
 
 env:
   global:
-    - CC_TEST_REPORTER_ID=787a2f89b15c637323c7340d65ec17e898ac44480706b4b4122ea040c2a88f1d
+    - CC_TEST_REPORTER_ID=f23ba257d0a12c588551991b4377e3eb218c1ff80050bc48c6b18c49ca16cb62
   matrix:
     - "UPLOADS=paperclip"
     - "UPLOADS=carrierwave"
@@ -26,4 +26,4 @@ before_script:
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
 after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  - ./cc-test-reporter after-build --debug --exit-code $TRAVIS_TEST_RESULT
