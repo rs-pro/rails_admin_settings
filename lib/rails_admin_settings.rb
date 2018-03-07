@@ -38,6 +38,35 @@ module RailsAdminSettings
   autoload :HexColorValidator, "rails_admin_settings/hex_color_validator"
   autoload :Dumper,            "rails_admin_settings/dumper"
 
+  def self.apply_defaults!(file, verbose = false)
+    if File.file?(file)
+      puts "[settings] Loading from #{file}" if verbose
+      if defined?(Psych) && Psych.respond_to?(:safe_load)
+        yaml = Psych.safe_load(File.read(file))
+      else
+        yaml = YAML.load(File.read(file), safe: true)
+      end
+      yaml.each_pair do |namespace, vals|
+        vals.symbolize_keys!
+        n = Settings.ns(namespace)
+        vals.each_pair do |key, val|
+          val.symbolize_keys!
+          if !val[:kind].nil? && (val[:kind] == 'file' || val[:kind] == 'image')
+            unless @@file_uploads_supported
+              ::Kernel.raise ::RailsAdminSettings::PersistenceException, "Fatal: setting #{key} is #{val[:type]} but file upload engine is not detected"
+            end
+            value = File.open(root_file_path.join(val.delete(:value)))
+          else
+            value = val.delete(:value)
+          end
+          puts "#{key} - default '#{value}' current '#{Settings.get(key).raw}'" if verbose
+          n.set(key, value, val.merge(overwrite: false))
+        end
+        n.unload!
+      end
+    end
+  end
+
   def self.migrate!
     if RailsAdminSettings.mongoid?
       RailsAdminSettings::Setting.where(:ns.exists => false).update_all(ns: 'main')
