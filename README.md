@@ -1,5 +1,10 @@
 # RailsAdminSettings
 
+Master repository has moved to gitlab, all new code will be there:
+
+https://gitlab.com/rocket-science/rails_admin_settings
+
+
 [![Build Status](https://secure.travis-ci.org/rs-pro/rails_admin_settings.png?branch=master)](http://travis-ci.org/rs-pro/rails_admin_settings)
 [![Dependency Status](https://gemnasium.com/rs-pro/rails_admin_settings.svg)](https://gemnasium.com/rs-pro/rails_admin_settings)
 [![Gem Version](https://badge.fury.io/rb/rails_admin_settings.svg)](https://badge.fury.io/rb/rails_admin_settings)
