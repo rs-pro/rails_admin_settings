@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["glebtv@gmail.com"]
   spec.description   = %q{Mongoid / ActiveRecord + RailsAdmin App Settings management}
   spec.summary       = %q{}
-  spec.homepage      = "https://github.com/rs-pro/rails_admin_settings"
+  spec.homepage      = "https://gitlab.com/rocket-science/rails_admin_settings"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
