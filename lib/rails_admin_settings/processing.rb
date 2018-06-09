@@ -10,7 +10,7 @@ module RailsAdminSettings
     end
 
     def text_kind?
-      (RailsAdminSettings.kinds - ['phone', 'phones', 'integer', 'yaml', 'json', 'boolean']).include? kind
+      (RailsAdminSettings.kinds - ['phone', 'phones', 'integer', 'float', 'yaml', 'json', 'boolean']).include? kind
     end
 
     def upload_kind?
@@ -54,7 +54,8 @@ module RailsAdminSettings
     end
 
     def to_s
-      if yaml_kind? || json_kind? || phone_kind? || integer_kind?
+      if yaml_kind? || json_kind? || phone_kind? || integer_kind? || float_kind?
+
         raw
       else
         value
@@ -93,6 +94,8 @@ module RailsAdminSettings
       elsif text_kind?
         ''
       elsif integer_kind?
+        0
+      elsif float_kind?
         0
       elsif yaml_kind?
         nil
@@ -181,6 +184,8 @@ module RailsAdminSettings
         process_text
       elsif integer_kind?
         raw.to_i
+      elsif float_kind?
+        raw.to_f
       elsif yaml_kind?
         load_yaml
       elsif json_kind?

@@ -1,3 +1,7 @@
+## 1.5.0 (2018-06-09)
+
+Add float type
+
 ## 1.4.1 (2018-03-07)
 
 Fix activerecord + paperclip uploads

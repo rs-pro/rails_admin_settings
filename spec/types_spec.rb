@@ -23,6 +23,13 @@ describe 'Settings kind' do
     expect(Settings.testint2).to eq 5
   end
 
+  it 'float' do
+    expect(Settings.get(:testfloat, kind: 'float').value).to eq 0
+    expect(Settings.get(:testfloat, default: 5.2, kind: 'float').value).to eq 0
+    expect(Settings.get(:testfloat2, default: 5.5, kind: 'float').value).to eq 5.5
+    expect(Settings.testfloat2).to eq 5.5
+  end
+
   it 'does yaml' do
     Settings.set(:data, '[one, two, three]', kind: 'yaml')
     expect(Settings.get(:data).raw).to eq '[one, two, three]'

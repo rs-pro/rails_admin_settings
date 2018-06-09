@@ -1,4 +1,4 @@
-- if ['string', 'integer', 'phone', 'email', 'address', 'url', 'domain'].include?(@object.type)
+- if ['string', 'integer', 'float', 'phone', 'email', 'address', 'url', 'domain'].include?(@object.type)
   = form.text_field :raw, :value => field.value
 - if @object.type == 'boolean'
   = form.check_box :raw, {:value => field.value}, 'true', 'false'

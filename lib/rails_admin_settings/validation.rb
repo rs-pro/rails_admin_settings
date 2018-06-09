@@ -9,6 +9,7 @@ module RailsAdminSettings
         base.validates_uniqueness_of :key, scope: :ns
         base.validates_inclusion_of :kind, in: RailsAdminSettings.kinds
         base.validates_numericality_of :raw, if: :integer_kind?
+        base.validates_numericality_of :raw, if: :float_kind?
 
         add_validators(base)
       end
