@@ -36,5 +36,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "addressable"
   spec.add_development_dependency "carrierwave-mongoid"
   spec.add_development_dependency "mongoid-paperclip"
-  spec.add_development_dependency "pry"
+  spec.add_development_dependency "rubocop-rspec"
 end

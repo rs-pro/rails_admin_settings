@@ -5,7 +5,6 @@ require 'rubygems'
 require 'simplecov'
 SimpleCov.start
 
-require 'pry'
 require 'bundler/setup'
 require 'active_support'
 require 'active_support/core_ext'

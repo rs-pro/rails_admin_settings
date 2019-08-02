@@ -7,7 +7,6 @@ end
 
 module RailsAdminSettings
   class Setting
-    #binding.pry
     if RailsAdminSettings.mongoid?
       include RailsAdminSettings::Mongoid
     end

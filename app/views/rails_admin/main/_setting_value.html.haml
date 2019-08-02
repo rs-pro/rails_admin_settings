@@ -8,7 +8,6 @@
   = form.text_area :raw, :value => field.value, :rows => 10, :cols => 80
 - elsif @object.type == 'code' || @object.type == 'sanitize_code'
   :ruby
-    #binding.pry
     js_data = {
       csspath: asset_path('ckeditor/plugins/codemirror/css/codemirror.min.css'),
       jspath: asset_path('ckeditor/plugins/codemirror/js/codemirror.min.js'),
