@@ -1,6 +1,7 @@
 module RailsAdminSettings
   module Uploads
     autoload :CarrierWaveUploader, "rails_admin_settings/storage/carrier_wave_uploader"
+    autoload :ShrineUploader, "rails_admin_settings/storage/shrine_uploader"
 
     def self.paperclip_options
       if defined?(Rails)
@@ -37,6 +38,13 @@ module RailsAdminSettings
         end
         Settings.file_uploads_supported = true
         Settings.file_uploads_engine = :paperclip
+      elsif RailsAdminSettings.active_record? && defined?(Shrine)
+        puts "Shrine detected"
+        Settings.file_uploads_supported = true
+        # Settings.file_uploads_engine = :shrine
+        base.send(:include, ShrineUploader::Attachment(:file))
+
+
       else
         # puts "[rails_admin_settings] Uploads disabled"
       end

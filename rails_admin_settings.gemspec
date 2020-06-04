@@ -37,4 +37,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "carrierwave-mongoid"
   spec.add_development_dependency "mongoid-paperclip"
   spec.add_development_dependency "rubocop-rspec"
+  spec.add_development_dependency 'image_processing'
+  spec.add_development_dependency "mini_magick"
+  spec.add_development_dependency "shrine", "~> 3.0"
+  spec.add_development_dependency "shrine-mongoid", "~> 1.0"
 end
