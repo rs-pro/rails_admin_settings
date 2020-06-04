@@ -42,8 +42,12 @@ module RailsAdminSettings
         Settings.file_uploads_supported = true
         Settings.file_uploads_engine = :shrine
         base.send(:include, ShrineUploader::Attachment(:file))
-
-
+      elsif RailsAdminSettings.mongoid? && ::Mongoid.const_defined?('Shrine')
+        base.send(:include, ::Mongoid::Document)
+        base.send(:include, ShrineUploader::Attachment(:file))
+        base.field(:file_data, type: String)
+        Settings.file_uploads_supported = true
+        Settings.file_uploads_engine = :shrine
       else
         # puts "[rails_admin_settings] Uploads disabled"
       end
