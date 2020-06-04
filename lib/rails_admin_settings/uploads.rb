@@ -39,9 +39,8 @@ module RailsAdminSettings
         Settings.file_uploads_supported = true
         Settings.file_uploads_engine = :paperclip
       elsif RailsAdminSettings.active_record? && defined?(Shrine)
-        puts "Shrine detected"
         Settings.file_uploads_supported = true
-        # Settings.file_uploads_engine = :shrine
+        Settings.file_uploads_engine = :shrine
         base.send(:include, ShrineUploader::Attachment(:file))
 
 

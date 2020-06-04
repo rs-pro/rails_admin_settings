@@ -38,7 +38,6 @@ module RailsAdminSettings
     end
 
     def apply_defaults!(file, verbose = false)
-      puts "apply_defaults!"
       if File.file?(file)
         puts "[settings] Loading from #{file}" if verbose
         if defined?(Psych) && Psych.respond_to?(:safe_load)

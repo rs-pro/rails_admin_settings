@@ -197,6 +197,9 @@ GEM
     shrine (3.2.1)
       content_disposition (~> 1.0)
       down (~> 5.1)
+    shrine-mongoid (1.0.0)
+      mongoid (>= 5.0)
+      shrine (>= 3.0.0.beta3, < 4)
     simplecov (0.17.0)
       docile (~> 1.1)
       json (>= 1.8, < 3)
@@ -246,6 +249,7 @@ DEPENDENCIES
   safe_yaml
   sanitize
   shrine (~> 3.0)
+  shrine-mongoid (~> 1.0)
   simplecov
   validates_email_format_of
 
