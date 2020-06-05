@@ -37,6 +37,8 @@ module RailsAdminSettings
           else
             nil
           end
+        else
+          file.url if file.present?
         end
       elsif raw.blank? || disabled?
         default_value
