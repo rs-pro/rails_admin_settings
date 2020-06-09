@@ -14,8 +14,10 @@ env:
   matrix:
     - "UPLOADS=paperclip"
     - "UPLOADS=carrierwave"
+    - "UPLOADS=shrine"
     - "RAILS=1 UPLOADS=paperclip"
     - "RAILS=1 UPLOADS=carrierwave"
+    - "RAILS=1 UPLOADS=shrine"
 
 gemfile:
   - gemfiles/mongoid-6.0.gemfile

@@ -15,6 +15,9 @@ class CreateRailsAdminSettings < ActiveRecord::Migration[5.0]
         t.attachment :file
       elsif defined?(CarrierWave)
         t.string :file
+      elsif defined?(Shrine)
+        t.text :file_data
+
       end
       t.timestamps
     end

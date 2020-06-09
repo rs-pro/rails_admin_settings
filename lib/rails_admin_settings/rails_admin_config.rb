@@ -4,7 +4,6 @@ module RailsAdminSettings
       if base.respond_to?(:rails_admin)
         base.rails_admin do
           navigation_label I18n.t('admin.settings.label')
-
           list do
             if Object.const_defined?('RailsAdminToggleable')
               field :enabled, :toggle
@@ -16,9 +15,9 @@ module RailsAdminSettings
             field :name
             field :raw do
               pretty_value do
-                if bindings[:object].file_kind?
+                if bindings[:object].file_kind? and !defined?(Shrine) and bindings[:object].to_path.present?
                   "<a href='#{CGI::escapeHTML(bindings[:object].file.url)}'>#{CGI::escapeHTML(bindings[:object].to_path)}</a>".html_safe
-                elsif bindings[:object].image_kind?
+                elsif bindings[:object].image_kind? and !defined?(Shrine) and !bindings[:object].file.nil?
                   "<a href='#{CGI::escapeHTML(bindings[:object].file.url)}'><img src='#{CGI::escapeHTML(bindings[:object].file.url)}' /></a>".html_safe
                 else
                   value

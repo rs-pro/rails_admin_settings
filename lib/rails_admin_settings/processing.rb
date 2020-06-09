@@ -31,10 +31,14 @@ module RailsAdminSettings
 
     def value
       if upload_kind?
-        if file?
-          file.url
+        unless defined?(Shrine)
+          if file?
+            file.url
+          else
+            nil
+          end
         else
-          nil
+          file.url if file.present?
         end
       elsif raw.blank? || disabled?
         default_value
