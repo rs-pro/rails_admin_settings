@@ -1,3 +1,7 @@
+## 1.6.0 (2020-06-11)
+
+Add shrine file uploads
+
 ## 1.5.0 (2018-06-09)
 
 Add float type
