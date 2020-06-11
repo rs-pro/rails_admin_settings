@@ -28,6 +28,22 @@ if ENV['UPLOADS'] == 'carrierwave'
     end
   end
 end
+if ENV['UPLOADS'] == 'shrine'
+  require "shrine"
+  require "shrine/storage/file_system"
+  Shrine.storages = {
+      cache: Shrine::Storage::FileSystem.new("public", prefix: "uploads/cache"), # temporary
+      store: Shrine::Storage::FileSystem.new("public", prefix: "uploads"),       # permanent
+  }
+
+  if ENV['ACTIVERECORD']
+    Shrine.plugin :activerecord
+  end
+  Shrine.plugin :cached_attachment_data # for retaining the cached file across form redisplays
+  Shrine.plugin :restore_cached_data # re-extract metadata when attaching a cached file
+end
+
+
 
 I18n.enforce_available_locales = true
 I18n.load_path << File.join(File.dirname(__FILE__), "..", "config", "locales", "en.yml")
