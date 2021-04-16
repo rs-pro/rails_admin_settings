@@ -16,9 +16,17 @@ module RailsAdminSettings
             field :raw do
               pretty_value do
                 if bindings[:object].file_kind? and !defined?(Shrine) and bindings[:object].to_path.present?
-                  "<a href='#{CGI::escapeHTML(bindings[:object].file.url)}'>#{CGI::escapeHTML(bindings[:object].to_path)}</a>".html_safe
+                  if bindings[:object].file.url.blank?
+                    "-"
+                  else
+                    "<a href='#{CGI::escapeHTML(bindings[:object].file.url)}'>#{CGI::escapeHTML(bindings[:object].to_path)}</a>".html_safe
+                  end
                 elsif bindings[:object].image_kind? and !defined?(Shrine) and !bindings[:object].file.nil?
-                  "<a href='#{CGI::escapeHTML(bindings[:object].file.url)}'><img src='#{CGI::escapeHTML(bindings[:object].file.url)}' /></a>".html_safe
+                  if bindings[:object].file.url.blank?
+                    "-"
+                  else
+                    "<a href='#{CGI::escapeHTML(bindings[:object].file.url)}'><img src='#{CGI::escapeHTML(bindings[:object].file.url)}' /></a>".html_safe
+                  end
                 else
                   value
                 end
