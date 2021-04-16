@@ -16,12 +16,14 @@ module RailsAdminSettings
             field :name
             field :raw do
               pretty_value do
-                if bindings[:object].file_kind?
-                  "<a href='#{CGI::escapeHTML(bindings[:object].file.url)}'>#{CGI::escapeHTML(bindings[:object].to_path)}</a>".html_safe
-                elsif bindings[:object].image_kind?
-                  "<a href='#{CGI::escapeHTML(bindings[:object].file.url)}'><img src='#{CGI::escapeHTML(bindings[:object].file.url)}' /></a>".html_safe
-                else
-                  value
+                if bindings[:object].file.url.present?
+                  if bindings[:object].file_kind?
+                    "<a href='#{CGI::escapeHTML(bindings[:object].file.url)}'>#{CGI::escapeHTML(bindings[:object].to_path)}</a>".html_safe
+                  elsif bindings[:object].image_kind?
+                    "<a href='#{CGI::escapeHTML(bindings[:object].file.url)}'><img src='#{CGI::escapeHTML(bindings[:object].file.url)}' /></a>".html_safe
+                  else
+                    value
+                  end
                 end
               end
             end
