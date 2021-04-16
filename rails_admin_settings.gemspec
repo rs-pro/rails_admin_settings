@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
 
-  spec.add_development_dependency "mongoid", '~> 6.3'
+  spec.add_development_dependency "mongoid", '~> 7.2.2'
   spec.add_development_dependency "rails"
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "rake"
