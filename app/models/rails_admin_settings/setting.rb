@@ -13,6 +13,14 @@ module RailsAdminSettings
 
     if RailsAdminSettings.active_record?
       self.table_name = "rails_admin_settings"
+
+      def self.ransackable_attributes(_auth_object = nil)
+        %w[id ns key label kind enabled created_at updated_at]
+      end
+
+      def self.ransackable_associations(_auth_object = nil)
+        []
+      end
     end
 
     scope :enabled, -> { where(enabled: true) }
@@ -58,20 +66,6 @@ module RailsAdminSettings
       v
     end
 
-    # t = {_all: 'Все'}
-    if ::Settings.table_exists?
-      ::RailsAdminSettings::Setting.pluck(:ns).uniq.each do |c|
-         s = "ns_#{c.gsub('-', '_')}".to_sym
-         scope s, -> { where(ns: c) }
-         # t[s] = c
-       end
-     end
-     # I18n.backend.store_translations(:ru, {admin: {scopes: {'rails_admin_settings/setting': t}}})
-
-    if Object.const_defined?('RailsAdmin')
-      include RailsAdminSettings::RailsAdminConfig
-    else
-      puts "[rails_admin_settings] Rails Admin not detected -- put this gem after rails_admin in gemfile"
-    end
+    include RailsAdminSettings::RailsAdminConfig if defined?(::RailsAdmin)
   end
 end

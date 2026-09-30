@@ -194,7 +194,7 @@ module RailsAdminSettings
           opts.delete(:enabled)
         end
         opts.delete(:overwrite)
-        @settings[key].update_attributes!(opts)
+        @settings[key].update!(opts)
       end
       if is_file
         if options[:overwrite] != false || !@settings[key].file?

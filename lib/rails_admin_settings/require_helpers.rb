@@ -83,4 +83,3 @@ module RailsAdminSettings
     end
   end
 end
-

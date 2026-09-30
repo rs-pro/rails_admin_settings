@@ -1,5 +1,5 @@
 PATH
-  remote: .
+  remote: ..
   specs:
     rails_admin_settings (1.7.0)
       rails (>= 8.0, < 9)
@@ -370,6 +370,7 @@ DEPENDENCIES
   importmap-rails
   puma
   rackup
+  rails (~> 8.1.0)
   rails_admin (~> 3.3)
   rails_admin_settings!
   rake

@@ -1,0 +1,74 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - ruby: '3.4'
+            rails: '8_0'
+          - ruby: '3.4'
+            rails: '8_1'
+          - ruby: '4.0'
+            rails: '8_0'
+          - ruby: '4.0'
+            rails: '8_1'
+    env:
+      BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/rails_${{ matrix.rails }}.gemfile
+      RAILS_ENV: test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+      - name: Verify Chrome
+        run: google-chrome --version || google-chrome-stable --version || chromium --version
+      - name: Build ActiveAdmin styles without npm
+        run: bundle exec rake -f examples/demo/Rakefile assets:build
+      - name: Migrate demo test database
+        run: bundle exec rake -f examples/demo/Rakefile db:migrate
+      - name: Run both demo suites with Cuprite
+        run: bundle exec rake
+      - name: Upload browser screenshots on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots-${{ matrix.ruby }}-rails-${{ matrix.rails }}
+          path: |
+            examples/demo/tmp/capybara/
+            examples/rails_admin/tmp/capybara/
+          if-no-files-found: ignore
+
+  demo-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '4.0'
+          bundler-cache: true
+      - name: Build stylesheet and seed development database
+        run: |
+          bundle exec rake -f examples/demo/Rakefile assets:build
+          bundle exec rake -f examples/demo/Rakefile db:migrate db:seed
+      - name: Boot Rack app and check public and admin pages
+        run: |
+          bundle exec rackup examples/demo/config.ru -o 127.0.0.1 -p 9292 &
+          server=$!
+          bundle exec rackup examples/rails_admin/config.ru -o 127.0.0.1 -p 9293 &
+          rails_admin_server=$!
+          trap 'kill "$server" "$rails_admin_server"' EXIT
+          curl --fail --silent --show-error --retry 15 --retry-connrefused --retry-delay 1 http://127.0.0.1:9292/ -o /dev/null
+          curl --fail --silent --show-error --retry 15 --retry-connrefused --retry-delay 1 -H 'Accept: text/html' http://127.0.0.1:9293/rails_admin/ -o /dev/null
+          curl --fail --silent --show-error -H 'Accept: text/html' http://127.0.0.1:9292/admin/rails_admin_settings_settings -o /dev/null
+      - name: Build installable gem
+        run: gem build rails_admin_settings.gemspec

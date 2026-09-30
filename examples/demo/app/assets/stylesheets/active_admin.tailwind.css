@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+/* ActiveAdmin's npm plugin supplies these component rules in typical apps.
+   Keep the small demo self-contained with the same essentials instead. */
+@layer components {
+  .data-table { width: 100%; border-collapse: collapse; text-align: left; font-size: .875rem; }
+  .data-table th, .data-table td { border-bottom: 1px solid #e5e7eb; padding: .7rem .9rem; vertical-align: middle; }
+  .data-table th { background: #f9fafb; font-weight: 600; white-space: nowrap; }
+  .data-table tbody tr:hover { background: #f9fafb; }
+  .data-table td:last-child { white-space: nowrap; }
+  .data-table td:last-child a { color: #1d4ed8; margin-right: .65rem; }
+  .data-table-sorted-icon { display: inline-block; width: .65rem; height: .65rem; margin-left: .35rem; vertical-align: middle; }
+  .formtastic fieldset { border: 0; padding: 0; margin: 0 0 1.5rem; }
+  .formtastic ol { list-style: none; margin: 0; padding: 0; }
+  .formtastic li.input { margin: 0 0 1.2rem; }
+  .formtastic li.input > label { display: block; font-size: .875rem; font-weight: 600; margin-bottom: .35rem; }
+  .formtastic input[type=text], .formtastic textarea, .filters-form input[type=text], .filters-form select {
+    border: 1px solid #d1d5db; border-radius: .4rem; padding: .5rem .65rem; background: white;
+    width: 100%; max-width: 40rem; font: inherit;
+  }
+  .formtastic input:disabled { background: #f3f4f6; color: #6b7280; }
+  .formtastic textarea { min-height: 8rem; }
+  .formtastic li.boolean > label { display: flex; align-items: center; gap: .5rem; }
+  .formtastic input[type=checkbox] { width: 1rem; height: 1rem; }
+  .formtastic .actions ol { display: flex; align-items: center; gap: 1rem; }
+  .formtastic input[type=submit], .filters-form input[type=submit] {
+    background: #1d4ed8; color: white; border: 0; border-radius: .4rem; padding: .55rem 1rem; cursor: pointer;
+  }
+  .formtastic .cancel-link, .filters-form a { color: #1d4ed8; }
+  .filters-form .filters-form-field { margin-bottom: .8rem; }
+  .filters-form .filters-form-field > label { display: block; font-size: .875rem; font-weight: 600; margin-bottom: .35rem; }
+  .filters-form .filters-form-input-group { display: flex; gap: .3rem; }
+  .filters-form .filters-form-input-group select { width: 5.5rem; }
+  .filters-form .filters-form-input-group input { min-width: 0; }
+}

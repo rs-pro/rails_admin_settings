@@ -1,4 +1,4 @@
-class CreateRailsAdminSettings < ActiveRecord::Migration[5.0]
+class CreateRailsAdminSettings < ActiveRecord::Migration[<%= ActiveRecord::Migration.current_version %>]
   def change
     create_table :rails_admin_settings do |t|
       t.boolean :enabled, default: true
@@ -26,4 +26,3 @@ class CreateRailsAdminSettings < ActiveRecord::Migration[5.0]
     add_index :rails_admin_settings, [:ns, :key], unique: true
   end
 end
-

@@ -1,17 +1,12 @@
 # RailsAdminSettings
 
-Master repository has moved to gitlab, all new code will be there:
-
-https://gitlab.com/rocket-science/rails_admin_settings
-
-
-[![Build Status](https://secure.travis-ci.org/rs-pro/rails_admin_settings.png?branch=master)](http://travis-ci.org/rs-pro/rails_admin_settings)
+[![CI](https://github.com/rs-pro/rails_admin_settings/actions/workflows/ci.yml/badge.svg)](https://github.com/rs-pro/rails_admin_settings/actions/workflows/ci.yml)
 [![Gem Version](https://badge.fury.io/rb/rails_admin_settings.svg)](https://badge.fury.io/rb/rails_admin_settings)
 [![security](https://hakiri.io/github/rs-pro/rails_admin_settings/master.svg)](https://hakiri.io/github/rs-pro/rails_admin_settings/master)
 [![Maintainability](https://api.codeclimate.com/v1/badges/de00cbec10559ebd2b4b/maintainability)](https://codeclimate.com/github/rs-pro/rails_admin_settings/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/de00cbec10559ebd2b4b/test_coverage)](https://codeclimate.com/github/rs-pro/rails_admin_settings/test_coverage)
 
-App settings editable via RailsAdmin with support for ActiveRecord and Mongoid.
+App settings editable via RailsAdmin or ActiveAdmin with support for ActiveRecord and Mongoid.
 
 Supports images, files, html with or without sanitization, code with codemirror, etc.
 
@@ -28,7 +23,7 @@ Add this line to your application's Gemfile:
 
     gem 'rails_admin_settings'
 
-For activerecord, generage migration:
+For ActiveRecord, generate a migration:
 
     rails g rails_admin_settings:migration
 
@@ -116,7 +111,7 @@ Supported types:
     url (requires addressable)
     domain (requires addressable)
     sanitize (uses rails sanitize helper with default settings, shows as html)
-    sanitize_code (uses rails sanitize helper with default settings, shows as codemirror textarea, can provide custom scrubber, defaults to Rails::Html::WhiteListSanitizer)
+    sanitize_code (uses rails sanitize helper with default settings, can provide custom scrubber, defaults to Rails::HTML4::SafeListSanitizer)
     strip_tags (uses strip_tags rails helper)
     simple_format (uses simple_format rails helper)
     simple_format_raw (does NOT sanitize (allows ANY javascript) - uses simple_format rails helper with sanitize: false)
@@ -126,9 +121,9 @@ Supported types:
 
 Sanitizer can be changed like this:
 ```
-RalsAdminSettings.scrubber = Rails::Html::WhiteListSanitizer.new
+RailsAdminSettings.scrubber = Rails::HTML4::SafeListSanitizer.new
 ```
-defaults to Rails::Html::WhiteListSanitizer
+defaults to Rails::HTML4::SafeListSanitizer
 
 Strings and html support following replacement patterns:
 
@@ -148,6 +143,31 @@ Disable via cancan:
 ```
 cannot :create, RailsAdminSettings::Setting
 ```
+
+## Usage with ActiveAdmin
+
+ActiveAdmin is optional. Register the existing settings model (no second settings
+table or separate cache is needed) in `app/admin/settings.rb`:
+
+```ruby
+ActiveAdmin.register RailsAdminSettings::Setting do
+  rails_admin_settings
+end
+```
+
+The registration allows listing and editing existing settings; application code
+continues to create settings using `Settings.set` or defaults. Add `activeadmin`
+to the host Gemfile and follow its asset setup instructions. RailsAdmin and
+ActiveAdmin can be installed in the same application.
+
+## Development
+
+With rbenv and Ruby 4.0.7: `bundle install && bundle exec rake`.
+The system specs use the separate [ActiveAdmin](examples/demo/README.md) and
+[RailsAdmin](examples/rails_admin/README.md) Rack demos with Chrome through
+Cuprite and SQLite. Build the ActiveAdmin stylesheet using
+`bundle exec rake -f examples/demo/Rakefile assets:build`; Tailwind's Ruby CLI
+and ActiveAdmin's own importmap provide everything without Node or npm.
 
 ## Contributing
 

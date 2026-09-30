@@ -1,8 +1,10 @@
 module RailsAdminSettings
   module RailsAdminConfig
     def self.included(base)
-      if base.respond_to?(:rails_admin)
-        base.rails_admin do
+      return unless defined?(::RailsAdmin)
+
+      ::RailsAdmin.config do |config|
+        config.model base do
           navigation_label I18n.t('admin.settings.label')
           list do
             if Object.const_defined?('RailsAdminToggleable')
@@ -15,26 +17,23 @@ module RailsAdminSettings
             field :name
             field :raw do
               pretty_value do
-                if bindings[:object].file_kind? and !defined?(Shrine) and bindings[:object].to_path.present?
-                  if bindings[:object].file.url.blank?
-                    "-"
+                object = bindings[:object]
+                if object.file_kind? && !defined?(Shrine) && object.to_path.present?
+                  if object.file.url.blank?
+                    '-'
                   else
-                    "<a href='#{CGI::escapeHTML(bindings[:object].file.url)}'>#{CGI::escapeHTML(bindings[:object].to_path)}</a>".html_safe
+                    "<a href='#{CGI.escapeHTML(object.file.url)}'>#{CGI.escapeHTML(object.to_path)}</a>".html_safe
                   end
-                elsif bindings[:object].image_kind? and !defined?(Shrine) and !bindings[:object].file.nil?
-                  if bindings[:object].file.url.blank?
-                    "-"
+                elsif object.image_kind? && !defined?(Shrine) && !object.file.nil?
+                  if object.file.url.blank?
+                    '-'
                   else
-                    "<a href='#{CGI::escapeHTML(bindings[:object].file.url)}'><img src='#{CGI::escapeHTML(bindings[:object].file.url)}' /></a>".html_safe
+                    "<a href='#{CGI.escapeHTML(object.file.url)}'><img src='#{CGI.escapeHTML(object.file.url)}' /></a>".html_safe
                   end
                 else
                   value
                 end
               end
-            end
-            if ::Settings.table_exists?
-              nss = ::RailsAdminSettings::Setting.pluck(:ns).uniq.map { |c| "ns_#{c.gsub('-', '_')}".to_sym }
-              scopes([nil] + nss)
             end
           end
 
@@ -49,22 +48,16 @@ module RailsAdminSettings
               help false
             end
             field :raw do
-              partial "setting_value"
-              visible do
-                !bindings[:object].upload_kind?
-              end
+              partial 'setting_value'
+              visible { !bindings[:object].upload_kind? }
             end
             if Settings.file_uploads_supported
               field :file, Settings.file_uploads_engine do
-                visible do
-                  bindings[:object].upload_kind?
-                end
+                visible { bindings[:object].upload_kind? }
               end
             end
           end
         end
-      else
-        puts "[rails_admin_settings] Problem: model does not respond to rails_admin: this should not happen"
       end
     end
   end

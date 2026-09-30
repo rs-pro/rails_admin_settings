@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%= @site_title %> — Settings demo</title>
+    <style>
+      body { font: 16px/1.6 system-ui, sans-serif; background: #f5f7fb; color: #263349; margin: 0; }
+      main { max-width: 760px; margin: 7vh auto; padding: 2.5rem; background: white; border-radius: 18px; box-shadow: 0 10px 40px #20345a19; }
+      h1 { line-height: 1.2; }
+      .links { display: flex; flex-wrap: wrap; gap: .75rem; margin: 2rem 0; }
+      .links a { padding: .7rem 1rem; background: #2859be; color: white; border-radius: 8px; text-decoration: none; }
+      footer { color: #52617a; border-top: 1px solid #ddd; padding-top: 1rem; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1><%= @site_title %></h1>
+      <p><%= @announcement %></p>
+      <p>Change either setting in an admin interface, then reload this page to see the saved value.</p>
+      <nav class="links">
+        <%= link_to 'Edit in RailsAdmin', 'http://localhost:9293/rails_admin/rails_admin_settings~setting' %>
+        <%= link_to 'Edit in ActiveAdmin', '/admin/rails_admin_settings_settings' %>
+      </nav>
+      <footer><%= @footer %></footer>
+    </main>
+  </body>
+</html>

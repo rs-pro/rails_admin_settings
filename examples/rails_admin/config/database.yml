@@ -1,0 +1,11 @@
+default: &default
+  adapter: sqlite3
+  pool: 5
+  database: <%= File.expand_path('../../demo/tmp/settings.sqlite3', __dir__) %>
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+  database: <%= File.expand_path('../../demo/tmp/rails_admin_test.sqlite3', __dir__) %>

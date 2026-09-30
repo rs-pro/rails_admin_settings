@@ -17,3 +17,10 @@ tmp
 .idea
 /uploads
 /public/uploads
+/spec/tmp/
+/log/*.log
+/examples/demo/tmp/
+/examples/demo/app/assets/active_admin.css
+/examples/demo/db/schema.rb
+/examples/rails_admin/tmp/
+/rails_admin_settings-*.gem

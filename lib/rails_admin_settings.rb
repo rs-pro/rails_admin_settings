@@ -1,7 +1,9 @@
 require "rails_admin_settings/version"
 
 module RailsAdminSettings
-  if defined?(Rails) && defined?(Rails::Html) && defined?(Rails::Html::WhiteListSanitizer)
+  if defined?(Rails::Html::SafeListSanitizer)
+    @@scrubber = Rails::Html::SafeListSanitizer.new
+  elsif defined?(Rails::Html::WhiteListSanitizer)
     @@scrubber = Rails::Html::WhiteListSanitizer.new
   end
   cattr_accessor :scrubber
@@ -16,6 +18,7 @@ module RailsAdminSettings
   autoload :Validation,        "rails_admin_settings/validation"
   autoload :RequireHelpers,    "rails_admin_settings/require_helpers"
   autoload :RailsAdminConfig,  "rails_admin_settings/rails_admin_config"
+  autoload :ActiveAdminDSL,    "rails_admin_settings/active_admin_dsl"
   autoload :Uploads,           "rails_admin_settings/uploads"
   autoload :HexColorValidator, "rails_admin_settings/hex_color_validator"
   autoload :Dumper,            "rails_admin_settings/dumper"

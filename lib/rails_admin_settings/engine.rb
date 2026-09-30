@@ -4,13 +4,17 @@ module RailsAdminSettings
       require File.expand_path('../tasks', __FILE__)
     end
 
-    initializer 'RailsAdminSettings Install after_action' do |app|
-      require File.dirname(__FILE__) + '/../../app/models/rails_admin_settings/setting.rb'
-
+    initializer 'rails_admin_settings.clear_request_cache' do
       if defined?(ActionController) and defined?(ActionController::Base)
         ActionController::Base.class_eval do
           after_action { Settings.unload! }
         end
+      end
+    end
+
+    initializer 'rails_admin_settings.active_admin', after: :load_config_initializers do
+      if defined?(::ActiveAdmin::DSL)
+        ::ActiveAdmin::DSL.include(RailsAdminSettings::ActiveAdminDSL)
       end
     end
   end

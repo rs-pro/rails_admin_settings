@@ -1,0 +1,20 @@
+require_relative 'config/application'
+require 'fileutils'
+
+Rails.application.load_tasks
+
+namespace :assets do
+  desc 'Build ActiveAdmin CSS with the Ruby Tailwind CLI (no Node/npm)'
+  task :build do
+    source = Rails.root.join('app/assets/stylesheets/active_admin.tailwind.css')
+    generated = Rails.root.join('tmp/active_admin.tailwind.css')
+    FileUtils.mkdir_p(generated.dirname)
+    css = source.read
+    css << "\n@source \"#{Gem::Specification.find_by_name('activeadmin').full_gem_path}/app/views\";\n"
+    css << "@source \"#{Gem::Specification.find_by_name('activeadmin').full_gem_path}/vendor\";\n"
+    css << "@source \"#{Rails.root}/app/views\";\n"
+    generated.write(css)
+    system('bundle', 'exec', 'tailwindcss', '-i', generated.to_s,
+           '-o', Rails.root.join('app/assets/active_admin.css').to_s, exception: true)
+  end
+end
